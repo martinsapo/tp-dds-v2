@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:c="http://www.w3.org/1999/XSL/Transform">
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex, nofollow">
+
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="css/styles.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+</head>
+<body>
+
+<div class="container">
+    <h1 class="title" style="color: #ffffff; text-align: center;">Sistema de gestion energetica</h1>
+    <h3 class="title" style="color: #ffffff; text-align: center;">Cliente</h3>
+
+    <hr>
+    <div class="card card-container">
+        <form class="form-signin" method="post" action="/loginCliente/submit">
+            <input type="text" id="inputUsuario" name="username" class="form-control" placeholder="Usuario" required autofocus>
+            <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Contrasena" required>
+            <c:choose>
+                <c:when test="${empty errorMessage}">
+
+                </c:when>
+                <c:otherwise>
+                    <div class="alert alert-danger" role="alert">
+                            ${errorMessage}
+                    </div>
+                </c:otherwise>
+            </c:choose>
+
+
+            <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Ingresar</button>
+        </form>
+    </div>
+    <form method="get" action="${pageContext.request.contextPath}/goToMap">
+        <div class="map inner">
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Ir a mapa</button>
+        </div>
+    </form>
+
+    <form method="get" action="${pageContext.request.contextPath}/goToAdminLogin">
+        <div class="map inner">
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Ir a login de administrador</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

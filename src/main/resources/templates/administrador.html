@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex, nofollow">
+
+    <title>Administrador</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
+    <link href="${pageContext.request.contextPath}/resources/css/styles.css" rel="stylesheet" />
+</head>
+<body>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <h4><span class="glyphicon glyphicon-user white"> ${userFormData.username} </span></h4>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="navbarNavDropdown" class="navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link">Bienvenido administrador!</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item float-right">
+                <h4><a class="nav-link" href="${pageContext.request.contextPath}/logout">Salir</a></h4>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="container">
+    <div class="card card-container">
+        <form class="form-signin" method="post" action="${pageContext.request.contextPath}/consumos" modelAttribute=userFormData">
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Visualizar Hogares y Consumos</button>
+        </form>
+        <form class="form-signin" method="post" action="${pageContext.request.contextPath}/reportes" modelAttribute="userFormData">
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Reportes</button>
+        </form>
+    </div>
+</div>
+
+
+<h3 class="title" style="color: #ffffff; text-align: center;">ABM Clases Dispositivos</h3>
+<div class="container">
+    <div class="card card-container">
+
+        <form class="form-signin" method="post" action="${pageContext.request.contextPath}/alta" modelAttribute="userFormData">
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Alta Dispositivo</button>
+        </form>
+        <form class="form-signin" method="post" action="${pageContext.request.contextPath}/modificacion" modelAttribute=userFormData">
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Modificar Dispositivos</button>
+        </form>
+        <form class="form-signin" method="post" action="${pageContext.request.contextPath}/baja" modelAttribute="userFormData">
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Dar de Baja Dispositivos</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
