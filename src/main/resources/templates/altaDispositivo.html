@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<html xmlns:c="http://www.w3.org/1999/XSL/Transform">
 <head>
     <head>
         <meta charset="utf-8">
@@ -8,13 +8,13 @@
         <title>Alta Dispositivo</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-        <link href="${pageContext.request.contextPath}/resources/css/styles.css" rel="stylesheet" />
+        <link href="css/styles.css" rel="stylesheet" />
     </head>
 </head>
 <body>
 <div class="container">
     <div class="card card-container">
-        <form class="form-signin" method="post" action="${pageContext.request.contextPath}/submitAlta" modelAttribute="userFormData">
+        <form class="form-signin" method="post" action="${pageContext.request.contextPath}/submitAlta">
             <input type="text" id="inputNombre" name="dispositivo" class="form-control" placeholder="Nombre Dispositivo" required autofocus>
             <input type="text" id="inputKw" name="kwPorHora" class="form-control" placeholder="Kw por Hora" required>
             <label for="InputCheck">¿Es Inteligente?</label>

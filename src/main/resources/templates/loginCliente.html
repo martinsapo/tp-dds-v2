@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:c="http://www.w3.org/1999/XSL/Transform">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
     <meta name="robots" content="noindex, nofollow">
@@ -22,28 +22,20 @@
         <form class="form-signin" method="post" action="/loginCliente/submit">
             <input type="text" id="inputUsuario" name="username" class="form-control" placeholder="Usuario" required autofocus>
             <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Contrasena" required>
-            <c:choose>
-                <c:when test="${empty errorMessage}">
-
-                </c:when>
-                <c:otherwise>
-                    <div class="alert alert-danger" role="alert">
-                            ${errorMessage}
-                    </div>
-                </c:otherwise>
-            </c:choose>
-
+            <div th:if="${errorMessage} != ''">
+                <label th:text="${errorMessage}"></label>
+            </div>
 
             <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Ingresar</button>
         </form>
     </div>
-    <form method="get" action="${pageContext.request.contextPath}/goToMap">
+    <form method="get" action="/mapa">
         <div class="map inner">
             <button class="btn btn-lg btn-primary btn-block" type="submit">Ir a mapa</button>
         </div>
     </form>
 
-    <form method="get" action="${pageContext.request.contextPath}/goToAdminLogin">
+    <form method="get" action="/adminLogin">
         <div class="map inner">
             <button class="btn btn-lg btn-primary btn-block" type="submit">Ir a login de administrador</button>
         </div>

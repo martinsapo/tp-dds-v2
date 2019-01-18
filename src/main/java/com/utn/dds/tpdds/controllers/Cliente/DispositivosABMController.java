@@ -1,30 +1,23 @@
 package com.utn.dds.tpdds.controllers.Cliente;
 
-import com.utn.dds.tpdds.model.CatalogoDispositivos;
-import com.utn.dds.tpdds.model.ClienteResidencial;
 import com.utn.dds.tpdds.repository.ClienteResidencialJpaRepository;
-import com.utn.model.*;
-import com.utn.model.DTOs.LoginDTO;
-import com.utn.repositorio.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @Controller
+@RequestMapping(value = "/abmDispositivos")
 public class DispositivosABMController {
 
     @Autowired ClienteResidencialJpaRepository clienteResidencialJPARepository;
 
+    @RequestMapping(value = "")
+    public String abmDispositivos() {
+        return "dispositivosABM";
+    }
 
-    List<CatalogoDispositivos> dispositivosDelCatalogo =  RepositorioDeDispositivosDeCatalogo.obtenerDispositivosDeCatalogo();
+
+    /*List<CatalogoDispositivos> dispositivosDelCatalogo =  RepositorioDeDispositivosDeCatalogo.obtenerDispositivosDeCatalogo();
 
     @RequestMapping(value = "/dispositivosABM", method = RequestMethod.GET)
     public ModelAndView submitDispositivoABM(@ModelAttribute("userFormData") LoginDTO formData,  Model model, HttpServletRequest request) {
@@ -66,5 +59,5 @@ public class DispositivosABMController {
         }
 
         return "dispositivosABM";
-    }
+    }*/
 }

@@ -180,4 +180,7 @@ public class Transformador {
         }
         return target;
     }
+
+    public void cargarDispositivosDeBaseDeDatos() {
+    }
 }

@@ -1,24 +1,18 @@
 package com.utn.dds.tpdds.controllers.Cliente;
 
-import com.utn.model.*;
-import com.utn.model.DTOs.ReglaDTO;
-import com.utn.repositorio.RepositorioDeClientesResidenciales;
-import com.utn.repositorio.RepositorioDeDispositivosInteligentes;
-import com.utn.repositorio.RepositorioDeReglas;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
-import java.util.List;
 
 @Controller
+@RequestMapping(value = "/abmReglas")
 public class ReglasABMController {
-    @RequestMapping(value = "/reglasABM", method = RequestMethod.GET)
+
+    @RequestMapping(value = "")
+    public String abmReglas() {
+        return "reglasABM";
+    }
+
+    /*@RequestMapping(value = "/reglasABM", method = RequestMethod.GET)
     public ModelAndView reglasABM(HttpServletRequest request) {
         Integer clienteId = ((ClienteResidencial) request.getSession().getAttribute("cliente")).getId();
         ClienteResidencial clienteResidencial =  RepositorioDeClientesResidenciales.buscarPorId(clienteId);
@@ -69,6 +63,6 @@ public class ReglasABMController {
         Regla regla = RepositorioDeReglas.buscarPorId(new Integer(id));
         RepositorioDeReglas.eliminar(regla);
         return new ModelAndView("redirect:/reglasABM");
-    }
+    }*/
 
 }

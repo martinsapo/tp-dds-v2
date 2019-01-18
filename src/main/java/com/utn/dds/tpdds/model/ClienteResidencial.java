@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.Hibernate;
 import org.joda.time.DateTime;
 
 import javax.persistence.CascadeType;
@@ -152,25 +153,17 @@ public class ClienteResidencial{
         return consumos;
     }
 
-    /*public List<ReglaDTO> obtenerReglasDeTodosLosDispositivos() {
-        List<ReglaDTO> reglas = new ArrayList<>();
+    public List<Regla> obtenerReglasDeTodosLosDispositivos() {
+        List<Regla> reglas = new ArrayList<>();
         for (DispositivoInteligente dispositivoInteligente : getDispositivosInteligentes()) {
-            for (Regla regla : dispositivoInteligente.getReglas()) {
-                ReglaDTO reglaDTO = new ReglaDTO(regla.getId(),
-                        regla.getSensor().getDispositivoInteligente().id,
-                        regla.getSensor().getId(),
-                        regla.getAccion().getAccionARealizar().toString(),
-                        regla.getCondicion().getOperator().toString(),
-                        regla.getCondicion().getMedicion().toString(),
-                        regla.getCondicion().getClass().getSimpleName());
-                reglas.add(reglaDTO);
-            }
+            reglas.addAll(dispositivoInteligente.getReglas());
         }
         return reglas;
-    }*/
+    }
 
     public List<DispositivoInteligente> getDispositivosInteligentes() {
         List<DispositivoInteligente> dispositivoInteligentes = new ArrayList<>();
+        Hibernate.initialize(getDispositivos());
         for (Dispositivo dispositivoInteligente : getDispositivos()) {
             if (dispositivoInteligente instanceof DispositivoInteligente) {
                 dispositivoInteligentes.add((DispositivoInteligente) dispositivoInteligente);
@@ -202,20 +195,17 @@ public class ClienteResidencial{
         return consumos;
     }
 
-    /*public List<MedicionDTO> obtenerTodasLasMedicionesDeTodosLosDispositivos() {
-        List<MedicionDTO> medicions = new ArrayList<>();
+    public List<Medicion> obtenerTodasLasMedicionesDeTodosLosDispositivos() {
+        List<Medicion> medicions = new ArrayList<>();
         for (Dispositivo dispositivo : getDispositivos()) {
             if (dispositivo instanceof DispositivoInteligente) {
-                List<Medicion> mediciones = ((DispositivoInteligente) dispositivo)
-                        .obtenerTodasLasMediciones();
-                for (Medicion medicion : mediciones) {
-                    medicions.add(new MedicionDTO(medicion));
-                }
+                List<Medicion> mediciones = ((DispositivoInteligente) dispositivo).obtenerTodasLasMediciones();
+                medicions.addAll(mediciones);
 
             }
         }
         return medicions;
-    }*/
+    }
 
     public Boolean passwordMatch(String password) {
         return Objects.equals(this.password, password);

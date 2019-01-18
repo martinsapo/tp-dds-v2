@@ -28,7 +28,7 @@ public class LoginController {
         ModelMap model = new ModelMap();
         if (usuario.isEmpty() || contrasena.isEmpty()){
             model.addAttribute("errorMessage","Indique Usuario o contraseña");
-            return new ModelAndView("/loginCliente",model);
+            return new ModelAndView("/loginCliente", model);
         }
 
         ClienteResidencial cliente = clienteResidencialJPARepository.findClienteResidencialByNombreDeUsuario(usuario);
@@ -40,7 +40,6 @@ public class LoginController {
         }
 
         request.getSession().setAttribute("cliente", cliente);
-        request.getSession().setAttribute("username", cliente.getNombreDeUsuario());
         return new ModelAndView("redirect:/cliente");
     }
 
