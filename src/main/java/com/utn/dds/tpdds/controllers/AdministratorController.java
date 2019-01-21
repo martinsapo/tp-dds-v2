@@ -22,8 +22,22 @@ public class AdministratorController {
         return "administrador";
     }
 
+    /*@RequestMapping(value = "/alta", method = RequestMethod.POST)
+    public String alta(@ModelAttribute("userFormData") LoginDTO formData, BindingResult result, Model model) {
+        return "altaDispositivo";
+    }
+    @RequestMapping(value = "/baja", method = RequestMethod.POST)
+    public String baja(@ModelAttribute("userFormData") LoginDTO formData, BindingResult result, Model model) {
+        return "bajaDispositivo";
+    }
 
-    /*@RequestMapping(value = "/consumos", method = RequestMethod.POST)
+    @RequestMapping(value = "/modificacion", method = RequestMethod.POST)
+    public String goToModificacion(@ModelAttribute("userFormData") LoginDTO formData, BindingResult result, Model model) {
+        return "modificacionDispositivo";
+    }
+
+
+    @RequestMapping(value = "/consumos", method = RequestMethod.POST)
     public String goToConsumos(@ModelAttribute("userFormData") LoginDTO formData, BindingResult result, Model model) {
         List<Transformador> transformadores = new ArrayList<>();
 
