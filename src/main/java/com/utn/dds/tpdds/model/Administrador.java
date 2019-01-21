@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GenerationType;
 import javax.persistence.Transient;
 import java.util.ArrayList;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -45,10 +46,14 @@ public class Administrador {
             this.password = administrador.password;
         }
     }
-    public static ArrayList<CatalogoDispositivos> catalogo=new ArrayList<CatalogoDispositivos>();
+    public static ArrayList<CatalogoDispositivos> catalogo=new ArrayList<>();
 
 
     public Integer getAntiguedad() {
         return Days.daysBetween(fechaDeAlta.toLocalDate(), DateTime.now().toLocalDate()).getDays();
+    }
+
+    public Boolean passwordMatch(String password) {
+        return Objects.equals(this.password, password);
     }
 }

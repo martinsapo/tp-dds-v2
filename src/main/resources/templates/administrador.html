@@ -7,8 +7,8 @@
     <title>Administrador</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
-    <link href="${pageContext.request.contextPath}/resources/css/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link href="/css/styles.css" rel="stylesheet" />
 </head>
 <body>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
@@ -25,17 +25,17 @@
         </ul>
         <ul class="navbar-nav">
             <li class="nav-item float-right">
-                <h4><a class="nav-link" href="${pageContext.request.contextPath}/logout">Salir</a></h4>
+                <h4><a class="nav-link" href="/logout">Salir</a></h4>
             </li>
         </ul>
     </div>
 </nav>
 <div class="container">
     <div class="card card-container">
-        <form class="form-signin" method="post" action="${pageContext.request.contextPath}/consumos" modelAttribute=userFormData">
+        <form class="form-signin" method="get" action="/admin/consumos">
             <button class="btn btn-lg btn-primary btn-block" type="submit">Visualizar Hogares y Consumos</button>
         </form>
-        <form class="form-signin" method="post" action="${pageContext.request.contextPath}/reportes" modelAttribute="userFormData">
+        <form class="form-signin" method="get" action="/admin/reportes">
             <button class="btn btn-lg btn-primary btn-block" type="submit">Reportes</button>
         </form>
     </div>
@@ -46,13 +46,13 @@
 <div class="container">
     <div class="card card-container">
 
-        <form class="form-signin" method="post" action="${pageContext.request.contextPath}/alta" modelAttribute="userFormData">
+        <form class="form-signin" method="get" action="/admin/alta">
             <button class="btn btn-lg btn-primary btn-block" type="submit">Alta Dispositivo</button>
         </form>
-        <form class="form-signin" method="post" action="${pageContext.request.contextPath}/modificacion" modelAttribute=userFormData">
+        <form class="form-signin" method="get" action="/admin/modificacion">
             <button class="btn btn-lg btn-primary btn-block" type="submit">Modificar Dispositivos</button>
         </form>
-        <form class="form-signin" method="post" action="${pageContext.request.contextPath}/baja" modelAttribute="userFormData">
+        <form class="form-signin" method="get" action="/admin/baja">
             <button class="btn btn-lg btn-primary btn-block" type="submit">Dar de Baja Dispositivos</button>
         </form>
     </div>

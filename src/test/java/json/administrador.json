@@ -1,0 +1,9 @@
+{
+  "@type":"Administrador",
+  "nombre":"martin",
+  "apellido":"saposnic",
+  "domicilio":"gaona",
+  "fechaDeAlta": "10/10/2018",
+  "nombreDeUsuario":"martinsapo",
+  "password":"asdasd"
+}

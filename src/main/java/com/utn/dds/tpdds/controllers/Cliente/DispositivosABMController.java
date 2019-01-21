@@ -1,63 +1,75 @@
 package com.utn.dds.tpdds.controllers.Cliente;
 
+import com.utn.dds.tpdds.model.CatalogoDispositivos;
+import com.utn.dds.tpdds.model.ClienteResidencial;
+import com.utn.dds.tpdds.model.Dispositivo;
+import com.utn.dds.tpdds.model.DispositivoEstandar;
+import com.utn.dds.tpdds.model.DispositivoInteligente;
+import com.utn.dds.tpdds.repository.CatalogoDispositivosJpaRepository;
 import com.utn.dds.tpdds.repository.ClienteResidencialJpaRepository;
+import com.utn.dds.tpdds.repository.DispositivoEstandarJpaRepository;
+import com.utn.dds.tpdds.repository.DispositivoInteligenteJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.Optional;
 
 @Controller
-@RequestMapping(value = "/abmDispositivos")
+@RequestMapping(value = "cliente/abmDispositivos")
 public class DispositivosABMController {
 
     @Autowired ClienteResidencialJpaRepository clienteResidencialJPARepository;
+    @Autowired DispositivoInteligenteJpaRepository dispositivoInteligenteJpaRepository;
+    @Autowired DispositivoEstandarJpaRepository dispositivoEstandarJpaRepository;
+    @Autowired CatalogoDispositivosJpaRepository catalogoDispositivosJpaRepository;
 
-    @RequestMapping(value = "")
-    public String abmDispositivos() {
-        return "dispositivosABM";
-    }
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public ModelAndView submitDispositivoABM() {
+        ModelMap model = new ModelMap();
 
-
-    /*List<CatalogoDispositivos> dispositivosDelCatalogo =  RepositorioDeDispositivosDeCatalogo.obtenerDispositivosDeCatalogo();
-
-    @RequestMapping(value = "/dispositivosABM", method = RequestMethod.GET)
-    public ModelAndView submitDispositivoABM(@ModelAttribute("userFormData") LoginDTO formData,  Model model, HttpServletRequest request) {
-
-        String username = request.getSession().getAttribute("username").toString();
+        List<CatalogoDispositivos> dispositivosDelCatalogo = catalogoDispositivosJpaRepository.findAll();
 
         model.addAttribute("dispositivosDelCatalogo", dispositivosDelCatalogo);
-        model.addAttribute("username",username);
-        return new ModelAndView("dispositivosABM", null);
+        return new ModelAndView("dispositivosABM", model);
     }
 
     @RequestMapping(value = "/asociarDispositivo", method = RequestMethod.GET)
-    public String asociarDispositivo(HttpServletRequest request, @RequestParam("catalogo") String catalogoIdElegido,Model model) {
+    public ModelAndView asociarDispositivo(HttpServletRequest request, @RequestParam("catalogo") String catalogoIdElegido) {
+        ModelMap model = new ModelMap();
 
-        String username = request.getSession().getAttribute("username").toString();
-        ClienteResidencial cliente = c.buscarPorUsername(username);
+        ClienteResidencial cliente = ((ClienteResidencial) request.getSession().getAttribute("cliente"));
         List<Dispositivo> dispositivosDelCliente = cliente.getDispositivos();
+        List<CatalogoDispositivos> dispositivosDelCatalogo = catalogoDispositivosJpaRepository.findAll();
 
-        CatalogoDispositivos catalogoElegido = RepositorioDeDispositivosDeCatalogo.buscarPorId(Integer.parseInt(catalogoIdElegido));
+
+        Optional<CatalogoDispositivos> catalogoElegido = catalogoDispositivosJpaRepository.findById(Integer.parseInt(catalogoIdElegido));
 
         for (Dispositivo dispositivo : dispositivosDelCliente){
-            if(dispositivo.getNombreDelDispositivo().equals(catalogoElegido.getNombre())){
-                model.addAttribute("msg", "El item de catalogo seleccionado ya existe");
+            if(catalogoElegido.isPresent() && dispositivo.getNombreDelDispositivo().equals(catalogoElegido.get().getNombre())){
+                model.addAttribute("errorMessage", "El item de catalogo seleccionado ya existe");
                 model.addAttribute("dispositivosDelCatalogo", dispositivosDelCatalogo);
-                return "dispositivosABM";
+                return new ModelAndView("dispositivosABM", model);
             }
         }
-        if(catalogoElegido.getEsInteligente()){
-            DispositivoInteligente nuevoDispositivoInteligente = new DispositivoInteligente(catalogoElegido.getNombre(), catalogoElegido.getConsumo(), cliente);
-            RepositorioDeDispositivosInteligentes.persistir(nuevoDispositivoInteligente);
-            model.addAttribute("msg", "Dispositivo Inteligente Creado");
+        if(catalogoElegido.isPresent() && catalogoElegido.get().getEsInteligente()){
+            DispositivoInteligente nuevoDispositivoInteligente = new DispositivoInteligente(catalogoElegido.get().getNombre(), catalogoElegido.get().getConsumo(), cliente);
+            dispositivoInteligenteJpaRepository.save(nuevoDispositivoInteligente);
+            model.addAttribute("errorMessage", "Dispositivo Inteligente Creado");
 
         }
-        else{
-
-            DispositivoEstandar nuevoDispositivoEstandar = new DispositivoEstandar(catalogoElegido.getNombre(), catalogoElegido.getConsumo(), cliente,2);
-            RepositorioDeDispositivosEstandar.persistir(nuevoDispositivoEstandar);
-            model.addAttribute("msg", "Dispositivo Estandar Creado");
+        else if (catalogoElegido.isPresent() ){
+            DispositivoEstandar nuevoDispositivoEstandar = new DispositivoEstandar(catalogoElegido.get().getNombre(), catalogoElegido.get().getConsumo(), cliente,2);
+            dispositivoEstandarJpaRepository.save(nuevoDispositivoEstandar);
+            model.addAttribute("errorMessage", "Dispositivo Estandar Creado");
         }
-
-        return "dispositivosABM";
-    }*/
+        model.addAttribute("dispositivosDelCatalogo", dispositivosDelCatalogo);
+        return new ModelAndView("dispositivosABM", model);
+    }
 }

@@ -1,0 +1,45 @@
+[
+  {
+    "id": 1,
+    "nombre": "Almagro-Boedo",
+    "latitud": -34.618680,
+    "longitud": -58.415423,
+    "radio": 200
+  },
+  {
+    "id": 2,
+    "nombre": "Congreso-De-Tucuman",
+    "latitud": -34.556031,
+    "longitud": -58.462031,
+    "radio": 200
+  },
+  {
+    "id": 3,
+    "nombre": "Juramento",
+    "latitud": -34.562419,
+    "longitud": -58.456278,
+    "radio": 200
+  },
+  {
+    "id": 4,
+    "nombre": "Jose Hernandez",
+    "latitud": -34.566249,
+    "longitud": -58.451978,
+    "radio": 200
+  },
+  {
+    "id": 5,
+    "nombre": "Olleros",
+    "latitud": -34.570214,
+    "longitud": -58.444348,
+    "radio": 200
+  },
+  {
+    "id": 6,
+    "nombre": "Ministro-Carranza",
+    "latitud": -34.575308,
+    "longitud": -58.434413,
+    "radio": 300
+  }
+
+]

@@ -47,7 +47,7 @@ public class ClienteResidencial{
     @OneToOne(cascade = CascadeType.ALL) private Categoria categoria;
 
     @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "dueno") List<Dispositivo> dispositivos = new ArrayList<>();
-    private Boolean ahorroAutomatico;
+    private Boolean ahorroAutomatico = false;
 
     public ClienteResidencial(String nombre, String apellido, String domicilio,
             String nombreDeUsuario, String password, Documento documento, String telefono, Categoria categoria) {
@@ -59,6 +59,7 @@ public class ClienteResidencial{
         this.documento = documento;
         this.telefono = telefono;
         this.categoria = categoria;
+        this.ahorroAutomatico = true;
     }
 
     private void addPoints(Integer points) {

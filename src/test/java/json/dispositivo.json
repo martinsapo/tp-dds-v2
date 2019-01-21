@@ -1,0 +1,15 @@
+{
+  "nombreDelDispositivo" : "Eric TV",
+  "kwPorHora": 10.0,
+  "dueno": null,
+  "sensores": [
+
+  ],
+  "tiempos": [
+
+  ],
+  "tiempoUso": null,
+  "state": null
+}
+
+

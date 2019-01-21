@@ -15,11 +15,11 @@
 
 <div class="container">
     <h1 class="title" style="color: #ffffff; text-align: center;">Sistema de gestion energetica</h1>
-    <h3 class="title" style="color: #ffffff; text-align: center;">Cliente</h3>
+    <h3 class="title" style="color: #ffffff; text-align: center;">Admin</h3>
 
     <hr>
     <div class="card card-container">
-        <form class="form-signin" method="post" action="/loginCliente/submit">
+        <form class="form-signin" method="post" action="/loginAdmin/submit">
             <input type="text" id="inputUsuario" name="username" class="form-control" placeholder="Usuario" required autofocus>
             <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Contrasena" required>
             <div th:if="${errorMessage} != ''">
@@ -29,15 +29,10 @@
             <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Ingresar</button>
         </form>
     </div>
-    <form method="get" action="/mapa">
-        <div class="map inner">
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Ir a mapa</button>
-        </div>
-    </form>
 
-    <form method="get" action="/loginAdmin">
+    <form method="get" action="/loginCliente">
         <div class="map inner">
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Ir a login de administrador</button>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Ir a login del cliente</button>
         </div>
     </form>
 </div>

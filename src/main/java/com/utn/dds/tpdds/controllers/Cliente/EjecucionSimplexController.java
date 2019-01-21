@@ -1,38 +1,45 @@
 package com.utn.dds.tpdds.controllers.Cliente;
 
+import com.utn.dds.tpdds.model.ClienteResidencial;
+import com.utn.dds.tpdds.model.Hogar;
+import org.quartz.JobDetail;
+import org.quartz.Scheduler;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean;
+import org.springframework.scheduling.quartz.SimpleTriggerFactoryBean;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping(value = "/simplex")
+@RequestMapping(value = "/cliente/simplex")
 public class EjecucionSimplexController {
 
-    @RequestMapping(value = "")
-    public String simplex() {
-        return "ejecutarSimplex";
-    }
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public ModelAndView submitsimplex(HttpServletRequest request) {
+        ModelMap model = new ModelMap();
 
-    /*@RequestMapping(value = "/submitsimplex", method = RequestMethod.GET)
-    public String submitsimplex(@ModelAttribute("userFormData") LoginDTO formData, BindingResult result, Model model, HttpServletRequest request) {
-        String jsonTablaDeDispositivos = "/home/eric/Desktop/DDS/tp-dds/archivos/json/tablaDispositivos.json";
-        String username = request.getSession().getAttribute("username").toString();
-        ClienteResidencial cliente = RepositorioDeClientesResidenciales.buscarPorUsername(username);
+        String jsonTablaDeDispositivos = "/Users/msaposnic/Documents/tp-dds/src/test/java/json";
+        ClienteResidencial cliente = ((ClienteResidencial) request.getSession().getAttribute("cliente"));
         cliente.getHogar().getTransformador().agregarTablaDeDispositivos(jsonTablaDeDispositivos);
         cliente.getHogar().obtenerRecomendacion();
 
         model.addAttribute("dispositivos", cliente.getDispositivos());
         model.addAttribute("hogar", cliente.getHogar());
-        model.addAttribute("username",username);
 
         if (cliente.getAhorroAutomatico()){
             disparaEjecucionAutomaticaDelSimplex(cliente.getHogar());
         }
 
-
-        return "EjecutarSimplex";
+        return new ModelAndView("ejecutarSimplex", model);
     }
 
-    public void disparaEjecucionAutomaticaDelSimplex(Hogar hogar){
+    private void disparaEjecucionAutomaticaDelSimplex(Hogar hogar){
 
         AbstractApplicationContext factory = new ClassPathXmlApplicationContext("spring-quartz.xml");
 
@@ -62,5 +69,5 @@ public class EjecucionSimplexController {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-    }*/
+    }
 }

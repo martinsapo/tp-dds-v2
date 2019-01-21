@@ -1,57 +1,46 @@
 package com.utn.dds.tpdds.controllers;
 
+import com.utn.dds.tpdds.model.Administrador;
+import com.utn.dds.tpdds.model.ClienteResidencial;
+import com.utn.dds.tpdds.repository.AdministradorJpaRepository;
+import com.utn.dds.tpdds.repository.ClienteResidencialJpaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Controller
-@SessionAttributes("admin")
+@RequestMapping(value = "/loginAdmin")
 public class LoginAdminController {
+    @Autowired AdministradorJpaRepository administradorJpaRepository;
 
-    /*@RequestMapping(value = "/adminLogin")
-    public String LoginAdmin() {
+    @RequestMapping(value = "")
+    public String loginAdmin() {
         return "loginAdmin";
     }
 
-    @RequestMapping(value = "/submitLoginAdmin", method = RequestMethod.POST)
-    public String submit(@ModelAttribute("userFormData") LoginDTO formData, BindingResult result, Model model, @ModelAttribute("admin") Administrador administrador) {
-        if (formData.getUsername() == null || formData.getPassword() == null){
-            model.addAttribute("msg","Indique Usuario o contraseña");
-            return "loginAdmin";
+    @RequestMapping(value = "/submit", method = RequestMethod.POST)
+    public ModelAndView submit(@RequestParam("username") String usuario, @RequestParam("password") String contrasena, HttpServletRequest request) {
+        ModelMap model = new ModelMap();
+        if (usuario.isEmpty() || contrasena.isEmpty()) {
+            model.addAttribute("errorMessage", "Indique Usuario o contraseña");
+            return new ModelAndView("/loginAdmin", model);
         }
 
-        administrador = RepositorioDeAdministradores.buscarPorUsername(formData.getUsername());
+        Administrador administrador = administradorJpaRepository.findAdministradorByNombreDeUsuario(usuario);
 
-        if (administrador != null && administrador.passwordMatch(formData.getPassword())){
-            model.addAttribute("username",formData.getUsername());
-            return "administrador";
+        if (administrador == null || !administrador.passwordMatch(contrasena)) {
+            model.addAttribute("errorMessage", "Usuario o contraseña incorrecta");
+            return new ModelAndView("/loginAdmin", model);
         }
-        else {
-            model.addAttribute("msg","Usuario o contrasena incorrecta");
-            return "loginAdmin";
-        }
-    }
 
-    @RequestMapping(value = "/goToMapFromAdmin", method = RequestMethod.GET)
-    public ModelAndView goToMap(HttpServletRequest request, HttpServletResponse response) {
-        return new ModelAndView("redirect:/mapa");
+        request.getSession().setAttribute("administrador", administrador);
+        return new ModelAndView("redirect:/admin");
     }
-
-    @RequestMapping(value = "/goToClientLogin", method = RequestMethod.GET)
-    public ModelAndView goToAdminLogin(HttpServletRequest request, HttpServletResponse response) {
-        return new ModelAndView("redirect:/");
-    }
-
-    @ModelAttribute("admin")
-    public Administrador setAdmin() {
-        return new Administrador();
-    }*/
 }

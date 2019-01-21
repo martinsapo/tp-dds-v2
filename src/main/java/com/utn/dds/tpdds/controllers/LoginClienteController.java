@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping(value = "/loginCliente")
-public class LoginController {
+public class LoginClienteController {
     @Autowired ClienteResidencialJpaRepository clienteResidencialJPARepository;
 
     @RequestMapping(value = "")
@@ -33,7 +33,7 @@ public class LoginController {
 
         ClienteResidencial cliente = clienteResidencialJPARepository.findClienteResidencialByNombreDeUsuario(usuario);
 
-        if (!cliente.passwordMatch(contrasena)){
+        if (cliente == null || !cliente.passwordMatch(contrasena)){
             model.addAttribute("errorMessage","Usuario o contraseña incorrecta");
             return new ModelAndView("/loginCliente",model);
 
@@ -41,15 +41,5 @@ public class LoginController {
 
         request.getSession().setAttribute("cliente", cliente);
         return new ModelAndView("redirect:/cliente");
-    }
-
-    @RequestMapping(value = "/goToMap", method = RequestMethod.GET)
-    public ModelAndView goToMap(HttpServletRequest request, HttpServletResponse response) {
-        return new ModelAndView("redirect:/mapa");
-    }
-
-    @RequestMapping(value = "/goToAdminLogin", method = RequestMethod.GET)
-    public ModelAndView goToAdminLogin(HttpServletRequest request, HttpServletResponse response) {
-        return new ModelAndView("redirect:/adminLogin");
     }
 }

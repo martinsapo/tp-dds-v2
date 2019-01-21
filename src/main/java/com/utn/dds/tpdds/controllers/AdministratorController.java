@@ -14,25 +14,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@RequestMapping(value = "/admin")
 public class AdministratorController {
 
-
-    /*@RequestMapping(value = "/alta", method = RequestMethod.POST)
-    public String alta(@ModelAttribute("userFormData") LoginDTO formData, BindingResult result, Model model) {
-        return "altaDispositivo";
-    }
-    @RequestMapping(value = "/baja", method = RequestMethod.POST)
-    public String baja(@ModelAttribute("userFormData") LoginDTO formData, BindingResult result, Model model) {
-        return "bajaDispositivo";
-    }
-
-    @RequestMapping(value = "/modificacion", method = RequestMethod.POST)
-    public String goToModificacion(@ModelAttribute("userFormData") LoginDTO formData, BindingResult result, Model model) {
-        return "modificacionDispositivo";
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public String index() {
+        return "administrador";
     }
 
 
-    @RequestMapping(value = "/consumos", method = RequestMethod.POST)
+    /*@RequestMapping(value = "/consumos", method = RequestMethod.POST)
     public String goToConsumos(@ModelAttribute("userFormData") LoginDTO formData, BindingResult result, Model model) {
         List<Transformador> transformadores = new ArrayList<>();
 

@@ -1,0 +1,194 @@
+[
+  {
+    "nombre": "Aire acondicionado 3500 frigorias",
+    "esInteligente": true,
+    "esBajoConsumo": false,
+    "consumo":1.613,
+    "usoMinimo": 90,
+    "usoMaximo": 360
+  },
+  {
+    "nombre": "Aire acondicionado 2200 frigorias",
+    "esInteligente": true,
+    "esBajoConsumo": true,
+    "consumo":1.013,
+    "usoMinimo": 90,
+    "usoMaximo": 360
+  },
+  {
+    "nombre": "Televisor de 21”",
+    "esInteligente": false,
+    "esBajoConsumo": false,
+    "consumo":0.075,
+    "usoMinimo": 90,
+    "usoMaximo": 360
+  },
+  {
+    "nombre": "Televisor de 29” a 34”",
+    "esInteligente": false,
+    "esBajoConsumo": false,
+    "consumo":0.175,
+    "usoMinimo": 90,
+    "usoMaximo": 360
+  },
+  {
+    "nombre": "Televisor LCD 40”",
+    "esInteligente": false,
+    "esBajoConsumo": false,
+    "consumo":0.18,
+    "usoMinimo": 90,
+    "usoMaximo": 360
+  },
+  {
+    "nombre": "Televisor LED 24”",
+    "esInteligente": true,
+    "esBajoConsumo": true,
+    "consumo":0.04,
+    "usoMinimo": 90,
+    "usoMaximo": 360
+  },
+  {
+    "nombre": "Televisor LED 32”",
+    "esInteligente": true,
+    "esBajoConsumo": true,
+    "consumo":0.055,
+    "usoMinimo": 90,
+    "usoMaximo": 360
+  },
+  {
+    "nombre": "Televisor LED 40”",
+    "esInteligente": true,
+    "esBajoConsumo": true,
+    "consumo":0.08,
+    "usoMinimo": 90,
+    "usoMaximo": 360
+  },
+  {
+    "nombre": "Heladera con freezer",
+    "esInteligente": true,
+    "esBajoConsumo": true,
+    "consumo":0.09,
+    "usoMinimo": 720,
+    "usoMaximo": 720
+  },
+  {
+    "nombre": "Heladera sin freezer",
+    "esInteligente": true,
+    "esBajoConsumo": true,
+    "consumo": 0.075,
+    "usoMinimo": 720,
+    "usoMaximo": 720
+  },
+  {
+    "nombre": "Lavarropas 5kg con calentamiento",
+    "esInteligente": false,
+    "esBajoConsumo": false,
+    "consumo":0.875,
+    "usoMinimo": 6,
+    "usoMaximo": 30
+  },
+  {
+    "nombre": "Lavarropas 5kg automatico",
+    "esInteligente": true,
+    "esBajoConsumo": true,
+    "consumo":0.175,
+    "usoMinimo": 6,
+    "usoMaximo": 30
+  },
+  {
+    "nombre": "Lavarropas 5kg semi-automatico",
+    "esInteligente": false,
+    "esBajoConsumo": true,
+    "consumo":0.1275,
+    "usoMinimo": 6,
+    "usoMaximo": 30
+  },
+  {
+    "nombre": "Ventilador de pie",
+    "esInteligente": false,
+    "esBajoConsumo": true,
+    "consumo":0.09,
+    "usoMinimo": 120,
+    "usoMaximo": 360
+  },
+  {
+    "nombre": "Ventilador de techo",
+    "esInteligente": true,
+    "esBajoConsumo": true,
+    "consumo":0.06,
+    "usoMinimo": 120,
+    "usoMaximo": 360
+  },
+  {
+    "nombre": "Lámpara de 40 W",
+    "esInteligente": true,
+    "esBajoConsumo": false,
+    "consumo":0.04,
+    "usoMinimo": 90,
+    "usoMaximo": 360
+  },
+  {
+    "nombre": "Lámpara de 60 W",
+    "esInteligente": true,
+    "esBajoConsumo": false,
+    "consumo":0.06,
+    "usoMinimo": 90,
+    "usoMaximo": 360
+  },
+  {
+    "nombre": "Lámpara de 110 W",
+    "esInteligente": true,
+    "esBajoConsumo": false,
+    "consumo":0.015,
+    "usoMinimo": 90,
+    "usoMaximo": 360
+  },
+  {
+    "nombre": "Lámpara de 11 W",
+    "esInteligente": true,
+    "esBajoConsumo": true,
+    "consumo":0.011,
+    "usoMinimo": 90,
+    "usoMaximo": 360
+  },
+  {
+    "nombre": "Lámpara de 15 W",
+    "esInteligente": true,
+    "esBajoConsumo": true,
+    "consumo":0.015,
+    "usoMinimo": 90,
+    "usoMaximo": 360
+  },
+  {
+    "nombre": "Lámpara de 20 W",
+    "esInteligente": true,
+    "esBajoConsumo": true,
+    "consumo":0.02,
+    "usoMinimo": 90,
+    "usoMaximo": 360
+  },
+  {
+    "nombre": "PC de escritorio",
+    "esInteligente": true,
+    "esBajoConsumo": true,
+    "consumo":0.4,
+    "usoMinimo": 60,
+    "usoMaximo": 360
+  },
+  {
+    "nombre": "Microondas convencional",
+    "esInteligente": true,
+    "esBajoConsumo": true,
+    "consumo":0.64,
+    "usoMinimo": 3,
+    "usoMaximo": 15
+  },
+  {
+    "nombre": "Plancha a vapor",
+    "esInteligente": false,
+    "esBajoConsumo": true,
+    "consumo":0.75,
+    "usoMinimo": 3,
+    "usoMaximo": 30
+  }
+]
