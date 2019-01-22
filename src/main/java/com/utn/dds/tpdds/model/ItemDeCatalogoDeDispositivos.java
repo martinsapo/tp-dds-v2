@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CatalogoDispositivos {
+public class ItemDeCatalogoDeDispositivos {
 
     @javax.persistence.Id @javax.persistence.GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
@@ -24,7 +24,7 @@ public class CatalogoDispositivos {
     private Boolean esBajoConsumo;
     private BigDecimal consumo;
 
-    public CatalogoDispositivos(String nombre, Boolean esInteligente, Boolean esBajoConsumo,BigDecimal consumo){
+    public ItemDeCatalogoDeDispositivos(String nombre, Boolean esInteligente, Boolean esBajoConsumo,BigDecimal consumo){
         this.nombre=nombre;
         this.esInteligente=esInteligente;
         this.esBajoConsumo=esBajoConsumo;
@@ -32,7 +32,7 @@ public class CatalogoDispositivos {
 
     }
 
-    public CatalogoDispositivos(JSONObject jsonDispositivoDeCatalogo) {
+    public ItemDeCatalogoDeDispositivos(JSONObject jsonDispositivoDeCatalogo) {
         if (jsonDispositivoDeCatalogo != null) {
             this.nombre = jsonDispositivoDeCatalogo.get("nombre").toString();
             this.esInteligente = (Boolean) jsonDispositivoDeCatalogo.get("esInteligente");

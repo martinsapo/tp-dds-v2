@@ -1,0 +1,48 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>ABM de reglas</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="/css/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css">
+    <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"></script>
+</head>
+
+<body>
+<form class="form-signin" method="get" action="/cliente/abmReglas">
+    <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Volver</button>
+</form>
+
+<form method="get" action="/cliente/abmReglas/alta/submit">
+    <div>
+        <h3>Acciones posibles</h3>
+        <select title="acciones" name="accion">
+            <option th:each="accion : ${accionesPosibles}" th:value="${accion.name()}" th:text="${accion.name()}"></option>
+        </select>
+    </div>
+    <div>
+        <h3>Dispositivo</h3>
+        <select title="dispositivo" name="dispositivo">
+            <option th:each="dispositivo : ${dispositivosInteligentes}" th:value="${dispositivo.id}" th:text="${dispositivo.nombreDelDispositivo}"></option>
+        </select>
+    </div>
+
+    <div>
+        <h3>Condicion</h3>
+        <select title = "tipoDeCondicion" name="tipoCondicion">
+            <option value="valor">Por valor</option>
+            <option value="binaria">Binaria</option>
+            <option value="consumo">Por consumo mensual</option>
+        </select>
+        <select name="operador">
+            <option th:each="operador : ${operadores}" th:value="${operador.name()}" th:text="${operador.name()}"></option>
+        </select>
+        <label>Valor (si aplica)</label>
+        <input title="valor" type="text" name="value"/>
+    </div>
+
+    <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Gurdar</button>
+</form>
+</body>
+</html>
+

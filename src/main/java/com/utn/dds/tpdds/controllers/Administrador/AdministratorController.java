@@ -1,4 +1,4 @@
-package com.utn.dds.tpdds.controllers;
+package com.utn.dds.tpdds.controllers.Administrador;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

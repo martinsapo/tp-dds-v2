@@ -1,0 +1,34 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <head>
+        <meta charset="utf-8">
+        <meta name="robots" content="noindex, nofollow">
+
+        <title>Alta Dispositivo</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <link href="css/styles.css" rel="stylesheet" />
+    </head>
+</head>
+<body>
+<div class="container">
+    <div class="card card-container">
+        <form class="form-signin" method="get" action="/admin/abmCatalogoDispositivos/alta/submit">
+            <input type="text" id="inputNombre" name="nombre" class="form-control" placeholder="Nombre Dispositivo" required autofocus>
+            <input type="text" id="inputKw" name="kwPorHora" class="form-control" placeholder="Kw por Hora" required>
+            <label>¿Es Inteligente?</label>
+            <input type="checkbox" name="inteligente"  class="form-control">
+            <label>¿Es de Bajo Consumo?</label>
+            <input type="checkbox" name="bajoconsumo" class="form-control">
+
+            <div th:if="${errorMessage} != ''">
+                <label th:text="${errorMessage}"></label>
+            </div>
+
+            <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Agregar Tipo Dispositivo</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

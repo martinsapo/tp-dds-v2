@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
     <meta name="robots" content="noindex, nofollow">
@@ -32,20 +32,35 @@
 </nav>
 
 
-<h3 class="title" style="color: #ffffff; text-align: center;">ABM Clases Dispositivos</h3>
+<h3 class="title" style="color: #ffffff; text-align: center;">ABM Catalogo Dispositivos</h3>
 <div class="container">
-    <div class="card card-container">
 
-        <form class="form-signin" method="get" action="/admin/abmDispositivos/alta">
+        <form class="form-signin" method="get" action="/admin/abmCatalogoDispositivos/alta">
             <button class="btn btn-lg btn-primary btn-block" type="submit">Alta Dispositivo</button>
         </form>
-        <form class="form-signin" method="get" action="/admin/abmDispositivos/modificacion">
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Modificar Dispositivos</button>
-        </form>
-        <form class="form-signin" method="get" action="/admin/abmDispositivos/baja">
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Dar de Baja Dispositivos</button>
-        </form>
-    </div>
+
+        <table style="width:100%">
+            <tr>
+                <th>Id del item</th>
+                <th>Nombre</th>
+                <th>Es inteligente</th>
+                <th>Es bajo consumo</th>
+                <th>Consumo</th>
+            </tr>
+            <tr th:each="item : ${catalogo}">
+                <td th:text="${item.id}"></td>
+                <td th:text="${item.nombre}"></td>
+                <td th:text="${item.esInteligente}"></td>
+                <td th:text="${item.esBajoConsumo}"></td>
+                <td th:text="${item.consumo.toString()}"></td>
+                <td>
+                    <form method="get" action="/admin/abmCatalogoDispositivos/baja/submit">
+                        <input type="hidden" name="id" th:value="${item.id}"/>
+                        <button class="btn" type="submit">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
 </div>
 
 </body>

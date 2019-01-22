@@ -3,7 +3,7 @@ package com.utn.dds.tpdds;
 import com.utn.dds.tpdds.model.Accion;
 import com.utn.dds.tpdds.model.AccionesPosibles;
 import com.utn.dds.tpdds.model.Administrador;
-import com.utn.dds.tpdds.model.CatalogoDispositivos;
+import com.utn.dds.tpdds.model.ItemDeCatalogoDeDispositivos;
 import com.utn.dds.tpdds.model.Categoria;
 import com.utn.dds.tpdds.model.ClienteResidencial;
 import com.utn.dds.tpdds.model.CondicionPorValor;
@@ -77,60 +77,60 @@ public class FillDataTest {
 
         clienteResidencialJPARepository.save(clienteResidencial);
 
-        CatalogoDispositivos disp1 = new CatalogoDispositivos(
+        ItemDeCatalogoDeDispositivos disp1 = new ItemDeCatalogoDeDispositivos(
                 "Aire de 2200 frigorias", true, false, new BigDecimal(1.013));
 
-        CatalogoDispositivos disp2 = new CatalogoDispositivos(
+        ItemDeCatalogoDeDispositivos disp2 = new ItemDeCatalogoDeDispositivos(
                 "TV de tubo fluorescente de 21", true, false, new BigDecimal(0.075));
-        CatalogoDispositivos disp3 = (new CatalogoDispositivos(
+        ItemDeCatalogoDeDispositivos disp3 = (new ItemDeCatalogoDeDispositivos(
                 "TV de tubo fluorescente de 29 a 34", true, false, new BigDecimal(0.175)));
-        CatalogoDispositivos disp4 = (new CatalogoDispositivos("TV LCD de 40",
+        ItemDeCatalogoDeDispositivos disp4 = (new ItemDeCatalogoDeDispositivos("TV LCD de 40",
                 false, false, new BigDecimal(0.18)));
-        CatalogoDispositivos disp5 = (new CatalogoDispositivos("TV LED de 24",
+        ItemDeCatalogoDeDispositivos disp5 = (new ItemDeCatalogoDeDispositivos("TV LED de 24",
                 true, true, new BigDecimal(0.04)));
-        CatalogoDispositivos disp6 = (new CatalogoDispositivos("TV LED de 32",
+        ItemDeCatalogoDeDispositivos disp6 = (new ItemDeCatalogoDeDispositivos("TV LED de 32",
                 true, true, new BigDecimal(0.055)));
-        CatalogoDispositivos disp7 = (new CatalogoDispositivos("TV LED de 40",
+        ItemDeCatalogoDeDispositivos disp7 = (new ItemDeCatalogoDeDispositivos("TV LED de 40",
                 true, true, new BigDecimal(0.08)));
 
-        CatalogoDispositivos disp8 = (new CatalogoDispositivos(
+        ItemDeCatalogoDeDispositivos disp8 = (new ItemDeCatalogoDeDispositivos(
                 "Heladera con freezer", true, true, new BigDecimal(0.09)));
-        CatalogoDispositivos disp9 = (new CatalogoDispositivos(
+        ItemDeCatalogoDeDispositivos disp9 = (new ItemDeCatalogoDeDispositivos(
                 "Heladera sin freezer", true, true, new BigDecimal(0.075)));
 
-        CatalogoDispositivos disp10 = (new CatalogoDispositivos(
+        ItemDeCatalogoDeDispositivos disp10 = (new ItemDeCatalogoDeDispositivos(
                 "Lavarropas automatico de 5kg con calentamiento de agua", false,
                 false, new BigDecimal(0.0875)));
-        CatalogoDispositivos disp11 = (new CatalogoDispositivos(
+        ItemDeCatalogoDeDispositivos disp11 = (new ItemDeCatalogoDeDispositivos(
                 "Lavarropas automatico de 5kg", true, true, new BigDecimal(0.175)));
-        CatalogoDispositivos disp12 = (new CatalogoDispositivos(
+        ItemDeCatalogoDeDispositivos disp12 = (new ItemDeCatalogoDeDispositivos(
                 "Lavarropas semiautomatico de 5kg", false, true, new BigDecimal(0.1275)));
 
-        CatalogoDispositivos disp13 = (new CatalogoDispositivos(
+        ItemDeCatalogoDeDispositivos disp13 = (new ItemDeCatalogoDeDispositivos(
                 "Ventilador de pie", false, true, new BigDecimal(0.09)));
-        CatalogoDispositivos disp14 = (new CatalogoDispositivos(
+        ItemDeCatalogoDeDispositivos disp14 = (new ItemDeCatalogoDeDispositivos(
                 "Ventilador de techo", true, true, new BigDecimal(0.06)));
 
-        CatalogoDispositivos disp15 = (new CatalogoDispositivos(
+        ItemDeCatalogoDeDispositivos disp15 = (new ItemDeCatalogoDeDispositivos(
                 "Lampara Halogena de 40w", true, false, new BigDecimal(0.04)));
-        CatalogoDispositivos disp16 = (new CatalogoDispositivos(
+        ItemDeCatalogoDeDispositivos disp16 = (new ItemDeCatalogoDeDispositivos(
                 "Lampara Halogena de 60w", true, false, new BigDecimal(0.06)));
-        CatalogoDispositivos disp17 = (new CatalogoDispositivos(
+        ItemDeCatalogoDeDispositivos disp17 = (new ItemDeCatalogoDeDispositivos(
                 "Lampara Halogena de 100w", true, false, new BigDecimal(0.015)));
-        CatalogoDispositivos disp18 = (new CatalogoDispositivos("Lampara de 11w",
+        ItemDeCatalogoDeDispositivos disp18 = (new ItemDeCatalogoDeDispositivos("Lampara de 11w",
                 true, true, new BigDecimal(0.011)));
-        CatalogoDispositivos disp19 = (new CatalogoDispositivos("Lampara de 15w",
+        ItemDeCatalogoDeDispositivos disp19 = (new ItemDeCatalogoDeDispositivos("Lampara de 15w",
                 true, true, new BigDecimal(0.015)));
-        CatalogoDispositivos disp20 = (new CatalogoDispositivos("Lampara de 20w",
+        ItemDeCatalogoDeDispositivos disp20 = (new ItemDeCatalogoDeDispositivos("Lampara de 20w",
                 true, true, new BigDecimal(0.02)));
 
-        CatalogoDispositivos disp21 = (new CatalogoDispositivos(
+        ItemDeCatalogoDeDispositivos disp21 = (new ItemDeCatalogoDeDispositivos(
                 "PC de escritorio", true, true, new BigDecimal(0.4)));
 
-        CatalogoDispositivos disp22 = (new CatalogoDispositivos(
+        ItemDeCatalogoDeDispositivos disp22 = (new ItemDeCatalogoDeDispositivos(
                 "Microondas convencional", false, true, new BigDecimal(0.64)));
 
-        CatalogoDispositivos disp23 = (new CatalogoDispositivos(
+        ItemDeCatalogoDeDispositivos disp23 = (new ItemDeCatalogoDeDispositivos(
                 "Plancha a vapor", false, true, new BigDecimal(0.75)));
 
         catalogoDispositivosJpaRepository.save(disp1);
@@ -158,7 +158,7 @@ public class FillDataTest {
         catalogoDispositivosJpaRepository.save(disp23);
         Administrador administrador = new Administrador();
         administrador.setPassword("123");
-        administrador.setNombreDeUsuario("martin");
+        administrador.setNombreDeUsuario("martinsapo");
 
 
         administradorJpaRepository.save(administrador);

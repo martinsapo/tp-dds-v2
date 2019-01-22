@@ -46,7 +46,7 @@ public class Administrador {
             this.password = administrador.password;
         }
     }
-    public static ArrayList<CatalogoDispositivos> catalogo=new ArrayList<>();
+    public static ArrayList<ItemDeCatalogoDeDispositivos> catalogo=new ArrayList<>();
 
 
     public Integer getAntiguedad() {

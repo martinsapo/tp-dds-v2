@@ -1,35 +1,49 @@
 package com.utn.dds.tpdds.controllers.Cliente;
 
+import com.utn.dds.tpdds.model.Accion;
+import com.utn.dds.tpdds.model.AccionesPosibles;
+import com.utn.dds.tpdds.model.ClienteResidencial;
+import com.utn.dds.tpdds.model.Condicion;
+import com.utn.dds.tpdds.model.CondicionBinaria;
+import com.utn.dds.tpdds.model.CondicionDeConsumoMensual;
+import com.utn.dds.tpdds.model.CondicionPorValor;
+import com.utn.dds.tpdds.model.DispositivoInteligente;
+import com.utn.dds.tpdds.model.Operador;
+import com.utn.dds.tpdds.model.Regla;
+import com.utn.dds.tpdds.repository.DispositivoInteligenteJpaRepository;
+import com.utn.dds.tpdds.repository.ReglaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
 @Controller
-@RequestMapping(value = "/abmReglas")
+@RequestMapping(value = "/cliente/abmReglas")
 public class ReglasABMController {
 
+    @Autowired ReglaRepository reglaRepository;
+    @Autowired DispositivoInteligenteJpaRepository dispositivoInteligenteJpaRepository;
+
     @RequestMapping(value = "")
-    public String abmReglas() {
-        return "reglasABM";
-    }
-
-    /*@RequestMapping(value = "/reglasABM", method = RequestMethod.GET)
-    public ModelAndView reglasABM(HttpServletRequest request) {
-        Integer clienteId = ((ClienteResidencial) request.getSession().getAttribute("cliente")).getId();
-        ClienteResidencial clienteResidencial =  RepositorioDeClientesResidenciales.buscarPorId(clienteId);
-        List<ReglaDTO> reglas = clienteResidencial.obtenerReglasDeTodosLosDispositivos();
-
+    public ModelAndView index(HttpServletRequest request) {
+        ClienteResidencial cliente = ((ClienteResidencial) request.getSession().getAttribute("cliente"));
         ModelMap model = new ModelMap();
-        model.addAttribute("reglas", reglas);
+        model.addAttribute("reglas", reglaRepository.findAllReglasFromClienteResidencial(cliente));
         return new ModelAndView("reglasABM", model);
     }
 
-    @RequestMapping(value = "/altaRegla", method = RequestMethod.GET)
-    public ModelAndView altaRegla(HttpServletRequest request) {
-        Integer clienteId = ((ClienteResidencial) request.getSession().getAttribute("cliente")).getId();
-        ClienteResidencial clienteResidencial =  RepositorioDeClientesResidenciales.buscarPorId(clienteId);
-        List<DispositivoInteligente> dispositivoInteligentes = clienteResidencial.getDispositivosInteligentes();
-
-
+    @RequestMapping(value = "/alta", method = RequestMethod.GET)
+    public ModelAndView alta(HttpServletRequest request) {
+        ClienteResidencial cliente = ((ClienteResidencial) request.getSession().getAttribute("cliente"));
+        List<DispositivoInteligente> dispositivoInteligentes = cliente.getDispositivosInteligentes();
         ModelMap model = new ModelMap();
 
         model.addAttribute("accionesPosibles", Arrays.asList(AccionesPosibles.values()));
@@ -38,8 +52,8 @@ public class ReglasABMController {
         return new ModelAndView("reglasAlta", model);
     }
 
-    @RequestMapping(value = "/guardarRegla", method = RequestMethod.GET)
-    public ModelAndView guardarRegla(HttpServletRequest request, @RequestParam("accion") String accionParam, @RequestParam("dispositivo") String dispositivoId, @RequestParam("tipoCondicion") String tipoCondicion, @RequestParam("operador") String operador, @RequestParam("value") String valor) {
+    @RequestMapping(value = "/alta/submit", method = RequestMethod.GET)
+    public ModelAndView altaSubmit(@RequestParam("accion") String accionParam, @RequestParam("dispositivo") String dispositivoId, @RequestParam("tipoCondicion") String tipoCondicion, @RequestParam("operador") String operador, @RequestParam("value") String valor) {
         Condicion condicion;
 
         if (tipoCondicion == "valor") {
@@ -51,18 +65,18 @@ public class ReglasABMController {
         }
         Accion accion = new Accion(AccionesPosibles.valueOf(accionParam));
 
-        DispositivoInteligente dispositivoInteligente = RepositorioDeDispositivosInteligentes.buscarPorId(Integer.parseInt(dispositivoId));
-        Regla regla = new Regla(condicion, accion, dispositivoInteligente, dispositivoInteligente.getSensores().get(0));
-        RepositorioDeReglas.persistir(regla);
-
-        return new ModelAndView("redirect:/reglasABM");
+        Optional<DispositivoInteligente> dispositivoInteligente = dispositivoInteligenteJpaRepository.findById(Integer.parseInt(dispositivoId));
+        if (dispositivoInteligente.isPresent()) {
+            Regla regla = new Regla(condicion, accion, dispositivoInteligente.get(), dispositivoInteligente.get().getSensores().get(0));
+            reglaRepository.save(regla);
+        }
+        return new ModelAndView("redirect:/cliente/abmReglas");
     }
 
-    @RequestMapping(value = "/eliminarRegla", method = RequestMethod.GET)
-    public ModelAndView eliminarRegla(HttpServletRequest request, @RequestParam("id") String id) {
-        Regla regla = RepositorioDeReglas.buscarPorId(new Integer(id));
-        RepositorioDeReglas.eliminar(regla);
-        return new ModelAndView("redirect:/reglasABM");
-    }*/
-
+    @RequestMapping(value = "/baja/submit", method = RequestMethod.GET)
+    public ModelAndView bajaSubmit(HttpServletRequest request) {
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        reglaRepository.deleteById(id);
+        return new ModelAndView("redirect:/cliente/abmReglas");
+    }
 }

@@ -1,6 +1,6 @@
 package com.utn.dds.tpdds.controllers.Cliente;
 
-import com.utn.dds.tpdds.model.CatalogoDispositivos;
+import com.utn.dds.tpdds.model.ItemDeCatalogoDeDispositivos;
 import com.utn.dds.tpdds.model.ClienteResidencial;
 import com.utn.dds.tpdds.model.Dispositivo;
 import com.utn.dds.tpdds.model.DispositivoEstandar;
@@ -34,7 +34,7 @@ public class DispositivosABMController {
     public ModelAndView submitDispositivoABM() {
         ModelMap model = new ModelMap();
 
-        List<CatalogoDispositivos> dispositivosDelCatalogo = catalogoDispositivosJpaRepository.findAll();
+        List<ItemDeCatalogoDeDispositivos> dispositivosDelCatalogo = catalogoDispositivosJpaRepository.findAll();
 
         model.addAttribute("dispositivosDelCatalogo", dispositivosDelCatalogo);
         return new ModelAndView("dispositivosABM", model);
@@ -46,10 +46,10 @@ public class DispositivosABMController {
 
         ClienteResidencial cliente = ((ClienteResidencial) request.getSession().getAttribute("cliente"));
         List<Dispositivo> dispositivosDelCliente = cliente.getDispositivos();
-        List<CatalogoDispositivos> dispositivosDelCatalogo = catalogoDispositivosJpaRepository.findAll();
+        List<ItemDeCatalogoDeDispositivos> dispositivosDelCatalogo = catalogoDispositivosJpaRepository.findAll();
 
 
-        Optional<CatalogoDispositivos> catalogoElegido = catalogoDispositivosJpaRepository.findById(Integer.parseInt(catalogoIdElegido));
+        Optional<ItemDeCatalogoDeDispositivos> catalogoElegido = catalogoDispositivosJpaRepository.findById(Integer.parseInt(catalogoIdElegido));
 
         for (Dispositivo dispositivo : dispositivosDelCliente){
             if(catalogoElegido.isPresent() && dispositivo.getNombreDelDispositivo().equals(catalogoElegido.get().getNombre())){
