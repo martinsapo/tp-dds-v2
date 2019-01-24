@@ -41,6 +41,7 @@ public class LoginAdminController {
         }
 
         request.getSession().setAttribute("administrador", administrador);
+        request.getSession().setAttribute("username", administrador.getNombreDeUsuario());
         return new ModelAndView("redirect:/admin");
     }
 }
