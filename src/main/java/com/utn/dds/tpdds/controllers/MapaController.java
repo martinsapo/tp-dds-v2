@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -17,7 +18,7 @@ public class MapaController {
     @Autowired TransformadorJpaRepository transformadorJpaRepository;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ModelMap cargarMapa() {
+    public ModelAndView cargarMapa() {
         List<Transformador> transformadores = transformadorJpaRepository.findAll();
         for (Transformador transformador : transformadores) {
             transformador.cargarDispositivosDeBaseDeDatos();
@@ -25,6 +26,6 @@ public class MapaController {
         }
         ModelMap model = new ModelMap();
         model.addAttribute("list", transformadores);
-        return model;
+        return new ModelAndView("mapa", model);
     }
 }
