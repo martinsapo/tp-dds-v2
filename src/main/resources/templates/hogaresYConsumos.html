@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex, nofollow">
+
+    <title>Hogares y Consumos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="/css/styles.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="title" style="color: #ffffff; text-align: center;">Consumo de Hogares</h1>
+    <hr>
+
+    <table style="width:70%; margin-left:15%; margin-right:15%; text-align:center; background-color:snow; border: 1px solid black;">
+        <tr>
+            <th style="border: 1px solid black; text-align:center; ">Hogar ID</th>
+            <th style="border: 1px solid black; text-align:center; ">Nombre del dueño del hogar</th>
+            <th style="border: 1px solid black; text-align:center; ">Consumo del hogar en el ultimo mes</th>
+            <th style="border: 1px solid black; text-align:center; ">Suma de todas los consumos por hora</th>
+        </tr>
+        <tr th:each="hogar : ${hogares}">
+            <td style="border: 1px solid black;" th:text="${hogar.getId()}"></td>
+            <td style="border: 1px solid black;" th:text="${hogar.getCliente().getNombre()}"></td>
+            <td style="border: 1px solid black;" th:text="${hogar.getCliente().obtenerTodosLosConsumosDeTodosLosDispositivosEnElUltimoMes()}"></td>
+            <td style="border: 1px solid black;" th:text="${hogar.obtenerConsumosDeDispositivosPorHora()}"></td>
+        </tr>
+    </table>
+
+</div>
+</body>
+</html>

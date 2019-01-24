@@ -50,4 +50,12 @@ public class ZonaGeografica {
         }
         return energia;
     }
+
+    public List<Hogar> getAllHogares() {
+        List<Hogar> hogares = new ArrayList<>();
+        for (Transformador transformador : listaDeTransformadores) {
+            hogares.addAll(transformador.getListaDeHogares());
+        }
+        return hogares;
+    }
 }

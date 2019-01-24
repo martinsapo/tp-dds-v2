@@ -65,7 +65,7 @@ public class Hogar {
         System.out.println("-------------------------------------------------");
     }
 
-    BigDecimal obtenerConsumosDeDispositivosPorHora() {
+    public BigDecimal obtenerConsumosDeDispositivosPorHora() {
         BigDecimal energia = new BigDecimal(0);
         for (Dispositivo dispositivo : cliente.getDispositivos()){
             energia = energia.add(dispositivo.getItemDeCatalogoDeDispositivos().getConsumo());

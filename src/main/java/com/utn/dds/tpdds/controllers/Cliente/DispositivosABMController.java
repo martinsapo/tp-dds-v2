@@ -40,13 +40,22 @@ public class DispositivosABMController {
         return new ModelAndView("dispositivosABM", model);
     }
 
-    @RequestMapping(value = "/alta", method = RequestMethod.GET)
-    public ModelAndView alta(HttpServletRequest request) {
+    @RequestMapping(value = "/altaInteligente", method = RequestMethod.GET)
+    public ModelAndView altaInteligente(HttpServletRequest request) {
         ClienteResidencial cliente = ((ClienteResidencial) request.getSession().getAttribute("cliente"));
         List<DispositivoInteligente> dispositivoInteligentes = cliente.getDispositivosInteligentes();
         ModelMap model = new ModelMap();
         //cargar datos para el alta
-        return new ModelAndView("dispositivosAlta", model);
+        return new ModelAndView("dispositivosInteligentesAlta", model);
+    }
+
+    @RequestMapping(value = "/altaEstandar", method = RequestMethod.GET)
+    public ModelAndView altaEstandar(HttpServletRequest request) {
+        ClienteResidencial cliente = ((ClienteResidencial) request.getSession().getAttribute("cliente"));
+        List<DispositivoInteligente> dispositivoInteligentes = cliente.getDispositivosInteligentes();
+        ModelMap model = new ModelMap();
+        //cargar datos para el alta
+        return new ModelAndView("dispositivosEstandarAlta", model);
     }
 
     @RequestMapping(value = "/alta/submit", method = RequestMethod.GET)

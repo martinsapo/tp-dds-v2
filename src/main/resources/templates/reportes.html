@@ -1,0 +1,71 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Reportes</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="/css/styles.css" rel="stylesheet" />
+</head>
+<body>
+
+    <form class="form-signin" method="get" action="/admin/reportes/consumoPorHogar">
+        <input type="date" name="fechaInicioHogar" required>
+        <input type="date" name="fechaFinHogar" required>
+        <button class="btn btn-lg btn-primary btn-block btn-signin " type="submit">Consumo por Hogar</button>
+    </form>
+    <form class="form-signin" method="get" action="/admin/reportes//consumoPromedioPorTipo">
+        <input type="date" name="fechaInicioPromedio" required>
+        <input type="date" name="fechaFinPromedio" required>
+        <button class="btn btn-lg btn-primary btn-block btn-signin " type="submit">Consumo promedio por Tipo de Dispositivo</button>
+    </form>
+    <form class="form-signin" method="get" action="/admin/reportes//consumoPorTransformador">
+        <input type="date" name="fechaInicioTransformador" required>
+        <input type="date" name="fechaFinTransformador" required>
+        <button class="btn btn-lg btn-primary btn-block btn-signin " type="submit">Consumo por Transformador</button>
+    </form>
+
+
+    <div th:if="${hogares != null}">
+        <table style="width:70%; margin-left:15%; margin-right:15%; text-align:center; background-color:snow; border: 1px solid black;">
+            <tr>
+                <th style="border: 1px solid black; text-align:center; ">Hogar</th>
+                <th style="border: 1px solid black; text-align:center; ">Consumo</th>
+            </tr>
+            <tr th:each="hogar : ${hogares}">
+                <td style="border: 1px solid black;" th:text="${hogar.getCliente().getNombre()}"></td>
+                <td style="border: 1px solid black;" th:text="${hogar.getCliente().calcularConsumoEnUnPeriodo(startDate, endDate)}"></td>
+            </tr>
+        </table>
+    </div>
+
+
+    <div th:if="${consumoPromedioEstandar != null || consumoPromedioEstandar != null}">
+        <h4>Consumo Promedio por Tipo de Dispositivo</h4>
+        <table style="width:70%; margin-left:15%; margin-right:15%; text-align:center; background-color:snow; border: 1px solid black;">
+            <tr>
+                <th style="border: 1px solid black; text-align:center; ">Estandar</th>
+                <th style="border: 1px solid black; text-align:center; ">Inteligente</th>
+            </tr>
+            <tr>
+                <td style="border: 1px solid black;">${consumoPromedioEstandar}</td>
+                <td style="border: 1px solid black;">${consumoPromedioInteligente}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div th:if="${transformadores != null}">
+        <table style="width:70%; margin-left:15%; margin-right:15%; text-align:center; background-color:snow; border: 1px solid black;">
+            <tr>
+                <th style="border: 1px solid black; text-align:center; ">Transformador</th>
+                <th style="border: 1px solid black; text-align:center; ">Consumo</th>
+            </tr>
+            <tr th:each="transformador : ${transformadores}">
+                <td style="border: 1px solid black;" th:text="${transformador.getId()}"></td>
+                <td style="border: 1px solid black;" th:text="${transformador.calcularConsumoEnUnPeriodo(startTime, endTime)}"></td>
+            </tr>
+        </table>
+    </div>
+
+</body>
+</html>
