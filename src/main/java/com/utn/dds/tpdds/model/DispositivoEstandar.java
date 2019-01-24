@@ -16,21 +16,20 @@ public class DispositivoEstandar extends Dispositivo implements Serializable{
 
     }
 
-    public DispositivoEstandar(String nombreDelDispositivo, BigDecimal kwPorHora, ClienteResidencial dueno, int horasDeUsoPorDia, ItemDeCatalogoDeDispositivos itemDeCatalogoDeDispositivos){
-        super(nombreDelDispositivo, kwPorHora, dueno, itemDeCatalogoDeDispositivos);
+    public DispositivoEstandar(String nombreDelDispositivo, ClienteResidencial dueno, int horasDeUsoPorDia, ItemDeCatalogoDeDispositivos itemDeCatalogoDeDispositivos){
+        super(nombreDelDispositivo, dueno, itemDeCatalogoDeDispositivos);
         fueConvertidoAInteligente=false;
         this.horasDeUsoPorDia=horasDeUsoPorDia;
     }
 
     DispositivoEstandar(DispositivoInteligente dispositivoInteligente) {
-        super(dispositivoInteligente.nombreDelDispositivo, dispositivoInteligente.kwQueConsumePorHora, dispositivoInteligente.dueno, dispositivoInteligente.getItemDeCatalogoDeDispositivos());
+        super(dispositivoInteligente.nombreDelDispositivo, dispositivoInteligente.dueno, dispositivoInteligente.getItemDeCatalogoDeDispositivos());
         fueConvertidoAInteligente=true;
     }
 
     public  DispositivoEstandar(String nombre, BigDecimal kwPorHora){
 //  Esta se utiliza unicamente para el Json de la tabla de dispositivos para el Simplex
         this.nombreDelDispositivo = nombre;
-        this.kwQueConsumePorHora = kwPorHora;
         fueConvertidoAInteligente=false;
     }
 
@@ -44,7 +43,7 @@ public class DispositivoEstandar extends Dispositivo implements Serializable{
     public BigDecimal cantidadDeEnergiaConsumidaEnUnPeriodo(LocalDateTime startTime, LocalDateTime endTime){
         BigDecimal energiaConsumida;
         Period intervaloDias = Period.between(startTime.toLocalDate(),endTime.toLocalDate());
-        energiaConsumida = kwQueConsumePorHora.multiply(new BigDecimal(intervaloDias.getDays())).multiply(new BigDecimal(horasDeUsoPorDia));
+        energiaConsumida = getItemDeCatalogoDeDispositivos().getConsumo().multiply(new BigDecimal(intervaloDias.getDays())).multiply(new BigDecimal(horasDeUsoPorDia));
         return energiaConsumida;
 
     }

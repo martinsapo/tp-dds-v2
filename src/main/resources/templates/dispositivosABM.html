@@ -11,28 +11,49 @@
 <body>
 
 <form class="form-signin" method="get" action="/cliente/abmDispositivos/alta">
-    <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Dar de alta regla</button>
+    <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Dar de alta dispositivo</button>
 </form>
 
-<h1>Dispositivos del cliente</h1>
+<h3>Dispositivos Inteligentes del cliente</h3>
 <table style="width:100%">
     <tr>
         <th>Id</th>
         <th>Kw que consume por hora</th>
         <th>Nombre de dispositivo</th>
         <th>Nombre del item del catalogo</th>
-        <th>Driver</th>
         <th>Eliminar</th>
     </tr>
-    <tr th:each="dispositivo : ${dispositivos}">
-        <td th:text="${dispositivo.id}"></td>
-        <td th:text="${dispositivo.id}"></td>
-        <td th:text="${dispositivo.id}"></td>
-        <td th:text="${dispositivo.id}"></td>
-        <td th:text="${dispositivo.id}"></td>
+    <tr th:each="dispositivoInteligente : ${dispositivosInteligentes}">
+        <td th:text="${dispositivoInteligente.id}"></td>
+        <td th:text="${dispositivoInteligente.itemDeCatalogoDeDispositivos.getConsumo()}"></td>
+        <td th:text="${dispositivoInteligente.nombreDelDispositivo}"></td>
+        <td th:text="${dispositivoInteligente.itemDeCatalogoDeDispositivos.getNombre()}"></td>
         <td>
             <form method="get" action="/cliente/abmDispositivos/baja/submit">
-                <input type="hidden" name="id" th:value="${regla.id}"/>
+                <input type="hidden" name="id" th:value="${dispositivoInteligente.id}"/>
+                <button class="btn" type="submit">Eliminar</button>
+            </form>
+        </td>
+    </tr>
+</table>
+
+<h3>Dispositivos Estandar del cliente</h3>
+<table style="width:100%">
+    <tr>
+        <th>Id</th>
+        <th>Kw que consume por hora</th>
+        <th>Nombre de dispositivo</th>
+        <th>Nombre del item del catalogo</th>
+        <th>Eliminar</th>
+    </tr>
+    <tr th:each="dispositivoEstandar : ${dispositivosEstandar}">
+        <td th:text="${dispositivoEstandar.id}"></td>
+        <td th:text="${dispositivoEstandar.itemDeCatalogoDeDispositivos.getConsumo()}"></td>
+        <td th:text="${dispositivoEstandar.nombreDelDispositivo}"></td>
+        <td th:text="${dispositivoEstandar.itemDeCatalogoDeDispositivos.getNombre()}"></td>
+        <td>
+            <form method="get" action="/cliente/abmDispositivos/baja/submit">
+                <input type="hidden" name="id" th:value="${dispositivoEstandar.id}"/>
                 <button class="btn" type="submit">Eliminar</button>
             </form>
         </td>

@@ -2,6 +2,7 @@ package com.utn.dds.tpdds.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.CascadeType;
@@ -22,6 +23,7 @@ import java.util.List;
 @JsonDeserialize(as=DispositivoInteligente.class)
 @Getter
 @Setter
+@NoArgsConstructor
 public class DispositivoInteligente extends Dispositivo implements Serializable{
 
     @OneToMany(orphanRemoval = true, cascade= CascadeType.ALL, mappedBy = "dispositivoInteligente")
@@ -39,13 +41,13 @@ public class DispositivoInteligente extends Dispositivo implements Serializable{
     @OneToMany(orphanRemoval = true, cascade= CascadeType.ALL, mappedBy = "dispositivoInteligente")
     private List<Sensor> sensores = new ArrayList<>();
 
-    public DispositivoInteligente(String nombre, BigDecimal kwPorHora, ClienteResidencial dueno, ItemDeCatalogoDeDispositivos itemDeCatalogoDeDispositivos) {
-        super(nombre, kwPorHora, dueno, itemDeCatalogoDeDispositivos);
+    public DispositivoInteligente(String nombre, ClienteResidencial dueno, ItemDeCatalogoDeDispositivos itemDeCatalogoDeDispositivos) {
+        super(nombre, dueno, itemDeCatalogoDeDispositivos);
         agregarRegistroARegistrosDeCambioDeEstadoDeDispositivo(EstadoDeDispositivo.APAGADO);
     }
 
     public DispositivoInteligente(DispositivoEstandar dispositivo) {
-        super(dispositivo.nombreDelDispositivo, dispositivo.kwQueConsumePorHora, dispositivo.dueno, dispositivo.getItemDeCatalogoDeDispositivos());
+        super(dispositivo.nombreDelDispositivo, dispositivo.dueno, dispositivo.getItemDeCatalogoDeDispositivos());
         agregarRegistroARegistrosDeCambioDeEstadoDeDispositivo(EstadoDeDispositivo.APAGADO);
     }
 
@@ -54,7 +56,6 @@ public class DispositivoInteligente extends Dispositivo implements Serializable{
         if (dispositivo != null) {
             this.nombreDelDispositivo = dispositivo.nombreDelDispositivo;
             this.state = dispositivo.state;
-            this.kwQueConsumePorHora = dispositivo.kwQueConsumePorHora;
             this.dueno = dispositivo.dueno;
             agregarRegistroARegistrosDeCambioDeEstadoDeDispositivo(EstadoDeDispositivo.APAGADO);
         }
@@ -62,11 +63,7 @@ public class DispositivoInteligente extends Dispositivo implements Serializable{
 
   public DispositivoInteligente(String nombre, BigDecimal kwPorHora){
       this.nombreDelDispositivo = nombre;
-      this.kwQueConsumePorHora = kwPorHora;
   }
-
-    public DispositivoInteligente() {
-    }
 
     public void encender() {
         state.encender(this);
@@ -138,7 +135,7 @@ public class DispositivoInteligente extends Dispositivo implements Serializable{
             }
         }
 
-        energiaConsumidaEnPeriodo= cantidadDeHorasEncendida.multiply(kwQueConsumePorHora);
+        energiaConsumidaEnPeriodo= cantidadDeHorasEncendida.multiply(getItemDeCatalogoDeDispositivos().getConsumo());
 
         return energiaConsumidaEnPeriodo;
     }

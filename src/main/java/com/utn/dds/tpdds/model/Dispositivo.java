@@ -32,16 +32,14 @@ public abstract class Dispositivo implements Serializable {
 	public Integer id;
 
 	String nombreDelDispositivo;
-	BigDecimal kwQueConsumePorHora;
     @ManyToOne(cascade = CascadeType.ALL)
     private ItemDeCatalogoDeDispositivos itemDeCatalogoDeDispositivos;
 
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	ClienteResidencial dueno;
 
-	Dispositivo(String nombreDelDispositivo, BigDecimal kwQueConsumePorHora, ClienteResidencial dueno, ItemDeCatalogoDeDispositivos itemDeCatalogoDeDispositivos) {
+	Dispositivo(String nombreDelDispositivo, ClienteResidencial dueno, ItemDeCatalogoDeDispositivos itemDeCatalogoDeDispositivos) {
 		this.nombreDelDispositivo = nombreDelDispositivo;
-		this.kwQueConsumePorHora = kwQueConsumePorHora;
 		this.dueno = dueno;
         dueno.addDispositivo(this);
         this.itemDeCatalogoDeDispositivos = itemDeCatalogoDeDispositivos;

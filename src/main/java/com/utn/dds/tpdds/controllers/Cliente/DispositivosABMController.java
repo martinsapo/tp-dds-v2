@@ -1,12 +1,13 @@
 package com.utn.dds.tpdds.controllers.Cliente;
 
 import com.utn.dds.tpdds.model.ClienteResidencial;
+import com.utn.dds.tpdds.model.DispositivoEstandar;
 import com.utn.dds.tpdds.model.DispositivoInteligente;
-import com.utn.dds.tpdds.model.ItemDeCatalogoDeDispositivos;
 import com.utn.dds.tpdds.repository.CatalogoDispositivosJpaRepository;
 import com.utn.dds.tpdds.repository.ClienteResidencialJpaRepository;
 import com.utn.dds.tpdds.repository.DispositivoEstandarJpaRepository;
 import com.utn.dds.tpdds.repository.DispositivoInteligenteJpaRepository;
+import com.utn.dds.tpdds.repository.DispositivoJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -24,15 +25,18 @@ public class DispositivosABMController {
     @Autowired ClienteResidencialJpaRepository clienteResidencialJPARepository;
     @Autowired DispositivoInteligenteJpaRepository dispositivoInteligenteJpaRepository;
     @Autowired DispositivoEstandarJpaRepository dispositivoEstandarJpaRepository;
+    @Autowired DispositivoJpaRepository dispositivoJpaRepository;
     @Autowired CatalogoDispositivosJpaRepository catalogoDispositivosJpaRepository;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ModelAndView submitDispositivoABM() {
+    public ModelAndView submitDispositivoABM(HttpServletRequest request) {
         ModelMap model = new ModelMap();
+        ClienteResidencial cliente = ((ClienteResidencial) request.getSession().getAttribute("cliente"));
+        List<DispositivoInteligente> dispositivosInteligentesDelCliente = dispositivoInteligenteJpaRepository.findDispositivoInteligentesByDueno(cliente);
+        List<DispositivoEstandar> dispositivosEstandarDelCliente = dispositivoEstandarJpaRepository.findDispositivoEstandarByDueno(cliente);
 
-        List<ItemDeCatalogoDeDispositivos> dispositivosDelCatalogo = catalogoDispositivosJpaRepository.findAll();
-
-        model.addAttribute("dispositivosDelCatalogo", dispositivosDelCatalogo);
+        model.addAttribute("dispositivosInteligentes", dispositivosInteligentesDelCliente);
+        model.addAttribute("dispositivosEstandar", dispositivosEstandarDelCliente);
         return new ModelAndView("dispositivosABM", model);
     }
 
@@ -54,7 +58,8 @@ public class DispositivosABMController {
 
     @RequestMapping(value = "/baja/submit", method = RequestMethod.GET)
     public ModelAndView bajaSubmit(HttpServletRequest request) {
-        //eliminar dispositivo
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        dispositivoJpaRepository.deleteById(id);
         return new ModelAndView("redirect:/cliente/abmDispositivos");
     }
 }

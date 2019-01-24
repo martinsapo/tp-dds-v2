@@ -35,16 +35,8 @@ public class ABMCatalogoDispositivosController {
 
         String nombre = request.getParameter("nombre");
         BigDecimal consumo = BigDecimal.valueOf(Double.parseDouble(request.getParameter("kwPorHora")));
-        Boolean esInteligente = true;
-        Boolean esBajoConsumo = true;
-        if (request.getParameter("inteligente") == null) {
-            esInteligente = false;
-        }
-        if (request.getParameter("bajoconsumo") == null) {
-            esBajoConsumo = false;
-        }
 
-        ItemDeCatalogoDeDispositivos item = new ItemDeCatalogoDeDispositivos(nombre, esInteligente, esBajoConsumo, consumo);
+        ItemDeCatalogoDeDispositivos item = new ItemDeCatalogoDeDispositivos(nombre, consumo);
         catalogoDispositivosJpaRepository.save(item);
         return new ModelAndView("redirect:/admin/abmCatalogoDispositivos");
     }
