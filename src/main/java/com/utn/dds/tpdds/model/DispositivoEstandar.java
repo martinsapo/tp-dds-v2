@@ -16,14 +16,14 @@ public class DispositivoEstandar extends Dispositivo implements Serializable{
 
     }
 
-    public DispositivoEstandar(String nombreDelDispositivo, BigDecimal kwPorHora, ClienteResidencial dueno, int horasDeUsoPorDia){
-        super(nombreDelDispositivo, kwPorHora, dueno);
+    public DispositivoEstandar(String nombreDelDispositivo, BigDecimal kwPorHora, ClienteResidencial dueno, int horasDeUsoPorDia, ItemDeCatalogoDeDispositivos itemDeCatalogoDeDispositivos){
+        super(nombreDelDispositivo, kwPorHora, dueno, itemDeCatalogoDeDispositivos);
         fueConvertidoAInteligente=false;
         this.horasDeUsoPorDia=horasDeUsoPorDia;
     }
 
     DispositivoEstandar(DispositivoInteligente dispositivoInteligente) {
-        super(dispositivoInteligente.nombreDelDispositivo, dispositivoInteligente.kwQueConsumePorHora, dispositivoInteligente.dueno);
+        super(dispositivoInteligente.nombreDelDispositivo, dispositivoInteligente.kwQueConsumePorHora, dispositivoInteligente.dueno, dispositivoInteligente.getItemDeCatalogoDeDispositivos());
         fueConvertidoAInteligente=true;
     }
 

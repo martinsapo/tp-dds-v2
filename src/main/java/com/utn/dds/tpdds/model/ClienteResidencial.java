@@ -46,7 +46,9 @@ public class ClienteResidencial{
     private String telefono;
     @OneToOne(cascade = CascadeType.ALL) private Categoria categoria;
 
-    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "dueno") List<Dispositivo> dispositivos = new ArrayList<>();
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "dueno")
+    List<Dispositivo> dispositivos = new ArrayList<>();
+
     private Boolean ahorroAutomatico = false;
 
     public ClienteResidencial(String nombre, String apellido, String domicilio,

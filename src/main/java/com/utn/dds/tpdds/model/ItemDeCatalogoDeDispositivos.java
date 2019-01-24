@@ -1,15 +1,16 @@
 package com.utn.dds.tpdds.model;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.json.simple.JSONObject;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -23,12 +24,15 @@ public class ItemDeCatalogoDeDispositivos {
     private Boolean esInteligente;
     private Boolean esBajoConsumo;
     private BigDecimal consumo;
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "itemDeCatalogoDeDispositivos")
+    private List<Dispositivo> dispositivosAsociados;
 
     public ItemDeCatalogoDeDispositivos(String nombre, Boolean esInteligente, Boolean esBajoConsumo,BigDecimal consumo){
         this.nombre=nombre;
         this.esInteligente=esInteligente;
         this.esBajoConsumo=esBajoConsumo;
         this.consumo=consumo;
+        dispositivosAsociados = new ArrayList<>();
 
     }
 

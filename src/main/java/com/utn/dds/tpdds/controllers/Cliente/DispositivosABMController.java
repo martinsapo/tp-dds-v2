@@ -39,37 +39,4 @@ public class DispositivosABMController {
         model.addAttribute("dispositivosDelCatalogo", dispositivosDelCatalogo);
         return new ModelAndView("dispositivosABM", model);
     }
-
-    @RequestMapping(value = "/asociarDispositivo", method = RequestMethod.GET)
-    public ModelAndView asociarDispositivo(HttpServletRequest request, @RequestParam("catalogo") String catalogoIdElegido) {
-        ModelMap model = new ModelMap();
-
-        ClienteResidencial cliente = ((ClienteResidencial) request.getSession().getAttribute("cliente"));
-        List<Dispositivo> dispositivosDelCliente = cliente.getDispositivos();
-        List<ItemDeCatalogoDeDispositivos> dispositivosDelCatalogo = catalogoDispositivosJpaRepository.findAll();
-
-
-        Optional<ItemDeCatalogoDeDispositivos> catalogoElegido = catalogoDispositivosJpaRepository.findById(Integer.parseInt(catalogoIdElegido));
-
-        for (Dispositivo dispositivo : dispositivosDelCliente){
-            if(catalogoElegido.isPresent() && dispositivo.getNombreDelDispositivo().equals(catalogoElegido.get().getNombre())){
-                model.addAttribute("errorMessage", "El item de catalogo seleccionado ya existe");
-                model.addAttribute("dispositivosDelCatalogo", dispositivosDelCatalogo);
-                return new ModelAndView("dispositivosABM", model);
-            }
-        }
-        if(catalogoElegido.isPresent() && catalogoElegido.get().getEsInteligente()){
-            DispositivoInteligente nuevoDispositivoInteligente = new DispositivoInteligente(catalogoElegido.get().getNombre(), catalogoElegido.get().getConsumo(), cliente);
-            dispositivoInteligenteJpaRepository.save(nuevoDispositivoInteligente);
-            model.addAttribute("errorMessage", "Dispositivo Inteligente Creado");
-
-        }
-        else if (catalogoElegido.isPresent() ){
-            DispositivoEstandar nuevoDispositivoEstandar = new DispositivoEstandar(catalogoElegido.get().getNombre(), catalogoElegido.get().getConsumo(), cliente,2);
-            dispositivoEstandarJpaRepository.save(nuevoDispositivoEstandar);
-            model.addAttribute("errorMessage", "Dispositivo Estandar Creado");
-        }
-        model.addAttribute("dispositivosDelCatalogo", dispositivosDelCatalogo);
-        return new ModelAndView("dispositivosABM", model);
-    }
 }

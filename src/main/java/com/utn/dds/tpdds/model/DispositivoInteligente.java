@@ -7,6 +7,7 @@ import lombok.Setter;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
@@ -38,13 +39,13 @@ public class DispositivoInteligente extends Dispositivo implements Serializable{
     @OneToMany(orphanRemoval = true, cascade= CascadeType.ALL, mappedBy = "dispositivoInteligente")
     private List<Sensor> sensores = new ArrayList<>();
 
-    public DispositivoInteligente(String nombre, BigDecimal kwPorHora, ClienteResidencial dueno) {
-        super(nombre, kwPorHora, dueno);
+    public DispositivoInteligente(String nombre, BigDecimal kwPorHora, ClienteResidencial dueno, ItemDeCatalogoDeDispositivos itemDeCatalogoDeDispositivos) {
+        super(nombre, kwPorHora, dueno, itemDeCatalogoDeDispositivos);
         agregarRegistroARegistrosDeCambioDeEstadoDeDispositivo(EstadoDeDispositivo.APAGADO);
     }
 
     public DispositivoInteligente(DispositivoEstandar dispositivo) {
-        super(dispositivo.nombreDelDispositivo, dispositivo.kwQueConsumePorHora, dispositivo.dueno);
+        super(dispositivo.nombreDelDispositivo, dispositivo.kwQueConsumePorHora, dispositivo.dueno, dispositivo.getItemDeCatalogoDeDispositivos());
         agregarRegistroARegistrosDeCambioDeEstadoDeDispositivo(EstadoDeDispositivo.APAGADO);
     }
 

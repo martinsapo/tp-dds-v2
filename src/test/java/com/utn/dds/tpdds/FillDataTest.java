@@ -46,37 +46,6 @@ public class FillDataTest {
 
     @Test
     public void testFillData() {
-        ZonaGeografica zonaGeografica = new ZonaGeografica("asd", 1.0, 1.0, 1.0);
-        Transformador transformador = new Transformador(zonaGeografica, -34.612985, -58.470673);
-
-        ClienteResidencial clienteResidencial = new ClienteResidencial("Martin",
-                "Saposnic", "gaona", "martinsapo", "123",
-                new Documento("40136136", TipoDeDocumento.DNI), "123123123", new Categoria(100.0));
-        Hogar hogar = new Hogar(clienteResidencial, 1.0, 1.0, transformador);
-
-        DispositivoInteligente dispositivoInteligente = new DispositivoInteligente(
-                "nombre", new BigDecimal(12.0), clienteResidencial);
-
-        dispositivoInteligente.agregarRegistroDeCambioDeEstadoPersonalizado(
-                LocalDateTime.of(2018, 11, 12, 0, 0), EstadoDeDispositivo.PRENDIDO);
-        dispositivoInteligente.agregarRegistroDeCambioDeEstadoPersonalizado(
-                LocalDateTime.of(2018, 11, 13, 0, 0), EstadoDeDispositivo.APAGADO);
-        dispositivoInteligente.agregarRegistroDeCambioDeEstadoPersonalizado(
-                LocalDateTime.of(2018, 11, 14, 0, 0), EstadoDeDispositivo.PRENDIDO);
-
-        Sensor sensor = new SensorDeValores(dispositivoInteligente,
-                "sensor de temperatura");
-
-        Accion accion = new Accion(AccionesPosibles.PRENDER);
-        CondicionPorValor condicion = new CondicionPorValor(1.0, Operador.MAYOR);
-
-        Regla regla = new Regla(condicion, accion, dispositivoInteligente,
-                sensor);
-
-        clienteResidencial.addDispositivo(dispositivoInteligente);
-
-        clienteResidencialJPARepository.save(clienteResidencial);
-
         ItemDeCatalogoDeDispositivos disp1 = new ItemDeCatalogoDeDispositivos(
                 "Aire de 2200 frigorias", true, false, new BigDecimal(1.013));
 
@@ -156,6 +125,39 @@ public class FillDataTest {
         catalogoDispositivosJpaRepository.save(disp21);
         catalogoDispositivosJpaRepository.save(disp22);
         catalogoDispositivosJpaRepository.save(disp23);
+
+
+        ZonaGeografica zonaGeografica = new ZonaGeografica("asd", 1.0, 1.0, 1.0);
+        Transformador transformador = new Transformador(zonaGeografica, -34.612985, -58.470673);
+
+        ClienteResidencial clienteResidencial = new ClienteResidencial("Martin",
+                "Saposnic", "gaona", "martinsapo", "123",
+                new Documento("40136136", TipoDeDocumento.DNI), "123123123", new Categoria(100.0));
+        Hogar hogar = new Hogar(clienteResidencial, 1.0, 1.0, transformador);
+
+        DispositivoInteligente dispositivoInteligente = new DispositivoInteligente(
+                "nombre", new BigDecimal(12.0), clienteResidencial, disp23);
+
+        dispositivoInteligente.agregarRegistroDeCambioDeEstadoPersonalizado(
+                LocalDateTime.of(2018, 11, 12, 0, 0), EstadoDeDispositivo.PRENDIDO);
+        dispositivoInteligente.agregarRegistroDeCambioDeEstadoPersonalizado(
+                LocalDateTime.of(2018, 11, 13, 0, 0), EstadoDeDispositivo.APAGADO);
+        dispositivoInteligente.agregarRegistroDeCambioDeEstadoPersonalizado(
+                LocalDateTime.of(2018, 11, 14, 0, 0), EstadoDeDispositivo.PRENDIDO);
+
+        Sensor sensor = new SensorDeValores(dispositivoInteligente,
+                "sensor de temperatura");
+
+        Accion accion = new Accion(AccionesPosibles.PRENDER);
+        CondicionPorValor condicion = new CondicionPorValor(1.0, Operador.MAYOR);
+
+        Regla regla = new Regla(condicion, accion, dispositivoInteligente,
+                sensor);
+
+        clienteResidencial.addDispositivo(dispositivoInteligente);
+
+        clienteResidencialJPARepository.save(clienteResidencial);
+
         Administrador administrador = new Administrador();
         administrador.setPassword("123");
         administrador.setNombreDeUsuario("martinsapo");
