@@ -1,67 +1,94 @@
-
 <html xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <title>ABM de dispositivos</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <link href="/css/styles.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/js/jquery-1.11.min.js"></script>
-</head>
-<body>
+    <head>
+        <title>ABM de dispositivos</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <link href="/css/styles.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/js/jquery-1.11.min.js"></script>
+    </head>
+    <body>
 
-<form class="form-signin" method="get" action="/cliente/abmDispositivos/altaInteligente">
-    <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Dar de alta dispositivo inteligente</button>
-</form>
-<form class="form-signin" method="get" action="/cliente/abmDispositivos/altaEstandar">
-    <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Dar de alta dispositivo estandar</button>
-</form>
+        <form class="form-signin" method="get" action="/cliente/abmDispositivos/altaInteligente">
+            <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Dar de alta dispositivo inteligente</button>
+        </form>
+        <form class="form-signin" method="get" action="/cliente/abmDispositivos/altaEstandar">
+            <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Dar de alta dispositivo estandar</button>
+        </form>
 
-<h3>Dispositivos Inteligentes del cliente</h3>
-<table style="width:100%">
-    <tr>
-        <th>Id</th>
-        <th>Kw que consume por hora</th>
-        <th>Nombre de dispositivo</th>
-        <th>Nombre del item del catalogo</th>
-        <th>Eliminar</th>
-    </tr>
-    <tr th:each="dispositivoInteligente : ${dispositivosInteligentes}">
-        <td th:text="${dispositivoInteligente.id}"></td>
-        <td th:text="${dispositivoInteligente.itemDeCatalogoDeDispositivos.getConsumo()}"></td>
-        <td th:text="${dispositivoInteligente.nombreDelDispositivo}"></td>
-        <td th:text="${dispositivoInteligente.itemDeCatalogoDeDispositivos.getNombre()}"></td>
-        <td>
-            <form method="get" action="/cliente/abmDispositivos/baja/submit">
-                <input type="hidden" name="id" th:value="${dispositivoInteligente.id}"/>
-                <button class="btn" type="submit">Eliminar</button>
-            </form>
-        </td>
-    </tr>
-</table>
-
-<h3>Dispositivos Estandar del cliente</h3>
-<table style="width:100%">
-    <tr>
-        <th>Id</th>
-        <th>Kw que consume por hora</th>
-        <th>Nombre de dispositivo</th>
-        <th>Nombre del item del catalogo</th>
-        <th>Eliminar</th>
-    </tr>
-    <tr th:each="dispositivoEstandar : ${dispositivosEstandar}">
-        <td th:text="${dispositivoEstandar.id}"></td>
-        <td th:text="${dispositivoEstandar.itemDeCatalogoDeDispositivos.getConsumo()}"></td>
-        <td th:text="${dispositivoEstandar.nombreDelDispositivo}"></td>
-        <td th:text="${dispositivoEstandar.itemDeCatalogoDeDispositivos.getNombre()}"></td>
-        <td>
-            <form method="get" action="/cliente/abmDispositivos/baja/submit">
-                <input type="hidden" name="id" th:value="${dispositivoEstandar.id}"/>
-                <button class="btn" type="submit">Eliminar</button>
-            </form>
-        </td>
-    </tr>
-</table>
-
-</body>
+        <div th:if="${dispositivosInteligentes.size() > 0}">
+            <h3>Dispositivos Inteligentes del cliente</h3>
+            <table style="width:100%">
+                <tr>
+                    <th>Id</th>
+                    <th>Kw que consume por hora</th>
+                    <th>Nombre de dispositivo</th>
+                    <th>Nombre del item del catalogo</th>
+                    <th>Estado del dispositivo</th>
+                    <th>Consumo en el ultimo mes</th>
+                    <th></th>
+                    <th></th>
+                    <th>Eliminar</th>
+                </tr>
+                <tr th:each="dispositivoInteligente : ${dispositivosInteligentes}">
+                    <td th:text="${dispositivoInteligente.id}"></td>
+                    <td th:text="${dispositivoInteligente.itemDeCatalogoDeDispositivos.getConsumo()}"></td>
+                    <td th:text="${dispositivoInteligente.nombreDelDispositivo}"></td>
+                    <td th:text="${dispositivoInteligente.itemDeCatalogoDeDispositivos.getNombre()}"></td>
+                    <td th:text="${dispositivoInteligente.obtenerEstadoDelDispositivo().name()}"></td>
+                    <td th:text="${dispositivoInteligente.cantidadDeEnergiaConsumidaEnElUltimoMes().doubleValue()}"></td>
+                    <td th:if="${dispositivoInteligente.obtenerEstadoDelDispositivo().name() == 'APAGADO' || dispositivoInteligente.obtenerEstadoDelDispositivo().name() == 'MODO_AHORRO'}">
+                        <form method="get" action="/cliente/abmDispositivos/encender">
+                            <input type="hidden" name="id" th:value="${dispositivoInteligente.id}"/>
+                            <button class="btn" type="submit">Encender</button>
+                        </form>
+                    </td>
+                    <td th:if="${dispositivoInteligente.obtenerEstadoDelDispositivo().name() == 'PRENDIDO' || dispositivoInteligente.obtenerEstadoDelDispositivo().name() == 'MODO_AHORRO'}">
+                        <form method="get" action="/cliente/abmDispositivos/apagar">
+                            <input type="hidden" name="id" th:value="${dispositivoInteligente.id}"/>
+                            <button class="btn" type="submit">Apagar</button>
+                        </form>
+                    </td>
+                    <td th:if="${dispositivoInteligente.obtenerEstadoDelDispositivo().name() == 'APAGADO' || dispositivoInteligente.obtenerEstadoDelDispositivo().name() == 'PRENDIDO'}">
+                        <form method="get" action="/cliente/abmDispositivos/modoAhorro">
+                            <input type="hidden" name="id" th:value="${dispositivoInteligente.id}"/>
+                            <button class="btn" type="submit">Modo ahorro</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form method="get" action="/cliente/abmDispositivos/baja/submit">
+                            <input type="hidden" name="id" th:value="${dispositivoInteligente.id}"/>
+                            <button class="btn" type="submit">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div th:if="${dispositivosEstandar.size() > 0}">
+            <h3>Dispositivos Estandar del cliente</h3>
+            <table style="width:100%">
+                <tr>
+                    <th>Id</th>
+                    <th>Kw que consume por hora</th>
+                    <th>Nombre de dispositivo</th>
+                    <th>Nombre del item del catalogo</th>
+                    <th>Consumo aproximado diario en KW/H</th>
+                    <th>Eliminar</th>
+                </tr>
+                <tr th:each="dispositivoEstandar : ${dispositivosEstandar}">
+                    <td th:text="${dispositivoEstandar.id}"></td>
+                    <td th:text="${dispositivoEstandar.itemDeCatalogoDeDispositivos.getConsumo()}"></td>
+                    <td th:text="${dispositivoEstandar.nombreDelDispositivo}"></td>
+                    <td th:text="${dispositivoEstandar.itemDeCatalogoDeDispositivos.getNombre()}"></td>
+                    <td th:text="${dispositivoEstandar.cantidadDeEnergiaConsumidaEnElUltimoMes()}"></td>
+                    <td>
+                        <form method="get" action="/cliente/abmDispositivos/baja/submit">
+                            <input type="hidden" name="id" th:value="${dispositivoEstandar.id}"/>
+                            <button class="btn" type="submit">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </body>
 </html>

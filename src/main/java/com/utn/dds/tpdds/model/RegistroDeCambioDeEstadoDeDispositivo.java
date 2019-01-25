@@ -1,9 +1,12 @@
 package com.utn.dds.tpdds.model;
 
+import com.utn.dds.tpdds.repository.RegistroDeCambioDeEstadoDeDispositivoJpaRepository;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -12,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -28,7 +32,7 @@ public class RegistroDeCambioDeEstadoDeDispositivo{
     @Enumerated(EnumType.STRING)
     private EstadoDeDispositivo estado;
 
-    @ManyToOne
+    @ManyToOne(cascade= CascadeType.ALL)
     private DispositivoInteligente dispositivoInteligente;
 
     RegistroDeCambioDeEstadoDeDispositivo(LocalDateTime timestamp, EstadoDeDispositivo estado, DispositivoInteligente dispositivoInteligente) {

@@ -89,6 +89,7 @@ public class FillDataTest {
         DispositivoInteligente dispositivoInteligente = new DispositivoInteligente(
                 "nombre", clienteResidencial, disp9);
 
+
         dispositivoInteligente.agregarRegistroDeCambioDeEstadoPersonalizado(
                 LocalDateTime.of(2018, 11, 12, 0, 0), EstadoDeDispositivo.PRENDIDO);
         dispositivoInteligente.agregarRegistroDeCambioDeEstadoPersonalizado(

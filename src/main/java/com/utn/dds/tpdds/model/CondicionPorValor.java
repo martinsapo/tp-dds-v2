@@ -18,7 +18,7 @@ public class CondicionPorValor extends Condicion{
 
     @Override Boolean applies(DispositivoInteligente dispositivoInteligente, Sensor sensor) {
         if (sensor != null && sensor instanceof SensorDeValores) {
-            return operator.apply(medicionEsperada, sensor.medir());
+            return operator.apply(medicionEsperada, ((MedicionPorValor)sensor.medir()).getMedicion());
         }
         return false;
     }

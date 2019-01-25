@@ -9,14 +9,14 @@ import java.time.Period;
 @Entity
 public class DispositivoEstandar extends Dispositivo implements Serializable{
 
-    private int horasDeUsoPorDia;
+    private Double horasDeUsoPorDia;
 
     private Boolean fueConvertidoAInteligente;
     public DispositivoEstandar(){
 
     }
 
-    public DispositivoEstandar(String nombreDelDispositivo, ClienteResidencial dueno, int horasDeUsoPorDia, ItemDeCatalogoDeDispositivos itemDeCatalogoDeDispositivos){
+    public DispositivoEstandar(String nombreDelDispositivo, ClienteResidencial dueno, Double horasDeUsoPorDia, ItemDeCatalogoDeDispositivos itemDeCatalogoDeDispositivos){
         super(nombreDelDispositivo, dueno, itemDeCatalogoDeDispositivos);
         fueConvertidoAInteligente=false;
         this.horasDeUsoPorDia=horasDeUsoPorDia;
@@ -46,6 +46,13 @@ public class DispositivoEstandar extends Dispositivo implements Serializable{
         energiaConsumida = getItemDeCatalogoDeDispositivos().getConsumo().multiply(new BigDecimal(intervaloDias.getDays())).multiply(new BigDecimal(horasDeUsoPorDia));
         return energiaConsumida;
 
+    }
+
+    public BigDecimal cantidadDeEnergiaConsumidaEnElUltimoMes() {
+        LocalDateTime initial = LocalDateTime.now();
+        LocalDateTime start = initial.withDayOfMonth(1);
+        LocalDateTime end = initial.withDayOfMonth(30);
+        return cantidadDeEnergiaConsumidaEnUnPeriodo(start, end);
     }
 
 }

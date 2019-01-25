@@ -65,20 +65,33 @@ public class DispositivoInteligente extends Dispositivo implements Serializable{
       this.nombreDelDispositivo = nombre;
   }
 
+  private void actualizarState() {
+      if (obtenerEstadoDelDispositivo() == EstadoDeDispositivo.PRENDIDO) {
+          state = new StateEncendido();
+      } else if (obtenerEstadoDelDispositivo() == EstadoDeDispositivo.APAGADO){
+          state = new StateApagado();
+      } else {
+          state = new StateModoAhorro();
+      }
+  }
+
     public void encender() {
+        actualizarState();
         state.encender(this);
     }
 
     public void apagar() {
+        actualizarState();
         state.apagar(this);
     }
 
     public void cambiarAAhorroDeEnergia() {
+        actualizarState();
         state.modoAhorro(this);
     }
 
     public EstadoDeDispositivo obtenerEstadoDelDispositivo() {
-        return state.getEstado();
+        return registrosDeCambioDeEstadoDeDispositivo.get(registrosDeCambioDeEstadoDeDispositivo.size() - 1).getEstado();
     }
 
     public Integer getPuntosASumar() {
@@ -140,14 +153,14 @@ public class DispositivoInteligente extends Dispositivo implements Serializable{
         return energiaConsumidaEnPeriodo;
     }
 
-    BigDecimal cantidadDeEnergiaConsumidaEnElUltimoMes() {
+    public BigDecimal cantidadDeEnergiaConsumidaEnElUltimoMes() {
         LocalDateTime initial = LocalDateTime.now();
         LocalDateTime start = initial.withDayOfMonth(1);
         LocalDateTime end = initial.withDayOfMonth(30);
         return cantidadDeEnergiaConsumidaEnUnPeriodo(start, end);
     }
 
-    void agregarRegistroARegistrosDeCambioDeEstadoDeDispositivo(EstadoDeDispositivo estado) {
+    public void agregarRegistroARegistrosDeCambioDeEstadoDeDispositivo(EstadoDeDispositivo estado) {
         registrosDeCambioDeEstadoDeDispositivo.add(new RegistroDeCambioDeEstadoDeDispositivo(LocalDateTime.now(), estado, this));
         ejecutarReglas();
     }

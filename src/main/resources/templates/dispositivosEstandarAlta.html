@@ -11,33 +11,18 @@
     <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Volver</button>
 </form>
 
-<form method="get" action="/cliente/abmDispositivos/alta/submit">
+<form method="get" action="/cliente/abmDispositivos/altaEstandar/submit">
     <div>
-        <h3>Acciones posibles</h3>
-        <select title="acciones" name="accion">
-            <option th:each="accion : ${accionesPosibles}" th:value="${accion.name()}" th:text="${accion.name()}"></option>
+        <h3>Catalogo</h3>
+        <select title="catalogo" name="catalogo">
+            <option th:each="item : ${catalogo}" th:value="${item.id}" th:text="${item.nombre}"></option>
         </select>
     </div>
-    <div>
-        <h3>Dispositivo</h3>
-        <select title="dispositivo" name="dispositivo">
-            <option th:each="dispositivo : ${dispositivosInteligentes}" th:value="${dispositivo.id}" th:text="${dispositivo.nombreDelDispositivo}"></option>
-        </select>
-    </div>
+    <label>Nombre del dispositivo: </label>
+    <input title="nombre" type="text" name="nombre"/>
 
-    <div>
-        <h3>Condicion</h3>
-        <select title = "tipoDeCondicion" name="tipoCondicion">
-            <option value="valor">Por valor</option>
-            <option value="binaria">Binaria</option>
-            <option value="consumo">Por consumo mensual</option>
-        </select>
-        <select name="operador">
-            <option th:each="operador : ${operadores}" th:value="${operador.name()}" th:text="${operador.name()}"></option>
-        </select>
-        <label>Valor (si aplica)</label>
-        <input title="valor" type="text" name="value"/>
-    </div>
+    <label>Horas de uso diario: </label>
+    <input title="nombre" type="text" name="usoDiario"/>
 
     <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Guardar</button>
 </form>

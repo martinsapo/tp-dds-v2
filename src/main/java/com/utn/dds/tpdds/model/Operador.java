@@ -1,7 +1,5 @@
 package com.utn.dds.tpdds.model;
 
-import java.math.BigDecimal;
-
 public enum Operador {
     FALSE {
         @Override
@@ -18,13 +16,13 @@ public enum Operador {
     MAYOR {
         @Override
         public Boolean apply(Object x1, Object x2) {
-            return ((BigDecimal)x1).compareTo((BigDecimal)x2) > 0;
+            return ((Double)x1).compareTo((Double) x2) > 0;
         }
     },
     MENOR {
         @Override
         public Boolean apply(Object x1, Object x2) {
-            return ((BigDecimal)x1).compareTo((BigDecimal)x2) > 0;
+            return ((Double)x1).compareTo((Double) x2) > 0;
         }
     },
     IGUAL {
