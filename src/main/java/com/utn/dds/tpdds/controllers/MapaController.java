@@ -21,7 +21,6 @@ public class MapaController {
     public ModelAndView cargarMapa() {
         List<Transformador> transformadores = transformadorJpaRepository.findAll();
         for (Transformador transformador : transformadores) {
-            transformador.cargarDispositivosDeBaseDeDatos();
             transformador.calcularConsumoPorHoraDeTodosLosDispositivos();
         }
         ModelMap model = new ModelMap();

@@ -6,12 +6,14 @@ import com.utn.dds.tpdds.model.DispositivoInteligente;
 import com.utn.dds.tpdds.model.Hogar;
 import com.utn.dds.tpdds.model.Transformador;
 import com.utn.dds.tpdds.model.ZonaGeografica;
+import com.utn.dds.tpdds.model.reportes.ReporteConsumoPromedioPorTipoDeDispositivo;
+import com.utn.dds.tpdds.model.reportes.ReporteDeConsumoTotalPorHogar;
+import com.utn.dds.tpdds.repository.ReporteDeConsumoPromedioPorTipoDeDispositivoMongoRepository;
+import com.utn.dds.tpdds.repository.ReporteDeConsumoTotalPorHogarMongoRepository;
 import com.utn.dds.tpdds.repository.ZonaGeograficaJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -21,12 +23,15 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "/admin")
 public class AdministratorController {
 
     @Autowired ZonaGeograficaJpaRepository zonaGeograficaJpaRepository;
+    @Autowired ReporteDeConsumoTotalPorHogarMongoRepository reporteDeConsumoTotalPorHogarMongoRepository;
+    @Autowired ReporteDeConsumoPromedioPorTipoDeDispositivoMongoRepository reporteDeConsumoPromedioPorTipoDeDispositivoMongoRepository;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String index() {
@@ -57,14 +62,6 @@ public class AdministratorController {
     public ModelAndView goToReporteConsumoPorHogar(HttpServletRequest request) {
         ModelMap model = new ModelMap();
 
-        List<ZonaGeografica> zonasGeograficas = zonaGeograficaJpaRepository.findAll();
-
-        for (ZonaGeografica zonaGeografica : zonasGeograficas) {
-            for (Transformador transformador : zonaGeografica.getListaDeTransformadores()) {
-                transformador.cargarDispositivosDeBaseDeDatos();
-            }
-        }
-
         String inicio = request.getParameter("fechaInicioHogar") + " 00:00";
         String fin = request.getParameter("fechaFinHogar") + " 23:59";
 
@@ -72,36 +69,26 @@ public class AdministratorController {
         LocalDateTime fechaInicio = LocalDateTime.parse(inicio, formatter);
         LocalDateTime fechaFin = LocalDateTime.parse(fin, formatter);
 
-        List<Hogar> hogares = obtenerHogares(zonasGeograficas);
+        String id = "reporte_de_consumo_total_por_hogar_" + fechaInicio.toString() + "_" + fechaFin.toString();
 
-        model.addAttribute("hogares", hogares);
-        model.addAttribute("startDate", fechaInicio);
-        model.addAttribute("endDate", fechaFin);
+        Optional<ReporteConsumoPromedioPorTipoDeDispositivo> optionalReporteDeConsumoTotalPorHogar = reporteDeConsumoPromedioPorTipoDeDispositivoMongoRepository.findById(id);
+
+        if (optionalReporteDeConsumoTotalPorHogar.isPresent()) {
+            model.addAttribute("reporteDeConsumoTotalPorHogar", optionalReporteDeConsumoTotalPorHogar.get());
+        } else {
+            List<ZonaGeografica> zonasGeograficas = zonaGeograficaJpaRepository.findAll();
+            ReporteDeConsumoTotalPorHogar reporteDeConsumoTotalPorHogar = new ReporteDeConsumoTotalPorHogar(zonasGeograficas, fechaInicio, fechaFin);
+            model.addAttribute("reporteDeConsumoTotalPorHogar", reporteDeConsumoTotalPorHogar);
+            reporteDeConsumoTotalPorHogarMongoRepository.save(reporteDeConsumoTotalPorHogar);
+        }
+
+
         return new ModelAndView("reportes", model);
     }
 
     @RequestMapping(value = "/reportes/consumoPromedioPorTipo", method = RequestMethod.GET)
     public ModelAndView goToReporteConsumoPromedioPorTipo(HttpServletRequest request) {
         ModelMap model = new ModelMap();
-        List<ZonaGeografica> zonasGeograficas = zonaGeograficaJpaRepository.findAll();
-
-        List<Hogar> hogares = obtenerHogares(zonasGeograficas);
-        List<ClienteResidencial> clientes = new ArrayList<>();
-
-        for(Hogar hogar : hogares) {
-            clientes.add(hogar.getCliente());
-        }
-
-        List<DispositivoEstandar> dispositivoEstandars = new ArrayList<>();
-        List<DispositivoInteligente> dispositivoInteligentes = new ArrayList<>();
-
-        for (ClienteResidencial cliente : clientes) {
-            dispositivoEstandars.addAll(cliente.getDispositivosEstandars());
-            dispositivoInteligentes.addAll(cliente.getDispositivosInteligentes());
-        }
-
-        double consumoEstandar = 0;
-        double consumoInteligente = 0;
 
         String inicio = request.getParameter("fechaInicioPromedio") + " 00:00";
         String fin = request.getParameter("fechaFinPromedio") + " 23:59";
@@ -110,27 +97,20 @@ public class AdministratorController {
         LocalDateTime fechaInicio = LocalDateTime.parse(inicio, formatter);
         LocalDateTime fechaFin = LocalDateTime.parse(fin, formatter);
 
-        for (DispositivoEstandar dispositivoEstandar : dispositivoEstandars) {
-            consumoEstandar = consumoEstandar + dispositivoEstandar.cantidadDeEnergiaConsumidaEnUnPeriodo(fechaInicio, fechaFin).doubleValue();
+
+        String id = "reporte_de_consumo_promedio_por_tipo_de_dispositivo" + fechaInicio.toString() + "_" + fechaFin.toString();
+
+        Optional<ReporteConsumoPromedioPorTipoDeDispositivo> optionalReporteConsumoPromedioPorTipoDeDispositivo = reporteDeConsumoPromedioPorTipoDeDispositivoMongoRepository.findById(id);
+
+        if (optionalReporteConsumoPromedioPorTipoDeDispositivo.isPresent()) {
+            model.addAttribute("reporteConsumoPromedioPorTipoDeDispositivo", optionalReporteConsumoPromedioPorTipoDeDispositivo.get());
+        } else {
+            List<ZonaGeografica> zonasGeograficas = zonaGeograficaJpaRepository.findAll();
+            ReporteConsumoPromedioPorTipoDeDispositivo reporteConsumoPromedioPorTipoDeDispositivo = new ReporteConsumoPromedioPorTipoDeDispositivo(zonasGeograficas, fechaInicio, fechaFin);
+            model.addAttribute("reporteConsumoPromedioPorTipoDeDispositivo", reporteConsumoPromedioPorTipoDeDispositivo);
+            reporteDeConsumoPromedioPorTipoDeDispositivoMongoRepository.save(reporteConsumoPromedioPorTipoDeDispositivo);
         }
 
-        for (DispositivoInteligente dispositivoInteligente : dispositivoInteligentes) {
-            consumoInteligente = consumoInteligente + dispositivoInteligente.cantidadDeEnergiaConsumidaEnUnPeriodo(fechaInicio, fechaFin).doubleValue();
-        }
-
-        double consumoPromedioEstandar = 0;
-        double consumoPromedioInteligente = 0;
-
-        if(dispositivoEstandars.size() > 0) {
-            consumoPromedioEstandar = consumoEstandar / dispositivoEstandars.size();
-        }
-
-        if(dispositivoInteligentes.size() > 0) {
-            consumoPromedioInteligente = consumoInteligente / dispositivoInteligentes.size();
-        }
-
-        model.addAttribute("consumoPromedioEstandar",consumoPromedioEstandar);
-        model.addAttribute("consumoPromedioInteligente",consumoPromedioInteligente);
         return new ModelAndView("reportes", model);
     }
 
@@ -142,10 +122,7 @@ public class AdministratorController {
         List<Transformador> transformadores = new ArrayList<>();
 
         for (ZonaGeografica zonaGeografica : zonasGeograficas) {
-            for (Transformador transformador : zonaGeografica.getListaDeTransformadores()) {
-                transformador.cargarDispositivosDeBaseDeDatos();
-                transformadores.add(transformador);
-            }
+            transformadores.addAll(zonaGeografica.getListaDeTransformadores());
         }
 
         String inicio = request.getParameter("fechaInicioTransformador") + " 00:00";
@@ -159,18 +136,5 @@ public class AdministratorController {
         model.addAttribute("endTime",fechaFin);
         model.addAttribute("transformadores",transformadores);
         return new ModelAndView("reportes", model);
-    }
-
-    private List<Hogar> obtenerHogares(List<ZonaGeografica> zonasGeograficas) {
-        List<Hogar> hogares = new ArrayList<>();
-
-        for (ZonaGeografica zonaGeografica : zonasGeograficas) {
-            for (Transformador transformador : zonaGeografica.getListaDeTransformadores()) {
-                transformador.cargarDispositivosDeBaseDeDatos();
-                hogares.addAll(transformador.getListaDeHogares());
-            }
-        }
-
-        return hogares;
     }
 }

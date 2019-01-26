@@ -26,21 +26,21 @@
     </form>
 
 
-    <div th:if="${hogares != null}">
+    <div th:if="${reporteDeConsumoTotalPorHogar != null}">
         <table style="width:70%; margin-left:15%; margin-right:15%; text-align:center; background-color:snow; border: 1px solid black;">
             <tr>
                 <th style="border: 1px solid black; text-align:center; ">Hogar</th>
                 <th style="border: 1px solid black; text-align:center; ">Consumo</th>
             </tr>
-            <tr th:each="hogar : ${hogares}">
-                <td style="border: 1px solid black;" th:text="${hogar.getCliente().getNombre()}"></td>
-                <td style="border: 1px solid black;" th:text="${hogar.getCliente().calcularConsumoEnUnPeriodo(startDate, endDate)}"></td>
+            <tr th:each="map : ${reporteDeConsumoTotalPorHogar.mapaDeNombreYConsumo}">
+                <td style="border: 1px solid black;" th:text="${map.key}"></td>
+                <td style="border: 1px solid black;" th:text="${map.value}"></td>
             </tr>
         </table>
     </div>
 
 
-    <div th:if="${consumoPromedioEstandar != null || consumoPromedioEstandar != null}">
+    <div th:if="${reporteConsumoPromedioPorTipoDeDispositivo != null}">
         <h4>Consumo Promedio por Tipo de Dispositivo</h4>
         <table style="width:70%; margin-left:15%; margin-right:15%; text-align:center; background-color:snow; border: 1px solid black;">
             <tr>
@@ -48,8 +48,8 @@
                 <th style="border: 1px solid black; text-align:center; ">Inteligente</th>
             </tr>
             <tr>
-                <td style="border: 1px solid black;">${consumoPromedioEstandar}</td>
-                <td style="border: 1px solid black;">${consumoPromedioInteligente}</td>
+                <td style="border: 1px solid black;" th:text="${reporteConsumoPromedioPorTipoDeDispositivo.consumoPromedioEstandar}"></td>
+                <td style="border: 1px solid black;" th:text="${reporteConsumoPromedioPorTipoDeDispositivo.consumoPromedioInteligente}"></td>
             </tr>
         </table>
     </div>
