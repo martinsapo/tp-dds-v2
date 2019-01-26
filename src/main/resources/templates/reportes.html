@@ -54,15 +54,15 @@
         </table>
     </div>
 
-    <div th:if="${transformadores != null}">
+    <div th:if="${reporteConsumoPorTransformador != null}">
         <table style="width:70%; margin-left:15%; margin-right:15%; text-align:center; background-color:snow; border: 1px solid black;">
             <tr>
                 <th style="border: 1px solid black; text-align:center; ">Transformador</th>
                 <th style="border: 1px solid black; text-align:center; ">Consumo</th>
             </tr>
-            <tr th:each="transformador : ${transformadores}">
-                <td style="border: 1px solid black;" th:text="${transformador.getId()}"></td>
-                <td style="border: 1px solid black;" th:text="${transformador.calcularConsumoEnUnPeriodo(startTime, endTime)}"></td>
+            <tr th:each="map : ${reporteConsumoPorTransformador.mapaDeIdYConsumo}">
+                <td style="border: 1px solid black;" th:text="${map.key}"></td>
+                <td style="border: 1px solid black;" th:text="${map.value}"></td>
             </tr>
         </table>
     </div>

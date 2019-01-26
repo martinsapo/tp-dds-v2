@@ -31,7 +31,7 @@ public class ReporteConsumoPromedioPorTipoDeDispositivo {
     public LocalDateTime fechaFin;
 
     public ReporteConsumoPromedioPorTipoDeDispositivo(List<ZonaGeografica> zonaGeograficas, LocalDateTime fechaInicio, LocalDateTime fechaFin) {
-        this.documentId = "reporte_de_consumo_promedio_por_tipo_de_dispositivo" + fechaInicio.toString() + "_" + fechaFin.toString();
+        this.documentId = "reporte_de_consumo_promedio_por_tipo_de_dispositivo_" + fechaInicio.toString() + "_" + fechaFin.toString();
 
         double consumoEstandar = 0;
         double consumoInteligente = 0;
@@ -81,5 +81,13 @@ public class ReporteConsumoPromedioPorTipoDeDispositivo {
         }
 
         return hogares;
+    }
+
+    @Override public String toString() {
+        return "ReporteConsumoPromedioPorTipoDeDispositivo{" + "documentId='"
+                + documentId + '\'' + ", consumoPromedioEstandar="
+                + consumoPromedioEstandar + ", consumoPromedioInteligente="
+                + consumoPromedioInteligente + ", fechaInicio=" + fechaInicio
+                + ", fechaFin=" + fechaFin + '}';
     }
 }

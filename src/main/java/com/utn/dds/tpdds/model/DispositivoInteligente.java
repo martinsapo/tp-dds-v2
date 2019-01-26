@@ -112,39 +112,57 @@ public class DispositivoInteligente extends Dispositivo implements Serializable{
 
         ArrayList<RegistroDeCambioDeEstadoDeDispositivo> registrosQueSucedieronEnLasUltimasHoras = filtrarListaDeRegistrosEntreDosFechas(startTime, endTime);
 
-        int indexStart = -1;
-        for(int i = 0; i < registrosDeCambioDeEstadoDeDispositivo.size(); i++) {
-            if(registrosDeCambioDeEstadoDeDispositivo.get(i).getTimestamp().isBefore(registrosQueSucedieronEnLasUltimasHoras.get(0).getTimestamp())) {
-                indexStart = i;
-            }
-        }
+        if (registrosQueSucedieronEnLasUltimasHoras.size() > 0) {
 
-        int indexEnd = -1;
-        for(int i = registrosDeCambioDeEstadoDeDispositivo.size() - 1; i >= 0; i--) {
-            if(registrosDeCambioDeEstadoDeDispositivo.get(i).getTimestamp().isAfter(registrosQueSucedieronEnLasUltimasHoras.get(registrosQueSucedieronEnLasUltimasHoras.size()-1).getTimestamp())) {
-                indexEnd = i;
+            int indexStart = -1;
+            for (int i = 0; i < registrosDeCambioDeEstadoDeDispositivo.size(); i++) {
+                if (registrosDeCambioDeEstadoDeDispositivo.get(i).getTimestamp()
+                        .isBefore(registrosQueSucedieronEnLasUltimasHoras.get(0)
+                                .getTimestamp())) {
+                    indexStart = i;
+                }
             }
-        }
 
-        if (indexStart != -1) {
-            registrosQueSucedieronEnLasUltimasHoras.add(0, registrosDeCambioDeEstadoDeDispositivo.get(indexStart));
-            if(registrosQueSucedieronEnLasUltimasHoras.get(0).getTimestamp().isBefore(startTime)) {
-                registrosQueSucedieronEnLasUltimasHoras.get(0).setTimestamp(startTime);
+            int indexEnd = -1;
+            for (int i = registrosDeCambioDeEstadoDeDispositivo.size() - 1;
+                 i >= 0; i--) {
+                if (registrosDeCambioDeEstadoDeDispositivo.get(i).getTimestamp()
+                        .isAfter(registrosQueSucedieronEnLasUltimasHoras
+                                .get(registrosQueSucedieronEnLasUltimasHoras.size()
+                                        - 1).getTimestamp())) {
+                    indexEnd = i;
+                }
             }
-        }
 
-        if (indexEnd != -1) {
-            registrosQueSucedieronEnLasUltimasHoras.add(registrosDeCambioDeEstadoDeDispositivo.get(indexEnd));
-            if(registrosQueSucedieronEnLasUltimasHoras.get(registrosQueSucedieronEnLasUltimasHoras.size()-1).getTimestamp().isAfter(endTime)) {
-                registrosQueSucedieronEnLasUltimasHoras.get(registrosQueSucedieronEnLasUltimasHoras.size()-1).setTimestamp(endTime);
+            if (indexStart != -1) {
+                registrosQueSucedieronEnLasUltimasHoras.add(0,
+                        registrosDeCambioDeEstadoDeDispositivo.get(indexStart));
+                if (registrosQueSucedieronEnLasUltimasHoras.get(0).getTimestamp().isBefore(startTime)) {
+                    registrosQueSucedieronEnLasUltimasHoras.get(0).setTimestamp(startTime);
+                }
             }
-        }
 
-        for (int i = 0; i < registrosQueSucedieronEnLasUltimasHoras.size()-1; i++) {
-            RegistroDeCambioDeEstadoDeDispositivo registro = registrosQueSucedieronEnLasUltimasHoras.get(i);
-            RegistroDeCambioDeEstadoDeDispositivo siguienteRegistro = registrosQueSucedieronEnLasUltimasHoras.get(i+1);
-            if (registro.seRegistroUnEncendido()) {
-                cantidadDeHorasEncendida = cantidadDeHorasEncendida.add(siguienteRegistro.diferenciaEntreTiempos(registro));
+            if (indexEnd != -1) {
+                registrosQueSucedieronEnLasUltimasHoras
+                        .add(registrosDeCambioDeEstadoDeDispositivo.get(indexEnd));
+                if (registrosQueSucedieronEnLasUltimasHoras
+                        .get(registrosQueSucedieronEnLasUltimasHoras.size() - 1)
+                        .getTimestamp().isAfter(endTime)) {
+                    registrosQueSucedieronEnLasUltimasHoras.get(registrosQueSucedieronEnLasUltimasHoras.size()
+                            - 1).setTimestamp(endTime);
+                }
+            }
+
+            for (int i = 0;
+                 i < registrosQueSucedieronEnLasUltimasHoras.size() - 1; i++) {
+                RegistroDeCambioDeEstadoDeDispositivo registro = registrosQueSucedieronEnLasUltimasHoras
+                        .get(i);
+                RegistroDeCambioDeEstadoDeDispositivo siguienteRegistro = registrosQueSucedieronEnLasUltimasHoras
+                        .get(i + 1);
+                if (registro.seRegistroUnEncendido()) {
+                    cantidadDeHorasEncendida = cantidadDeHorasEncendida
+                            .add(siguienteRegistro.diferenciaEntreTiempos(registro));
+                }
             }
         }
 

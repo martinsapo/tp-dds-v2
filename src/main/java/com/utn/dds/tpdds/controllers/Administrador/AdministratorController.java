@@ -1,13 +1,11 @@
 package com.utn.dds.tpdds.controllers.Administrador;
 
-import com.utn.dds.tpdds.model.ClienteResidencial;
-import com.utn.dds.tpdds.model.DispositivoEstandar;
-import com.utn.dds.tpdds.model.DispositivoInteligente;
 import com.utn.dds.tpdds.model.Hogar;
-import com.utn.dds.tpdds.model.Transformador;
 import com.utn.dds.tpdds.model.ZonaGeografica;
+import com.utn.dds.tpdds.model.reportes.ReporteConsumoPorTransformador;
 import com.utn.dds.tpdds.model.reportes.ReporteConsumoPromedioPorTipoDeDispositivo;
 import com.utn.dds.tpdds.model.reportes.ReporteDeConsumoTotalPorHogar;
+import com.utn.dds.tpdds.repository.ReporteDeConsumoPorTransformadorMongoRepository;
 import com.utn.dds.tpdds.repository.ReporteDeConsumoPromedioPorTipoDeDispositivoMongoRepository;
 import com.utn.dds.tpdds.repository.ReporteDeConsumoTotalPorHogarMongoRepository;
 import com.utn.dds.tpdds.repository.ZonaGeograficaJpaRepository;
@@ -32,6 +30,7 @@ public class AdministratorController {
     @Autowired ZonaGeograficaJpaRepository zonaGeograficaJpaRepository;
     @Autowired ReporteDeConsumoTotalPorHogarMongoRepository reporteDeConsumoTotalPorHogarMongoRepository;
     @Autowired ReporteDeConsumoPromedioPorTipoDeDispositivoMongoRepository reporteDeConsumoPromedioPorTipoDeDispositivoMongoRepository;
+    @Autowired ReporteDeConsumoPorTransformadorMongoRepository reporteDeConsumoPorTransformadorMongoRepository;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String index() {
@@ -98,7 +97,7 @@ public class AdministratorController {
         LocalDateTime fechaFin = LocalDateTime.parse(fin, formatter);
 
 
-        String id = "reporte_de_consumo_promedio_por_tipo_de_dispositivo" + fechaInicio.toString() + "_" + fechaFin.toString();
+        String id = "reporte_de_consumo_promedio_por_tipo_de_dispositivo_" + fechaInicio.toString() + "_" + fechaFin.toString();
 
         Optional<ReporteConsumoPromedioPorTipoDeDispositivo> optionalReporteConsumoPromedioPorTipoDeDispositivo = reporteDeConsumoPromedioPorTipoDeDispositivoMongoRepository.findById(id);
 
@@ -117,13 +116,6 @@ public class AdministratorController {
     @RequestMapping(value = "/reportes/consumoPorTransformador", method = RequestMethod.GET)
     public ModelAndView goToReporteConsumoPorTransformador( HttpServletRequest request) {
         ModelMap model = new ModelMap();
-        List<ZonaGeografica> zonasGeograficas = zonaGeograficaJpaRepository.findAll();
-
-        List<Transformador> transformadores = new ArrayList<>();
-
-        for (ZonaGeografica zonaGeografica : zonasGeograficas) {
-            transformadores.addAll(zonaGeografica.getListaDeTransformadores());
-        }
 
         String inicio = request.getParameter("fechaInicioTransformador") + " 00:00";
         String fin = request.getParameter("fechaFinTransformador") + " 23:59";
@@ -132,9 +124,18 @@ public class AdministratorController {
         LocalDateTime fechaInicio = LocalDateTime.parse(inicio, formatter);
         LocalDateTime fechaFin = LocalDateTime.parse(fin, formatter);
 
-        model.addAttribute("startTime",fechaInicio);
-        model.addAttribute("endTime",fechaFin);
-        model.addAttribute("transformadores",transformadores);
+        String id = "reporte_de_consumo_por_transformador_" + fechaInicio.toString() + "_" + fechaFin.toString();
+
+        Optional<ReporteConsumoPorTransformador> optionalReporteConsumoPorTransformador = reporteDeConsumoPorTransformadorMongoRepository.findById(id);
+
+        if (optionalReporteConsumoPorTransformador.isPresent()) {
+            model.addAttribute("reporteConsumoPorTransformador", optionalReporteConsumoPorTransformador.get());
+        } else {
+            List<ZonaGeografica> zonasGeograficas = zonaGeograficaJpaRepository.findAll();
+            ReporteConsumoPorTransformador reporteConsumoPorTransformador = new ReporteConsumoPorTransformador(zonasGeograficas, fechaInicio, fechaFin);
+            model.addAttribute("reporteConsumoPorTransformador", reporteConsumoPorTransformador);
+            reporteDeConsumoPorTransformadorMongoRepository.save(reporteConsumoPorTransformador);
+        }
         return new ModelAndView("reportes", model);
     }
 }
