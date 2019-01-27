@@ -16,10 +16,6 @@
         <form class="form-signin" method="get" action="/admin/abmCatalogoDispositivos/alta/submit">
             <input type="text" id="inputNombre" name="nombre" class="form-control" placeholder="Nombre Dispositivo" required autofocus>
             <input type="text" id="inputKw" name="kwPorHora" class="form-control" placeholder="Kw por Hora" required>
-            <label>¿Es Inteligente?</label>
-            <input type="checkbox" name="inteligente"  class="form-control">
-            <label>¿Es de Bajo Consumo?</label>
-            <input type="checkbox" name="bajoconsumo" class="form-control">
 
             <div th:if="${errorMessage} != ''">
                 <label th:text="${errorMessage}"></label>

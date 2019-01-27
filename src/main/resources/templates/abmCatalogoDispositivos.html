@@ -43,15 +43,11 @@
             <tr>
                 <th>Id del item</th>
                 <th>Nombre</th>
-                <th>Es inteligente</th>
-                <th>Es bajo consumo</th>
                 <th>Consumo</th>
             </tr>
             <tr th:each="item : ${catalogo}">
                 <td th:text="${item.id}"></td>
                 <td th:text="${item.nombre}"></td>
-                <td th:text="${item.esInteligente}"></td>
-                <td th:text="${item.esBajoConsumo}"></td>
                 <td th:text="${item.consumo.toString()}"></td>
                 <td>
                     <form method="get" action="/admin/abmCatalogoDispositivos/baja/submit">
