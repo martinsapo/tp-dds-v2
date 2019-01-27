@@ -147,6 +147,19 @@ public class DispositivosABMController {
                         dispositivoInteligente.agregarRegistroDeCambioDeEstadoPersonalizado(date, EstadoDeDispositivo.valueOf(registro.get("estado").toString()));
                     }
                     dispositivoInteligenteJpaRepository.save(dispositivoInteligente);
+                } else {
+                    ClienteResidencial cliente = ((ClienteResidencial) request.getSession().getAttribute("cliente"));
+                    DispositivoInteligente dispositivoInteligente = new DispositivoInteligente(nombre, cliente, optionalItemDeCatalogoDeDispositivos.get());
+
+
+                    JSONArray registros = map.getJSONArray("registrosDeCambioDeEstado");
+                    for (int i = 0; i < registros.length(); i++) {
+                        JSONObject registro = (JSONObject) registros.get(i);
+                        LocalDateTime date = LocalDateTime.of((Integer) registro.get("ano"), (Integer) registro.get("mes"), (Integer) registro.get("dia"), (Integer) registro.get("hora"), (Integer) registro.get("minuto"));
+
+                        dispositivoInteligente.agregarRegistroDeCambioDeEstadoPersonalizado(date, EstadoDeDispositivo.valueOf(registro.get("estado").toString()));
+                    }
+                    dispositivoInteligenteJpaRepository.save(dispositivoInteligente);
                 }
             }
 

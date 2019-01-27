@@ -1,8 +1,8 @@
 {
   "inteligente": {
-    "idCliente": 1,
+    "idCliente": 2,
     "nombre": "aire acondicionado 2",
-    "idCatalogo": 1,
+    "idCatalogo": 12,
     "registrosDeCambioDeEstado": [
       {
         "ano": 2018,
