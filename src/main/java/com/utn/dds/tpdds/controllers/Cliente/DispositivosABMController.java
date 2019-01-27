@@ -3,21 +3,29 @@ package com.utn.dds.tpdds.controllers.Cliente;
 import com.utn.dds.tpdds.model.ClienteResidencial;
 import com.utn.dds.tpdds.model.DispositivoEstandar;
 import com.utn.dds.tpdds.model.DispositivoInteligente;
+import com.utn.dds.tpdds.model.EstadoDeDispositivo;
 import com.utn.dds.tpdds.model.ItemDeCatalogoDeDispositivos;
 import com.utn.dds.tpdds.repository.CatalogoDispositivosJpaRepository;
 import com.utn.dds.tpdds.repository.ClienteResidencialJpaRepository;
 import com.utn.dds.tpdds.repository.DispositivoEstandarJpaRepository;
 import com.utn.dds.tpdds.repository.DispositivoInteligenteJpaRepository;
 import com.utn.dds.tpdds.repository.DispositivoJpaRepository;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -31,7 +39,7 @@ public class DispositivosABMController {
     @Autowired CatalogoDispositivosJpaRepository catalogoDispositivosJpaRepository;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ModelAndView submitDispositivoABM(HttpServletRequest request) {
+    public ModelAndView index(HttpServletRequest request) {
         ModelMap model = new ModelMap();
         ClienteResidencial cliente = ((ClienteResidencial) request.getSession().getAttribute("cliente"));
         List<DispositivoInteligente> dispositivosInteligentesDelCliente = dispositivoInteligenteJpaRepository.findDispositivoInteligentesByDueno(cliente);
@@ -101,6 +109,68 @@ public class DispositivosABMController {
         List<ItemDeCatalogoDeDispositivos> items = catalogoDispositivosJpaRepository.findAll();
         model.addAttribute("catalogo", items);
         return new ModelAndView("dispositivosEstandarAlta", model);
+    }
+
+    @RequestMapping(value = "/altaDesdeArchivo", method = RequestMethod.GET)
+    public String altaDesdeArchivo() {
+        return "cargaDeDispositivoDesdeArchivo";
+    }
+
+    @RequestMapping(value = "/altaDesdeArchivo/submit", method = RequestMethod.POST)
+    public ModelAndView altaDesdeArchivoSubmit(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes,HttpServletRequest request) {
+
+        if (file.isEmpty()) {
+            redirectAttributes.addFlashAttribute("message", "Seleccione un archivo a cargar");
+            return new ModelAndView("redirect:/cliente/altaDesdeArchivo");
+        }
+
+        try {
+            String content = new String(file.getBytes(), "UTF-8");
+            JSONObject jsonObj = new JSONObject(content);
+            if (jsonObj.has("inteligente")) {
+                JSONObject map = (JSONObject) jsonObj.get("inteligente");
+                Integer clienteId = (Integer) map.get("idCliente");
+                Optional<ClienteResidencial> optionalClienteResidencial = clienteResidencialJPARepository.findById(clienteId);
+                Integer catalogoId = (Integer) map.get("idCatalogo");
+                Optional<ItemDeCatalogoDeDispositivos> optionalItemDeCatalogoDeDispositivos = catalogoDispositivosJpaRepository.findById(catalogoId);
+                String nombre = (String) map.get("nombre");
+
+                if (optionalClienteResidencial.isPresent() && optionalItemDeCatalogoDeDispositivos.isPresent()) {
+                    DispositivoInteligente dispositivoInteligente = new DispositivoInteligente(nombre, optionalClienteResidencial.get(), optionalItemDeCatalogoDeDispositivos.get());
+
+
+                    JSONArray registros = map.getJSONArray("registrosDeCambioDeEstado");
+                    for (int i = 0; i < registros.length(); i++) {
+                        JSONObject registro = (JSONObject) registros.get(i);
+                        LocalDateTime date = LocalDateTime.of((Integer) registro.get("ano"), (Integer) registro.get("mes"), (Integer) registro.get("dia"), (Integer) registro.get("hora"), (Integer) registro.get("minuto"));
+
+                        dispositivoInteligente.agregarRegistroDeCambioDeEstadoPersonalizado(date, EstadoDeDispositivo.valueOf(registro.get("estado").toString()));
+                    }
+                    dispositivoInteligenteJpaRepository.save(dispositivoInteligente);
+                }
+            }
+
+            if (jsonObj.has("estandar")) {
+                Map map = (Map) jsonObj.get("estandar");
+                Integer clienteId = (Integer) map.get("idCliente");
+                Optional<ClienteResidencial> optionalClienteResidencial = clienteResidencialJPARepository.findById(clienteId);
+                Integer catalogoId = (Integer) map.get("idCatalogo");
+                Optional<ItemDeCatalogoDeDispositivos> optionalItemDeCatalogoDeDispositivos = catalogoDispositivosJpaRepository.findById(catalogoId);
+                String nombre = (String) map.get("nombre");
+                Double consumo = (Double) map.get("consumo");
+
+                if (optionalClienteResidencial.isPresent() && optionalItemDeCatalogoDeDispositivos.isPresent()) {
+                    DispositivoEstandar dispositivoEstandar = new DispositivoEstandar(nombre, optionalClienteResidencial.get(),consumo, optionalItemDeCatalogoDeDispositivos.get());
+                    dispositivoEstandarJpaRepository.save(dispositivoEstandar);
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ModelAndView("redirect:/cliente/altaDesdeArchivo");
+        }
+
+        return new ModelAndView("redirect:/cliente/abmDispositivos");
     }
 
     @RequestMapping(value = "/altaInteligente/submit", method = RequestMethod.GET)

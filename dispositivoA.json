@@ -1,0 +1,33 @@
+{
+  "inteligente": {
+    "idCliente": 1,
+    "nombre": "aire acondicionado 2",
+    "idCatalogo": 1,
+    "registrosDeCambioDeEstado": [
+      {
+        "ano": 2018,
+        "mes": 11,
+        "dia": 12,
+        "hora": 0,
+        "minuto": 0,
+        "estado": "PRENDIDO"
+      },
+      {
+        "ano": 2018,
+        "mes": 11,
+        "dia": 13,
+        "hora": 0,
+        "minuto": 0,
+        "estado": "APAGADO"
+      },
+      {
+        "ano": 2018,
+        "mes": 11,
+        "dia": 14,
+        "hora": 0,
+        "minuto": 0,
+        "estado": "PRENDIDO"
+      }
+    ]
+  }
+}
