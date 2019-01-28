@@ -84,10 +84,14 @@ public class FillDataTest {
         ClienteResidencial clienteResidencial = new ClienteResidencial("Martin",
                 "Saposnic", "gaona", "martinsapo", "123",
                 new Documento("40136136", TipoDeDocumento.DNI), "123123123", new Categoria(100.0));
-        Hogar hogar = new Hogar(clienteResidencial, 1.0, 1.0, transformador);
+
+        ClienteResidencial otroCliente =  new ClienteResidencial("Eric", "Cano", "san martin", "ecano", "1234",
+                new Documento("367282827", TipoDeDocumento.DNI), "1364748373", new Categoria(10.0));
+
+        Hogar hogar = new Hogar(otroCliente, 1.0, 1.0, transformador);
 
         DispositivoInteligente dispositivoInteligente = new DispositivoInteligente(
-                "nombre", clienteResidencial, disp9);
+                "nombre", otroCliente, disp9);
 
 
         dispositivoInteligente.agregarRegistroDeCambioDeEstadoPersonalizado(
@@ -106,9 +110,9 @@ public class FillDataTest {
         Regla regla = new Regla(condicion, accion, dispositivoInteligente,
                 sensor);
 
-        clienteResidencial.addDispositivo(dispositivoInteligente);
+        otroCliente.addDispositivo(dispositivoInteligente);
 
-        clienteResidencialJPARepository.save(clienteResidencial);
+        clienteResidencialJPARepository.save(otroCliente);
 
         Administrador administrador = new Administrador();
         administrador.setPassword("123");

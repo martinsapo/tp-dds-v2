@@ -5,53 +5,57 @@
     <meta name="robots" content="noindex, nofollow">
 
     <title>Cliente</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link href="css/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.css">
+    <link rel="stylesheet" href="js/bootstrap.min.js">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-    <h4><span class="glyphicon glyphicon-user white" th:text="${session.username}">  </span></h4>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div id="navbarNavDropdown" class="navbar-collapse">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link">Bienvenido!</a>
-            </li>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+
+        <div class="navbar-header">
+            <ul class="nav navbar-nav">
+                <li class="active"> <a class="navbar-brand" href="#"> <span class="glyphicon glyphicon-user white" th:inline="text" >  </span>   ¡Bienvenido [[${session.username}]]!</a></li>
+            </ul>
+        </div>
+
+        <ul class="nav navbar-nav">
+            <li><a href="/mapa/">Mapa </a></li>
         </ul>
-        <ul class="navbar-nav">
-            <li class="nav-item float-right">
-                <h4><a class="nav-link" href="/logout">Salir</a></h4>
-            </li>
-        </ul>
+
+        <div class="floatright">
+            <ul class="nav navbar-nav">
+                <li><a class="avbar-brand" href="/logout">Log out  <span class="glyphicon glyphicon-log-out"></span></a>
+            </ul>
+        </div>
+
     </div>
 </nav>
 
 <div class="container">
     <div class="card card-container">
-        <form class="form-signin" method="get" action="cliente/estadoHogar">
+        <form class="form-signin" method="get" action="/cliente/estadoHogar/">
             <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Estado del Hogar</button>
         </form>
 
         <!-- Consumo de cliente luego de seleccionar un periodo -->
-        <form class="form-signin" method="get" action="/cliente/calculoDeConsumo">
+        <form class="form-signin" method="get" action="/cliente/calculoDeConsumo/">
             <button class="btn btn-lg btn-primary btn-block btn-signin " type="submit">Consumo Periodo</button>
         </form>
 
-        <form class="form-signin" method="get" action="/cliente/simplex" >
+        <form class="form-signin" method="get" action="/cliente/simplex/" >
         <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Ejecutar Simplex</button>
         </form>
 
-        <form class="form-signin" method="get" action="/cliente/abmReglas">
+        <form class="form-signin" method="get" action="/cliente/abmReglas/">
             <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">ABM Reglas</button>
         </form>
 
-        <form class="form-signin" method="get" action="/cliente/abmDispositivos">
+        <form class="form-signin" method="get" action="/cliente/abmDispositivos/">
             <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">ABM Dispositivos</button>
         </form>
     </div>
