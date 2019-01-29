@@ -5,12 +5,11 @@
     <meta name="robots" content="noindex, nofollow">
 
     <title>Cliente</title>
-    <link href="css/styles.css" rel="stylesheet" />
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/bootstrap-theme.css">
-    <link rel="stylesheet" href="js/bootstrap.min.js">
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/styles.css"  />
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.css">
+    <link rel="stylesheet" href="../js/bootstrap.min.js">
+    <script src="../js/jquery.min.js"></script>
 </head>
 <body>
 
@@ -25,6 +24,11 @@
 
         <ul class="nav navbar-nav">
             <li><a href="/mapa/">Mapa </a></li>
+            <li><a href="/cliente/estadoHogar/">Estado del hogar </a></li>
+            <li><a href="/cliente/calculoDeConsumo/">Consumo Periodo </a></li>
+            <li><a href="/cliente/simplex/">Ejecutar Simplex </a></li>
+            <li><a href="/cliente/abmReglas/">ABM Reglas </a></li>
+            <li><a href="/cliente/abmDispositivos/">ABM Dispositivos </a></li>
         </ul>
 
         <div class="floatright">
@@ -37,29 +41,30 @@
 </nav>
 
 <div class="container">
-    <div class="card card-container">
-        <form class="form-signin" method="get" action="/cliente/estadoHogar/">
-            <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Estado del Hogar</button>
-        </form>
-
-        <!-- Consumo de cliente luego de seleccionar un periodo -->
-        <form class="form-signin" method="get" action="/cliente/calculoDeConsumo/">
-            <button class="btn btn-lg btn-primary btn-block btn-signin " type="submit">Consumo Periodo</button>
-        </form>
-
-        <form class="form-signin" method="get" action="/cliente/simplex/" >
-        <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Ejecutar Simplex</button>
-        </form>
-
-        <form class="form-signin" method="get" action="/cliente/abmReglas/">
-            <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">ABM Reglas</button>
-        </form>
-
-        <form class="form-signin" method="get" action="/cliente/abmDispositivos/">
-            <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">ABM Dispositivos</button>
-        </form>
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="well well-sm">
+                <div class="row">
+                    <div class="col-sm-6 col-md-4">
+                        <img src="http://placehold.it/380x500" alt="" class="img-rounded img-responsive" />
+                    </div>
+                    <div class="col-sm-6 col-md-8">
+                        <h4 th:inline="text"> [[${cliente.nombre}]]</h4>
+                        <small><cite title="Domicilio" th:inline="text">[[${cliente.domicilio}]] <i class="glyphicon glyphicon-map-marker">
+                        </i></cite></small>
+                        <p>
+                            <i class="glyphicon glyphicon-envelope"th:inline="text"></i>  [[${cliente.telefono}]]
+                            <br />
+                            <i class="glyphicon glyphicon-globe"></i><a href="http://www.jquery2dotnet.com" th:inline="text">  [[${cliente.documento.numeroDeDocumento}]]</a>
+                            <br />
+                            <i class="glyphicon glyphicon-gift"th:inline="text"></i>  [[${cliente.fechaDeAlta}]]</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
 
 </body>
 </html>

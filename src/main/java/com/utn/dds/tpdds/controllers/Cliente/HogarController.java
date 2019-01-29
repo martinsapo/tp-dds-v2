@@ -24,7 +24,7 @@ public class HogarController {
 
         modelAndView.addObject("dispositivos", cliente.getDispositivosInteligentes());
         modelAndView.addObject("reglas", cliente.obtenerReglasDeTodosLosDispositivos());
-        modelAndView.addObject("consumo", cliente.obtenerTodosLosConsumosDeTodosLosDispositivosEnElUltimoMes());
+        modelAndView.addObject("consumo", cliente.obtenerTodosLosConsumosDeTodosLosDispositivosEnElUltimoMes().toString());
         modelAndView.addObject("mediciones", cliente.obtenerTodasLasMedicionesDeTodosLosDispositivos());
         return modelAndView;
     }
