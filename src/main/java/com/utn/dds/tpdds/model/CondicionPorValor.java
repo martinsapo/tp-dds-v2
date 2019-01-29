@@ -1,19 +1,22 @@
 package com.utn.dds.tpdds.model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.Entity;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class CondicionPorValor extends Condicion{
 
-    Double medicionEsperada;
+    private Double medicionEsperada;
 
     public CondicionPorValor(Double medicionEsperada, Operador operator) {
         super(operator);
         this.medicionEsperada = medicionEsperada;
-    }
-
-    public CondicionPorValor() {
-        super();
     }
 
     @Override Boolean applies(DispositivoInteligente dispositivoInteligente, Sensor sensor) {
@@ -23,8 +26,7 @@ public class CondicionPorValor extends Condicion{
         return false;
     }
 
-    @Override
-    public Object getMedicion() {
+    @Override public Object getMedicion() {
         return medicionEsperada;
     }
 }

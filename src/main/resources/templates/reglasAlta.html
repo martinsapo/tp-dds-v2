@@ -31,6 +31,7 @@
             <option value="valor">Por valor</option>
             <option value="binaria">Binaria</option>
             <option value="consumo">Por consumo mensual</option>
+            <option value="uso">Por uso mensual</option>
         </select>
         <select name="operador">
             <option th:each="operador : ${operadores}" th:value="${operador.name()}" th:text="${operador.name()}"></option>

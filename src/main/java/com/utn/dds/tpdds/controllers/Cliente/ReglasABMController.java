@@ -6,6 +6,7 @@ import com.utn.dds.tpdds.model.ClienteResidencial;
 import com.utn.dds.tpdds.model.Condicion;
 import com.utn.dds.tpdds.model.CondicionBinaria;
 import com.utn.dds.tpdds.model.CondicionDeConsumoMensual;
+import com.utn.dds.tpdds.model.CondicionDeUsoMensual;
 import com.utn.dds.tpdds.model.CondicionPorValor;
 import com.utn.dds.tpdds.model.DispositivoInteligente;
 import com.utn.dds.tpdds.model.Operador;
@@ -54,14 +55,25 @@ public class ReglasABMController {
 
     @RequestMapping(value = "/alta/submit", method = RequestMethod.GET)
     public ModelAndView altaSubmit(@RequestParam("accion") String accionParam, @RequestParam("dispositivo") String dispositivoId, @RequestParam("tipoCondicion") String tipoCondicion, @RequestParam("operador") String operador, @RequestParam("value") String valor) {
-        Condicion condicion;
+        Condicion condicion = null;
 
-        if (tipoCondicion == "valor") {
-            condicion = new CondicionPorValor(new Double(valor), Operador.valueOf(operador));
-        } else if (tipoCondicion == "Binaria") {
-            condicion = new CondicionBinaria(Boolean.valueOf(valor), Operador.valueOf(operador));
-        } else {
-            condicion = new CondicionDeConsumoMensual(new Double(valor), Operador.valueOf(operador));
+        switch (tipoCondicion) {
+        case "valor":
+            condicion = new CondicionPorValor(new Double(valor),
+                    Operador.valueOf(operador));
+            break;
+        case "binaria":
+            condicion = new CondicionBinaria(Boolean.valueOf(valor),
+                    Operador.valueOf(operador));
+            break;
+        case "consumo":
+            condicion = new CondicionDeConsumoMensual(new Double(valor),
+                    Operador.valueOf(operador));
+            break;
+        case "uso":
+            condicion = new CondicionDeUsoMensual(new Integer(valor),
+                    Operador.valueOf(operador));
+            break;
         }
         Accion accion = new Accion(AccionesPosibles.valueOf(accionParam));
 

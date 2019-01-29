@@ -1,8 +1,15 @@
 package com.utn.dds.tpdds.model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.Entity;
 
 @Entity
+@Setter
+@Getter
+@NoArgsConstructor
 public class CondicionBinaria extends Condicion{
 
     private Boolean medicionEsperada;
@@ -10,10 +17,6 @@ public class CondicionBinaria extends Condicion{
     public CondicionBinaria(Boolean medicionEsperada, Operador operator) {
         super(operator);
         this.medicionEsperada = medicionEsperada;
-    }
-
-    public CondicionBinaria() {
-        super();
     }
 
     @Override

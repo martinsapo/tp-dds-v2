@@ -30,6 +30,7 @@
                     <th>Nombre del item del catalogo</th>
                     <th>Estado del dispositivo</th>
                     <th>Consumo en el ultimo mes</th>
+                    <th>Uso en el ultimo mes</th>
                     <th></th>
                     <th></th>
                     <th>Eliminar</th>
@@ -41,6 +42,7 @@
                     <td th:text="${dispositivoInteligente.itemDeCatalogoDeDispositivos.getNombre()}"></td>
                     <td th:text="${dispositivoInteligente.obtenerEstadoDelDispositivo().name()}"></td>
                     <td th:text="${dispositivoInteligente.cantidadDeEnergiaConsumidaEnElUltimoMes().doubleValue()}"></td>
+                    <td th:text="${dispositivoInteligente.cantidadDeHorasUsadoEnElUltimoMes().doubleValue()}"></td>
                     <td th:if="${!dispositivoInteligente.obtenerEstadoDelDispositivo().name().equals('PRENDIDO')}">
                         <form method="get" action="/cliente/abmDispositivos/encender">
                             <input type="hidden" name="id" th:value="${dispositivoInteligente.id}"/>

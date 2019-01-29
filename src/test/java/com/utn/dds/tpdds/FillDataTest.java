@@ -3,6 +3,7 @@ package com.utn.dds.tpdds;
 import com.utn.dds.tpdds.model.Accion;
 import com.utn.dds.tpdds.model.AccionesPosibles;
 import com.utn.dds.tpdds.model.Administrador;
+import com.utn.dds.tpdds.model.CondicionDeUsoMensual;
 import com.utn.dds.tpdds.model.ItemDeCatalogoDeDispositivos;
 import com.utn.dds.tpdds.model.Categoria;
 import com.utn.dds.tpdds.model.ClienteResidencial;
@@ -97,11 +98,10 @@ public class FillDataTest {
         dispositivoInteligente.agregarRegistroDeCambioDeEstadoPersonalizado(
                 LocalDateTime.of(2018, 11, 14, 0, 0), EstadoDeDispositivo.PRENDIDO);
 
-        Sensor sensor = new SensorDeValores(dispositivoInteligente,
-                "sensor de temperatura");
+        Sensor sensor = new SensorDeValores(dispositivoInteligente, "sensor de temperatura");
 
-        Accion accion = new Accion(AccionesPosibles.PRENDER);
-        CondicionPorValor condicion = new CondicionPorValor(1.0, Operador.MAYOR);
+        Accion accion = new Accion(AccionesPosibles.APAGAR);
+        CondicionDeUsoMensual condicion = new CondicionDeUsoMensual(360, Operador.MAYOR);
 
         Regla regla = new Regla(condicion, accion, dispositivoInteligente,
                 sensor);

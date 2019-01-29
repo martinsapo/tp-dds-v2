@@ -44,6 +44,9 @@ public class DispositivoInteligente extends Dispositivo implements Serializable{
     public DispositivoInteligente(String nombre, ClienteResidencial dueno, ItemDeCatalogoDeDispositivos itemDeCatalogoDeDispositivos) {
         super(nombre, dueno, itemDeCatalogoDeDispositivos);
         agregarRegistroARegistrosDeCambioDeEstadoDeDispositivo(EstadoDeDispositivo.APAGADO);
+        agregarSensor(new SensorDeValores());
+        driver = new AireAcondicionado();
+        driver.setDispositivoInteligente(this);
     }
 
     public DispositivoInteligente(DispositivoEstandar dispositivo) {
@@ -65,7 +68,7 @@ public class DispositivoInteligente extends Dispositivo implements Serializable{
       this.nombreDelDispositivo = nombre;
   }
 
-  private void actualizarState() {
+  public void actualizarState() {
       if (obtenerEstadoDelDispositivo() == EstadoDeDispositivo.PRENDIDO) {
           state = new StateEncendido();
       } else if (obtenerEstadoDelDispositivo() == EstadoDeDispositivo.APAGADO){
@@ -105,8 +108,70 @@ public class DispositivoInteligente extends Dispositivo implements Serializable{
 
 
     public BigDecimal cantidadDeEnergiaConsumidaEnUnPeriodo(LocalDateTime startTime, LocalDateTime endTime) {
+        BigDecimal cantidadDeHorasEncendida = cantidadDeHorasUsadoEnUnPeriodo(startTime, endTime);
+
+        return cantidadDeHorasEncendida.multiply(getItemDeCatalogoDeDispositivos().getConsumo());
+    }
+
+    public BigDecimal cantidadDeEnergiaConsumidaEnElUltimoMes() {
+        LocalDateTime initial = LocalDateTime.now();
+        LocalDateTime start = initial.withDayOfMonth(1);
+        LocalDateTime end = initial.withDayOfMonth(30);
+        return cantidadDeEnergiaConsumidaEnUnPeriodo(start, end);
+    }
+
+    public void agregarRegistroARegistrosDeCambioDeEstadoDeDispositivo(EstadoDeDispositivo estado) {
+        registrosDeCambioDeEstadoDeDispositivo.add(new RegistroDeCambioDeEstadoDeDispositivo(LocalDateTime.now(), estado, this));
+        ejecutarReglas();
+    }
+
+    public void ejecutarReglas() {
+        List<Accion> accionesARealizar = new ArrayList<>();
+        for (Regla regla : reglas) {
+            accionesARealizar.add(regla.devolverAccionSiAplica(this));
+        }
+        for (Accion accion : accionesARealizar){
+            accion.apply(driver);
+        }
+    }
+
+    public void agregarSensor(Sensor sensor) {
+        this.sensores.add(sensor);
+    }
+
+    void agregarRegla(Regla regla) {
+        reglas.add(regla);
+    }
+
+    public ArrayList<RegistroDeCambioDeEstadoDeDispositivo> filtrarListaDeRegistrosEntreDosFechas(LocalDateTime startTime, LocalDateTime endTime) {
+        ArrayList<RegistroDeCambioDeEstadoDeDispositivo> registrosQueSucedieronEnLasUltimasHoras = new ArrayList<>();
+        for (RegistroDeCambioDeEstadoDeDispositivo registro : registrosDeCambioDeEstadoDeDispositivo) {
+            if (registro.registroSucedioEntreCiertasFechas(startTime, endTime)) {
+                registrosQueSucedieronEnLasUltimasHoras.add(registro);
+
+            }
+        }
+
+        return registrosQueSucedieronEnLasUltimasHoras;
+    }
+
+    public List<Medicion> obtenerTodasLasMediciones() {
+        List<Medicion> mediciones = new ArrayList<>();
+        for (Sensor sensor : getSensores()) {
+            mediciones.addAll(sensor.mediciones);
+        }
+        return mediciones;
+    }
+
+    public BigDecimal cantidadDeHorasUsadoEnElUltimoMes() {
+        LocalDateTime initial = LocalDateTime.now();
+        LocalDateTime start = initial.withDayOfMonth(1);
+        LocalDateTime end = initial.withDayOfMonth(30);
+        return cantidadDeHorasUsadoEnUnPeriodo(start, end);
+    }
+
+    private BigDecimal cantidadDeHorasUsadoEnUnPeriodo(LocalDateTime startTime, LocalDateTime endTime) {
         BigDecimal cantidadDeHorasEncendida = new BigDecimal(0);
-        BigDecimal energiaConsumidaEnPeriodo;
 
         Collections.sort(registrosDeCambioDeEstadoDeDispositivo, new RegistroDeCambioDeEstadoComparator());
 
@@ -166,58 +231,6 @@ public class DispositivoInteligente extends Dispositivo implements Serializable{
             }
         }
 
-        energiaConsumidaEnPeriodo= cantidadDeHorasEncendida.multiply(getItemDeCatalogoDeDispositivos().getConsumo());
-
-        return energiaConsumidaEnPeriodo;
-    }
-
-    public BigDecimal cantidadDeEnergiaConsumidaEnElUltimoMes() {
-        LocalDateTime initial = LocalDateTime.now();
-        LocalDateTime start = initial.withDayOfMonth(1);
-        LocalDateTime end = initial.withDayOfMonth(30);
-        return cantidadDeEnergiaConsumidaEnUnPeriodo(start, end);
-    }
-
-    public void agregarRegistroARegistrosDeCambioDeEstadoDeDispositivo(EstadoDeDispositivo estado) {
-        registrosDeCambioDeEstadoDeDispositivo.add(new RegistroDeCambioDeEstadoDeDispositivo(LocalDateTime.now(), estado, this));
-        ejecutarReglas();
-    }
-
-    public void ejecutarReglas() {
-        List<Accion> accionesARealizar = new ArrayList<>();
-        for (Regla regla : reglas) {
-            accionesARealizar.add(regla.devolverAccionSiAplica(this));
-        }
-        for (Accion accion : accionesARealizar){
-            accion.apply(driver);
-        }
-    }
-
-    public void agregarSensor(Sensor sensor) {
-        this.sensores.add(sensor);
-    }
-
-    void agregarRegla(Regla regla) {
-        reglas.add(regla);
-    }
-
-    public ArrayList<RegistroDeCambioDeEstadoDeDispositivo> filtrarListaDeRegistrosEntreDosFechas(LocalDateTime startTime, LocalDateTime endTime) {
-        ArrayList<RegistroDeCambioDeEstadoDeDispositivo> registrosQueSucedieronEnLasUltimasHoras = new ArrayList<>();
-        for (RegistroDeCambioDeEstadoDeDispositivo registro : registrosDeCambioDeEstadoDeDispositivo) {
-            if (registro.registroSucedioEntreCiertasFechas(startTime, endTime)) {
-                registrosQueSucedieronEnLasUltimasHoras.add(registro);
-
-            }
-        }
-
-        return registrosQueSucedieronEnLasUltimasHoras;
-    }
-
-    public List<Medicion> obtenerTodasLasMediciones() {
-        List<Medicion> mediciones = new ArrayList<>();
-        for (Sensor sensor : getSensores()) {
-            mediciones.addAll(sensor.mediciones);
-        }
-        return mediciones;
+        return cantidadDeHorasEncendida;
     }
 }
