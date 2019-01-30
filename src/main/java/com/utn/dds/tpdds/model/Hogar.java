@@ -59,7 +59,7 @@ public class Hogar {
         System.out.println("    Recomendacion por Dispositivo                ");
         System.out.println("-------------------------------------------------");
         for (Dispositivo dispositivo : this.cliente.dispositivos) {
-            System.out.println(dispositivo.getNombreDelDispositivo() + ": " + this.recomendacion.getPoint()[i] + " Horas");
+            System.out.println(dispositivo.getNombreDelDispositivo() + ": " + this.recomendacion.getPoint()[0] + " Horas");
             i++;
         }
         System.out.println("-------------------------------------------------");

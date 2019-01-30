@@ -1,30 +1,16 @@
 package com.utn.dds.tpdds;
 
-import com.utn.dds.tpdds.model.Accion;
-import com.utn.dds.tpdds.model.AccionesPosibles;
-import com.utn.dds.tpdds.model.Administrador;
-import com.utn.dds.tpdds.model.CondicionDeUsoMensual;
-import com.utn.dds.tpdds.model.ItemDeCatalogoDeDispositivos;
-import com.utn.dds.tpdds.model.Categoria;
-import com.utn.dds.tpdds.model.ClienteResidencial;
-import com.utn.dds.tpdds.model.CondicionPorValor;
-import com.utn.dds.tpdds.model.DispositivoInteligente;
-import com.utn.dds.tpdds.model.Documento;
-import com.utn.dds.tpdds.model.EstadoDeDispositivo;
-import com.utn.dds.tpdds.model.Hogar;
-import com.utn.dds.tpdds.model.Operador;
-import com.utn.dds.tpdds.model.Regla;
-import com.utn.dds.tpdds.model.Sensor;
-import com.utn.dds.tpdds.model.SensorDeValores;
-import com.utn.dds.tpdds.model.TipoDeDocumento;
-import com.utn.dds.tpdds.model.Transformador;
-import com.utn.dds.tpdds.model.ZonaGeografica;
+import com.utn.dds.tpdds.model.*;
 import com.utn.dds.tpdds.repository.AdministradorJpaRepository;
 import com.utn.dds.tpdds.repository.CatalogoDispositivosJpaRepository;
 import com.utn.dds.tpdds.repository.ClienteResidencialJpaRepository;
+import com.utn.dds.tpdds.repository.ReglaJpaRepository;
 import org.joda.time.DateTime;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.omg.CORBA.RepositoryIdHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -48,71 +34,65 @@ public class FillDataTest {
 
     @Test
     public void testFillData() {
-        ItemDeCatalogoDeDispositivos disp1 = new ItemDeCatalogoDeDispositivos(
-                "Aire de 2200 frigorias", new BigDecimal(1.013));
 
-        ItemDeCatalogoDeDispositivos disp2 = new ItemDeCatalogoDeDispositivos(
-                "TV de tubo fluorescente de 21",  new BigDecimal(0.075));
-        ItemDeCatalogoDeDispositivos disp3 = (new ItemDeCatalogoDeDispositivos(
-                "TV de tubo fluorescente de 29 a 34",  new BigDecimal(0.175)));
-        ItemDeCatalogoDeDispositivos disp4 = (new ItemDeCatalogoDeDispositivos("TV LCD de 40",
-                 new BigDecimal(0.18)));
-        ItemDeCatalogoDeDispositivos disp5 = (new ItemDeCatalogoDeDispositivos("TV LED de 24",
-                new BigDecimal(0.04)));
-        ItemDeCatalogoDeDispositivos disp6 = (new ItemDeCatalogoDeDispositivos("TV LED de 32",
-                new BigDecimal(0.055)));
-        ItemDeCatalogoDeDispositivos disp7 = (new ItemDeCatalogoDeDispositivos("TV LED de 40",
-                 new BigDecimal(0.08)));
+        String jsonTablaDeDispositivos = "src/test/java/json/tablaDispositivos.json";
+        persistirTablaDispositivos(jsonTablaDeDispositivos);
 
-        ItemDeCatalogoDeDispositivos disp8 = (new ItemDeCatalogoDeDispositivos(
-                "Heladera con freezer",  new BigDecimal(0.09)));
-        ItemDeCatalogoDeDispositivos disp9 = (new ItemDeCatalogoDeDispositivos(
-                "Heladera sin freezer", new BigDecimal(0.075)));
+        ItemDeCatalogoDeDispositivos disp1 = new ItemDeCatalogoDeDispositivos("Aire de 2200 frigorias", new BigDecimal(1.013));
+        ItemDeCatalogoDeDispositivos disp2 = new ItemDeCatalogoDeDispositivos("TV de tubo fluorescente de 21", new BigDecimal(0.075));
+        ItemDeCatalogoDeDispositivos disp3 = (new ItemDeCatalogoDeDispositivos("TV de tubo fluorescente de 29 a 34", new BigDecimal(0.175)));
+        ItemDeCatalogoDeDispositivos disp4 = (new ItemDeCatalogoDeDispositivos("TV LCD de 40",new BigDecimal(0.18)));
+        ItemDeCatalogoDeDispositivos disp5 = (new ItemDeCatalogoDeDispositivos("TV LED de 24",new BigDecimal(0.04)));
+        ItemDeCatalogoDeDispositivos disp6 = (new ItemDeCatalogoDeDispositivos("TV LED de 32",new BigDecimal(0.055)));
+        ItemDeCatalogoDeDispositivos disp7 = (new ItemDeCatalogoDeDispositivos("TV LED de 40",new BigDecimal(0.08)));
+        ItemDeCatalogoDeDispositivos disp8 = (new ItemDeCatalogoDeDispositivos("Heladera con freezer",  new BigDecimal(0.09)));
+        ItemDeCatalogoDeDispositivos disp9 = (new ItemDeCatalogoDeDispositivos("Heladera sin freezer", new BigDecimal(0.075)));
 
-        catalogoDispositivosJpaRepository.save(disp1);
+        //catalogoDispositivosJpaRepository.save(disp1);
         catalogoDispositivosJpaRepository.save(disp2);
-        catalogoDispositivosJpaRepository.save(disp3);
-        catalogoDispositivosJpaRepository.save(disp4);
-        catalogoDispositivosJpaRepository.save(disp5);
-        catalogoDispositivosJpaRepository.save(disp6);
+        //catalogoDispositivosJpaRepository.save(disp3);
+        //catalogoDispositivosJpaRepository.save(disp4);
+        //catalogoDispositivosJpaRepository.save(disp5);
+        //catalogoDispositivosJpaRepository.save(disp6);
         catalogoDispositivosJpaRepository.save(disp7);
-        catalogoDispositivosJpaRepository.save(disp8);
+        //catalogoDispositivosJpaRepository.save(disp8);
         catalogoDispositivosJpaRepository.save(disp9);
 
 
-        ZonaGeografica zonaGeografica = new ZonaGeografica("asd", 1.0, 1.0, 1.0);
+        ZonaGeografica zonaGeografica = new ZonaGeografica("Mitre", 1.0, 1.0, 1.0);
         Transformador transformador = new Transformador(zonaGeografica, -34.612985, -58.470673);
+        transformador.agregarTablaDeDispositivos(jsonTablaDeDispositivos);
 
-        ClienteResidencial clienteResidencial = new ClienteResidencial("Martin",
-                "Saposnic", "gaona", "martinsapo", "123",
+        ClienteResidencial clienteResidencial = new ClienteResidencial("Martin","Saposnic", "gaona", "martinsapo", "123",
                 new Documento("40136136", TipoDeDocumento.DNI), "123123123", new Categoria(100.0));
 
         ClienteResidencial otroCliente =  new ClienteResidencial("Eric", "Cano", "san martin", "ecano", "1234",
                 new Documento("367282827", TipoDeDocumento.DNI), "1364748373", new Categoria(10.0));
+
         otroCliente.setFechaDeAlta(new DateTime());
 
-        Hogar hogar = new Hogar(otroCliente, 1.0, 1.0, transformador);
-
-        DispositivoInteligente dispositivoInteligente = new DispositivoInteligente(
-                "Microondas", otroCliente, disp9);
+        Hogar hogar = new Hogar(otroCliente, 3.0, 2.0, transformador);
 
 
-        dispositivoInteligente.agregarRegistroDeCambioDeEstadoPersonalizado(
-                LocalDateTime.of(2018, 11, 12, 0, 0), EstadoDeDispositivo.PRENDIDO);
-        dispositivoInteligente.agregarRegistroDeCambioDeEstadoPersonalizado(
-                LocalDateTime.of(2018, 11, 13, 0, 0), EstadoDeDispositivo.APAGADO);
-        dispositivoInteligente.agregarRegistroDeCambioDeEstadoPersonalizado(
-                LocalDateTime.of(2018, 11, 14, 0, 0), EstadoDeDispositivo.PRENDIDO);
+        DispositivoInteligente tv = new DispositivoInteligente("TV tubo", otroCliente, disp2);
+        DispositivoInteligente heladera = new DispositivoInteligente("Heladera", otroCliente,disp9);
+        DispositivoInteligente smarttv = new DispositivoInteligente("Tv LCD”",otroCliente, disp7);
 
-        Sensor sensor = new SensorDeValores(dispositivoInteligente, "sensor de temperatura");
+        agregarConsumosAdispositivo(smarttv);
+        agregarConsumosAdispositivo(heladera);
+
+        tv.agregarRegistroDeCambioDeEstadoPersonalizado(LocalDateTime.of(2018, 11, 12, 0, 0), EstadoDeDispositivo.PRENDIDO);
+        tv.agregarRegistroDeCambioDeEstadoPersonalizado(LocalDateTime.of(2018, 11, 13, 0, 0), EstadoDeDispositivo.APAGADO);
+        tv.agregarRegistroDeCambioDeEstadoPersonalizado(LocalDateTime.of(2018, 11, 14, 0, 0), EstadoDeDispositivo.PRENDIDO);
+
+        Sensor sensor = new SensorDeValores(tv, "sensor de temperatura");
 
         Accion accion = new Accion(AccionesPosibles.APAGAR);
         CondicionDeUsoMensual condicion = new CondicionDeUsoMensual(360, Operador.MAYOR);
 
-        Regla regla = new Regla(condicion, accion, dispositivoInteligente,
-                sensor);
+        Regla regla = new Regla(condicion, accion, tv, sensor);
 
-        otroCliente.addDispositivo(dispositivoInteligente);
+        otroCliente.addDispositivo(tv);
 
         clienteResidencialJPARepository.save(otroCliente);
 
@@ -121,7 +101,67 @@ public class FillDataTest {
         administrador.setNombreDeUsuario("martinsapo");
 
 
-        administradorJpaRepository.save(administrador);
+       administradorJpaRepository.save(administrador);
+
+        hogar.obtenerRecomendacion();
+        hogar.mostrarRecomendacion();
 
     }
+
+    //Para agregar consumo a dispositivo inteligente
+    private void agregarConsumosAdispositivo(DispositivoInteligente dispositivo){
+
+        System.out.println("----------------------------------------------------------");
+        System.out.println("    Consumo del dispositivo: " + dispositivo.getNombreDelDispositivo());
+        System.out.println("----------------------------------------------------------");
+        LocalDateTime startTime =  LocalDateTime.of(2018,6,11,0,0);
+        LocalDateTime endTime =  LocalDateTime.of(2018, 6, 20,0,0);
+
+        //PERIODO 1
+        dispositivo.agregarRegistroDeCambioDeEstadoPersonalizado(LocalDateTime.of(2018, 6, 11,0,0), EstadoDeDispositivo.APAGADO);
+        dispositivo.agregarRegistroDeCambioDeEstadoPersonalizado(LocalDateTime.of(2018, 6, 12,0,0), EstadoDeDispositivo.PRENDIDO);
+        dispositivo.agregarRegistroDeCambioDeEstadoPersonalizado(LocalDateTime.of(2018, 6, 13,0,0), EstadoDeDispositivo.APAGADO);
+        dispositivo.agregarRegistroDeCambioDeEstadoPersonalizado(LocalDateTime.of(2018, 6, 14,0,0), EstadoDeDispositivo.PRENDIDO);
+        dispositivo.agregarRegistroDeCambioDeEstadoPersonalizado(LocalDateTime.of(2018, 6, 15,0,0), EstadoDeDispositivo.APAGADO);
+        dispositivo.agregarRegistroDeCambioDeEstadoPersonalizado(LocalDateTime.of(2018, 6, 16,0,0), EstadoDeDispositivo.PRENDIDO);
+        dispositivo.agregarRegistroDeCambioDeEstadoPersonalizado(LocalDateTime.of(2018, 6, 17,0,0), EstadoDeDispositivo.APAGADO);
+        dispositivo.agregarRegistroDeCambioDeEstadoPersonalizado(LocalDateTime.of(2018, 6, 18,0,0), EstadoDeDispositivo.PRENDIDO);
+
+        // Resultado de consumo periodo1
+        BigDecimal consumoInteligente = dispositivo.cantidadDeEnergiaConsumidaEnUnPeriodo(startTime, endTime);
+        System.out.println("Consumo inicial: " + consumoInteligente);
+
+
+        //PERIODO 2
+        LocalDateTime startTime2 =  LocalDateTime.of(2018,6,20,0,0);
+        LocalDateTime endTime2 =  LocalDateTime.of(2018, 6, 30,0,0);
+
+        dispositivo.agregarRegistroDeCambioDeEstadoPersonalizado(LocalDateTime.of(2018, 6, 20,0,0), EstadoDeDispositivo.APAGADO);
+        dispositivo.agregarRegistroDeCambioDeEstadoPersonalizado(LocalDateTime.of(2018, 6, 21,0,0), EstadoDeDispositivo.PRENDIDO);
+        dispositivo.agregarRegistroDeCambioDeEstadoPersonalizado(LocalDateTime.of(2018, 6, 22,0,0), EstadoDeDispositivo.APAGADO);
+        dispositivo.agregarRegistroDeCambioDeEstadoPersonalizado(LocalDateTime.of(2018, 6, 23,0,0), EstadoDeDispositivo.PRENDIDO);
+        dispositivo.agregarRegistroDeCambioDeEstadoPersonalizado(LocalDateTime.of(2018, 6, 24,0,0), EstadoDeDispositivo.APAGADO);
+        dispositivo.agregarRegistroDeCambioDeEstadoPersonalizado(LocalDateTime.of(2018, 6, 25,0,0), EstadoDeDispositivo.PRENDIDO);
+        dispositivo.agregarRegistroDeCambioDeEstadoPersonalizado(LocalDateTime.of(2018, 6, 26,0,0), EstadoDeDispositivo.APAGADO);
+        dispositivo.agregarRegistroDeCambioDeEstadoPersonalizado(LocalDateTime.of(2018, 6, 27,0,0), EstadoDeDispositivo.PRENDIDO);
+
+
+        // Resultado de consumo periodo2
+        consumoInteligente = dispositivo.cantidadDeEnergiaConsumidaEnUnPeriodo(startTime2, endTime2);
+        System.out.println("Consumo final: " + consumoInteligente);
+        System.out.println("-----------------------------------------");
+
+    }
+
+    private void persistirTablaDispositivos(String jsonCatalogo){
+
+        JSONArray catalogoArray = (JSONArray) Helper.mapJsonToArrayJSON(jsonCatalogo);
+
+        for (Object catalogoDispositivo : catalogoArray) {
+            JSONObject object = (JSONObject) catalogoDispositivo;
+            ItemDeCatalogoDeDispositivos dispositivoDeCatalogo = new ItemDeCatalogoDeDispositivos(object);
+            catalogoDispositivosJpaRepository.save(dispositivoDeCatalogo);
+        }
+    }
+
 }

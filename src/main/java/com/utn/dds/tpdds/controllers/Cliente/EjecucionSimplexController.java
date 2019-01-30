@@ -4,6 +4,7 @@ import com.utn.dds.tpdds.model.ClienteResidencial;
 import com.utn.dds.tpdds.model.Hogar;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
+import org.quartz.SchedulerFactory;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean;
@@ -42,6 +43,7 @@ public class EjecucionSimplexController {
     private void disparaEjecucionAutomaticaDelSimplex(Hogar hogar){
 
         AbstractApplicationContext factory = new ClassPathXmlApplicationContext("spring-quartz.xml");
+
 
         //get the quartzFactory bean
         Scheduler scheduler = (Scheduler) factory.getBean("scheduler");

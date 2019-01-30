@@ -12,6 +12,31 @@
 </head>
 <body>
 
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+
+        <div class="navbar-header">
+            <ul class="nav navbar-nav">
+                <li class="active"> <a class="navbar-brand" href="#"> <span class="glyphicon glyphicon-user white" th:inline="text" >  </span>   ¡Bienvenido [[${session.username}]]!</a></li>
+            </ul>
+        </div>
+
+        <ul class="nav navbar-nav">
+            <li><a href="/mapa/">Mapa </a></li>
+            <li class="active"><a href="/admin/verHogaresYConsumos">Visualizar Hogares y Consumos </a></li>
+            <li><a href="/admin/reportes">Reportes </a></li>
+            <li><a href="/admin/abmCatalogoDispositivos/">Ir a ABM de dispositivos </a></li>
+        </ul>
+
+        <div class="floatright">
+            <ul class="nav navbar-nav">
+                <li><a class="avbar-brand" href="/logout">Log out  <span class="glyphicon glyphicon-log-out"></span></a>
+            </ul>
+        </div>
+
+    </div>
+</nav>
+
 <div class="container">
     <h1 class="title" style="color: #ffffff; text-align: center;">Consumo de Hogares</h1>
     <hr>

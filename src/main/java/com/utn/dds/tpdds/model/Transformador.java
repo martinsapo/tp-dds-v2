@@ -106,7 +106,7 @@ public class Transformador {
                 for (int i = 0; i < cliente.dispositivos.size(); i++) {
                     Dispositivo dispositivo = cliente.dispositivos.get(i);
                     if(dispositivo instanceof DispositivoInteligente &&
-                            ((DispositivoInteligente) dispositivo).cantidadDeEnergiaConsumidaEnUnPeriodo(startOfMonth, LocalDateTime.now()).doubleValue() >= solucion.getPoint()[i]) {//MODIFICO PARA ADAPTAR A LOCALDATETIME DE JAVA
+                            ((DispositivoInteligente) dispositivo).cantidadDeEnergiaConsumidaEnUnPeriodo(startOfMonth, LocalDateTime.now()).doubleValue() >= solucion.getPoint()[0]) {//MODIFICO PARA ADAPTAR A LOCALDATETIME DE JAVA
                         System.out.println("Consumo Dispositivo: " + ((DispositivoInteligente) dispositivo).cantidadDeEnergiaConsumidaEnUnPeriodo(startOfMonth, LocalDateTime.now()).doubleValue());
                         System.out.println("Consumo Simplex Permitido: " + solucion.getPoint()[i]);
                         ((DispositivoInteligente) dispositivo).apagar();
@@ -153,7 +153,7 @@ public class Transformador {
     private ArrayList<Double> crearArrayConConsumos(List<Dispositivo> dispositivos) {
         ArrayList<Double> arr = new ArrayList<>();
         for (Dispositivo dispositivo : dispositivos) {
-            String aBuscar = dispositivo.nombreDelDispositivo;
+            String aBuscar = dispositivo.getItemDeCatalogoDeDispositivos().getNombre();
             for (TablaDeDispositivos tabla : this.tablaDeDispositivos) {
                 if (tabla.getNombre().equals(aBuscar)) {
                     arr.add(tabla.getConsumo());
