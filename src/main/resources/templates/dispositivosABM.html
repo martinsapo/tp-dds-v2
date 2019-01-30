@@ -34,35 +34,32 @@
 
         </div>
     </nav>
-
-        <form class="form-signin" method="get" action="/cliente/abmDispositivos/altaInteligente">
-            <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Dar de alta dispositivo inteligente</button>
-        </form>
-        <form class="form-signin" method="get" action="/cliente/abmDispositivos/altaEstandar">
-            <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Dar de alta dispositivo estandar</button>
-        </form>
-
-        <form class="form-signin" method="get" action="/cliente/abmDispositivos/altaDesdeArchivo">
-            <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Dar de alta dispositivo desde archivo</button>
+    <div class="container">
+        <form class="form-signin" method="get">
+            <div>
+                <button class="btn btn-lg btn-primary btn-block btn-signin" style="width:33%; display: inline-block;" type="submit" formaction="/cliente/abmDispositivos/altaInteligente">Alta inteligente</button>
+                <button class="btn btn-lg btn-primary btn-block btn-signin" style="width:33%; display: inline-block;" type="submit" formaction="/cliente/abmDispositivos/altaEstandar">Alta estandar</button>
+                <button class="btn btn-lg btn-primary btn-block btn-signin" style="width:33%; display: inline-block;" type="submit" formaction="/cliente/abmDispositivos/altaDesdeArchivo">Alta desde archivo</button>
+            </div>
         </form>
 
         <div th:if="${dispositivosInteligentes.size() > 0}">
             <h3>Dispositivos Inteligentes del cliente</h3>
-            <table style="width:100%">
-                <tr>
-                    <th>Id</th>
-                    <th>Kw que consume por hora</th>
-                    <th>Nombre de dispositivo</th>
-                    <th>Nombre del item del catalogo</th>
-                    <th>Estado del dispositivo</th>
-                    <th>Consumo en el ultimo mes</th>
-                    <th>Uso en el ultimo mes</th>
-                    <th></th>
-                    <th></th>
-                    <th>Eliminar</th>
-                </tr>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Consumo por hora</th>
+                        <th>Nombre</th>
+                        <th>Nombre del catalogo</th>
+                        <th>Estado</th>
+                        <th>Consumo en el ultimo mes</th>
+                        <th>Uso en el ultimo mes</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
                 <tr th:each="dispositivoInteligente : ${dispositivosInteligentes}">
-                    <td th:text="${dispositivoInteligente.id}"></td>
                     <td th:text="${dispositivoInteligente.itemDeCatalogoDeDispositivos.getConsumo()}"></td>
                     <td th:text="${dispositivoInteligente.nombreDelDispositivo}"></td>
                     <td th:text="${dispositivoInteligente.itemDeCatalogoDeDispositivos.getNombre()}"></td>
@@ -98,15 +95,17 @@
         </div>
         <div th:if="${dispositivosEstandar.size() > 0}">
             <h3>Dispositivos Estandar del cliente</h3>
-            <table style="width:100%">
-                <tr>
-                    <th>Id</th>
-                    <th>Kw que consume por hora</th>
-                    <th>Nombre de dispositivo</th>
-                    <th>Nombre del item del catalogo</th>
-                    <th>Consumo aproximado diario en KW/H</th>
-                    <th>Eliminar</th>
-                </tr>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Kw que consume por hora</th>
+                        <th>Nombre de dispositivo</th>
+                        <th>Nombre del item del catalogo</th>
+                        <th>Consumo aproximado diario en KW/H</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
                 <tr th:each="dispositivoEstandar : ${dispositivosEstandar}">
                     <td th:text="${dispositivoEstandar.id}"></td>
                     <td th:text="${dispositivoEstandar.itemDeCatalogoDeDispositivos.getConsumo()}"></td>
@@ -122,5 +121,6 @@
                 </tr>
             </table>
         </div>
+    </div>
     </body>
 </html>

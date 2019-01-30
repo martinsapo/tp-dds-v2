@@ -1,70 +1,73 @@
 <html xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <title>ABM de reglas</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <link href="/css/styles.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css">
-    <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"></script>
-</head>
-<body>
+    <head>
+        <title>ABM de reglas</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <link href="/css/styles.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css">
+        <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"></script>
+    </head>
+    <body>
 
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
 
-        <div class="navbar-header">
-            <ul class="nav navbar-nav">
-                <li class="active"> <a class="navbar-brand" href="#"> <span class="glyphicon glyphicon-user white" th:inline="text" >  </span>   ¡Bienvenido [[${session.username}]]!</a></li>
-            </ul>
-        </div>
+                <div class="navbar-header">
+                    <ul class="nav navbar-nav">
+                        <li class="active"> <a class="navbar-brand" href="#"> <span class="glyphicon glyphicon-user white" th:inline="text" >  </span>   ¡Bienvenido [[${session.username}]]!</a></li>
+                    </ul>
+                </div>
 
-        <ul class="nav navbar-nav">
-            <li><a href="/mapa/">Mapa </a></li>
-            <li><a href="/cliente/estadoHogar/">Estado del hogar </a></li>
-            <li><a href="/cliente/calculoDeConsumo/">Consumo Periodo </a></li>
-            <li><a href="/cliente/simplex/">Ejecutar Simplex </a></li>
-            <li class="active"><a href="/cliente/abmReglas/">ABM Reglas </a></li>
-            <li><a href="/cliente/abmDispositivos/">ABM Dispositivos </a></li>
-        </ul>
+                <ul class="nav navbar-nav">
+                    <li><a href="/mapa/">Mapa </a></li>
+                    <li><a href="/cliente/estadoHogar/">Estado del hogar </a></li>
+                    <li><a href="/cliente/calculoDeConsumo/">Consumo Periodo </a></li>
+                    <li><a href="/cliente/simplex/">Ejecutar Simplex </a></li>
+                    <li class="active"><a href="/cliente/abmReglas/">ABM Reglas </a></li>
+                    <li><a href="/cliente/abmDispositivos/">ABM Dispositivos </a></li>
+                </ul>
 
-        <div class="floatright">
-            <ul class="nav navbar-nav">
-                <li><a class="avbar-brand" href="/logout">Log out  <span class="glyphicon glyphicon-log-out"></span></a>
-            </ul>
-        </div>
+                <div class="floatright">
+                    <ul class="nav navbar-nav">
+                        <li><a class="avbar-brand" href="/logout">Log out  <span class="glyphicon glyphicon-log-out"></span></a>
+                    </ul>
+                </div>
 
-    </div>
-</nav>
+            </div>
+        </nav>
 
-<form class="form-signin" method="get" action="/cliente/abmReglas/alta">
-    <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Dar de alta regla</button>
-</form>
 
-<h1>Reglas activas</h1>
-<table style="width:100%">
-    <tr>
-        <th>Id de regla</th>
-        <th>Id de dispositivo</th>
-        <th>Sensor</th>
-        <th>Accion</th>
-        <th>Operador de la condicion</th>
-        <th>Medicion esperada</th>
-        <th>Eliminar</th>
-    </tr>
-    <tr th:each="regla : ${reglas}">
-        <td th:text="${regla.id}"></td>
-        <td th:text="${regla.dispositivoInteligente.id}"></td>
-        <td th:text="${regla.sensor.id}"></td>
-        <td th:text="${regla.accion.accionARealizar.toString()}"></td>
-        <td th:text="${regla.condicion.operator.toString()}"></td>
-        <td th:text="${regla.condicion.getMedicion()}"></td>
-        <td>
-            <form method="get" action="/cliente/abmReglas/baja/submit">
-                <input type="hidden" name="id" th:value="${regla.id}"/>
-                <button class="btn" type="submit">Eliminar</button>
+        <div class="container">
+            <form class="form-signin" method="get" action="/cliente/abmReglas/alta">
+                <button class="btn btn-lg btn-primary btn-block btn-signin" style="width:20%" type="submit">Dar de alta regla</button>
             </form>
-        </td>
-    </tr>
-</table>
-</body>
+
+            <h2>Reglas del cliente</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Tipo de regla</th>
+                        <th>Dispositivo</th>
+                        <th>Accion</th>
+                        <th>Operador de la condicion</th>
+                        <th>Medicion esperada</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tr th:each="regla : ${reglas}">
+                    <td th:text="${regla.condicion.getClass().getSimpleName()}"></td>
+                    <td th:text="${regla.dispositivoInteligente.nombreDelDispositivo}"></td>
+                    <td th:text="${regla.accion.accionARealizar.toString()}"></td>
+                    <td th:text="${regla.condicion.operator.toString()}"></td>
+                    <td th:text="${regla.condicion.getMedicion()}"></td>
+                    <td>
+                        <form method="get" action="/cliente/abmReglas/baja/submit">
+                            <input type="hidden" name="id" th:value="${regla.id}"/>
+                            <button class="btn" type="submit">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </body>
 </html>
