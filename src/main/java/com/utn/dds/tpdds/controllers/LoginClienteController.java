@@ -28,14 +28,14 @@ public class LoginClienteController {
         ModelMap model = new ModelMap();
         if (usuario.isEmpty() || contrasena.isEmpty()){
             model.addAttribute("errorMessage","Indique Usuario o contraseña");
-            return new ModelAndView("/loginCliente", model);
+            return new ModelAndView("loginCliente", model);
         }
 
         ClienteResidencial cliente = clienteResidencialJPARepository.findClienteResidencialByNombreDeUsuario(usuario);
 
         if (cliente == null || !cliente.passwordMatch(contrasena)){
             model.addAttribute("errorMessage","Usuario o contraseña incorrecta");
-            return new ModelAndView("/loginCliente",model);
+            return new ModelAndView("loginCliente",model);
 
         }
 

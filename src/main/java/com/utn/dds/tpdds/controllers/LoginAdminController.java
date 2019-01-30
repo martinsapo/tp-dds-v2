@@ -30,14 +30,14 @@ public class LoginAdminController {
         ModelMap model = new ModelMap();
         if (usuario.isEmpty() || contrasena.isEmpty()) {
             model.addAttribute("errorMessage", "Indique Usuario o contraseña");
-            return new ModelAndView("/loginAdmin", model);
+            return new ModelAndView("loginAdmin", model);
         }
 
         Administrador administrador = administradorJpaRepository.findAdministradorByNombreDeUsuario(usuario);
 
         if (administrador == null || !administrador.passwordMatch(contrasena)) {
             model.addAttribute("errorMessage", "Usuario o contraseña incorrecta");
-            return new ModelAndView("/loginAdmin", model);
+            return new ModelAndView("loginAdmin", model);
         }
 
         request.getSession().setAttribute("administrador", administrador);
