@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
@@ -24,13 +26,14 @@ import java.time.LocalDateTime;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.NONE)
 @Rollback(false)
-public class FillDataTest {
+@ActiveProfiles("test")
+public class AAAAFillDataTest {
 
     @Autowired ClienteResidencialJpaRepository clienteResidencialJPARepository;
     @Autowired CatalogoDispositivosJpaRepository catalogoDispositivosJpaRepository;
     @Autowired AdministradorJpaRepository administradorJpaRepository;
 
-    public FillDataTest() {}
+    public AAAAFillDataTest() {}
 
     @Test
     public void testFillData() {
@@ -48,14 +51,14 @@ public class FillDataTest {
         ItemDeCatalogoDeDispositivos disp8 = (new ItemDeCatalogoDeDispositivos("Heladera con freezer",  new BigDecimal(0.09)));
         ItemDeCatalogoDeDispositivos disp9 = (new ItemDeCatalogoDeDispositivos("Heladera sin freezer", new BigDecimal(0.075)));
 
-        //catalogoDispositivosJpaRepository.save(disp1);
+        catalogoDispositivosJpaRepository.save(disp1);
         catalogoDispositivosJpaRepository.save(disp2);
-        //catalogoDispositivosJpaRepository.save(disp3);
-        //catalogoDispositivosJpaRepository.save(disp4);
-        //catalogoDispositivosJpaRepository.save(disp5);
-        //catalogoDispositivosJpaRepository.save(disp6);
+        catalogoDispositivosJpaRepository.save(disp3);
+        catalogoDispositivosJpaRepository.save(disp4);
+        catalogoDispositivosJpaRepository.save(disp5);
+        catalogoDispositivosJpaRepository.save(disp6);
         catalogoDispositivosJpaRepository.save(disp7);
-        //catalogoDispositivosJpaRepository.save(disp8);
+        catalogoDispositivosJpaRepository.save(disp8);
         catalogoDispositivosJpaRepository.save(disp9);
 
 
@@ -94,6 +97,7 @@ public class FillDataTest {
 
         otroCliente.addDispositivo(tv);
 
+        clienteResidencialJPARepository.save(clienteResidencial);
         clienteResidencialJPARepository.save(otroCliente);
 
         Administrador administrador = new Administrador();
