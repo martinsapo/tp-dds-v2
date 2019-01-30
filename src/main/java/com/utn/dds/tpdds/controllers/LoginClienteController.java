@@ -41,6 +41,6 @@ public class LoginClienteController {
 
         request.getSession().setAttribute("cliente", cliente);
         request.getSession().setAttribute("username", cliente.getNombreDeUsuario());
-        return new ModelAndView("redirect:/cliente");
+        return new ModelAndView("redirect:/cliente",model);
     }
 }

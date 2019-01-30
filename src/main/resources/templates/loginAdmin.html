@@ -6,16 +6,17 @@
 
     <title>Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <link href="/css/styles.css" rel="stylesheet" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-
+    <link rel="stylesheet" type="text/css" href="../css/styles.css"  />
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.css">
+    <link rel="stylesheet" href="../js/bootstrap.min.js">
+    <script src="../js/jquery.min.js"></script>
 </head>
 <body>
 
 <div class="container">
     <h1 class="title" style="color: #ffffff; text-align: center;">Sistema de gestion energetica</h1>
-    <h3 class="title" style="color: #ffffff; text-align: center;">Admin</h3>
+    <h3 class="title" style="color: #ffffff; text-align: center;">Administrador</h3>
 
     <hr>
     <div class="card card-container">
@@ -26,15 +27,16 @@
                 <label th:text="${errorMessage}"></label>
             </div>
 
-            <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Ingresar</button>
+            <button class="btn btn-primary btn-xl" type="submit">Ingresar</button>
         </form>
     </div>
 
-    <form method="get" action="/loginCliente">
-        <div class="map inner">
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Ir a login del cliente</button>
-        </div>
-    </form>
+    <div id = "MapAndAdmin" style="text-align: center">
+        <form action="/loginCliente/">
+            <button  type="submit" class="btn btn-success btn-circle btn-xl" title="Ir al login cliente"> <i class="glyphicon glyphicon-user"></i>
+            </button>
+        </form>
+    </div>
 </div>
 </body>
 </html>
