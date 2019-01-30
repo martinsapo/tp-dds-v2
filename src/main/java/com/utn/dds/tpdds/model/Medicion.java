@@ -28,4 +28,6 @@ public abstract class Medicion {
     public Medicion(Sensor sensor) {
         this.sensor = sensor;
     }
+
+    abstract Object getMedicion();
 }

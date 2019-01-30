@@ -18,4 +18,9 @@ public class MedicionBooleana extends Medicion{
         super(sensor);
         medicion = b;
     }
+
+    @Override
+    public Object getMedicion() {
+        return medicion;
+    }
 }

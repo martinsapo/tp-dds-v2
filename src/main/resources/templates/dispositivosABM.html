@@ -48,37 +48,38 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Consumo por hora</th>
                         <th>Nombre</th>
                         <th>Nombre del catalogo</th>
                         <th>Estado</th>
+                        <th>Consumo por hora</th>
                         <th>Consumo en el ultimo mes</th>
                         <th>Uso en el ultimo mes</th>
+                        <th></th>
                         <th></th>
                         <th></th>
                         <th></th>
                     </tr>
                 </thead>
                 <tr th:each="dispositivoInteligente : ${dispositivosInteligentes}">
-                    <td th:text="${dispositivoInteligente.itemDeCatalogoDeDispositivos.getConsumo()}"></td>
                     <td th:text="${dispositivoInteligente.nombreDelDispositivo}"></td>
                     <td th:text="${dispositivoInteligente.itemDeCatalogoDeDispositivos.getNombre()}"></td>
                     <td th:text="${dispositivoInteligente.obtenerEstadoDelDispositivo().name()}"></td>
+                    <td th:text="${dispositivoInteligente.itemDeCatalogoDeDispositivos.getConsumo()}"></td>
                     <td th:text="${dispositivoInteligente.cantidadDeEnergiaConsumidaEnElUltimoMes().doubleValue()}"></td>
                     <td th:text="${dispositivoInteligente.cantidadDeHorasUsadoEnElUltimoMes().doubleValue()}"></td>
-                    <td th:if="${!dispositivoInteligente.obtenerEstadoDelDispositivo().name().equals('PRENDIDO')}">
+                    <td>
                         <form method="get" action="/cliente/abmDispositivos/encender">
                             <input type="hidden" name="id" th:value="${dispositivoInteligente.id}"/>
                             <button class="btn" type="submit">Encender</button>
                         </form>
                     </td>
-                    <td th:if="${!dispositivoInteligente.obtenerEstadoDelDispositivo().name().equals('APAGADO')}">
+                    <td>
                         <form method="get" action="/cliente/abmDispositivos/apagar">
                             <input type="hidden" name="id" th:value="${dispositivoInteligente.id}"/>
                             <button class="btn" type="submit">Apagar</button>
                         </form>
                     </td>
-                    <td th:if="${!dispositivoInteligente.obtenerEstadoDelDispositivo().name().equals('MODO_AHORRO')}">
+                    <td>
                         <form method="get" action="/cliente/abmDispositivos/modoAhorro">
                             <input type="hidden" name="id" th:value="${dispositivoInteligente.id}"/>
                             <button class="btn" type="submit">Modo ahorro</button>

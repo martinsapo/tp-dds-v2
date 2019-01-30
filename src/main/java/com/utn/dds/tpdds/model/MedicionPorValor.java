@@ -18,4 +18,9 @@ public class MedicionPorValor extends Medicion{
         super(sensor);
         medicion = v;
     }
+
+    @Override
+    public Object getMedicion() {
+        return medicion;
+    }
 }

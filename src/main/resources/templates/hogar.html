@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../../js/bootstrap.min.js">
     <script src="../../js/jquery.min.js"></script>
 </head>
-<body>
+<div>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
 
@@ -35,55 +35,68 @@
 
     </div>
 </nav>
+    <div class="container">
 <div id="estadoDeDispositivos">
-    <h1>Estado de los dispositivos</h1>
-    <table style="width:100%">
+    <h1 th:text="${'Consumo en el ultimo periodo:' + consumo}"></h1>
+    <h3>Estado de los dispositivos</h3>
+    <table class="table">
+        <thead>
         <tr>
-            <th>Id</th>
             <th>Nombre</th>
+            <th>Nombre del catalogo</th>
             <th>Estado</th>
+            <th>Consumo por hora</th>
+            <th>Consumo en el ultimo mes</th>
+            <th>Uso en el ultimo mes</th>
         </tr>
+        </thead>
         <tr th:each="dispositivo : ${dispositivos}">
-            <td th:text="${dispositivo.id}"> </td>
+            <td th:text="${dispositivo.itemDeCatalogoDeDispositivos.getConsumo()}"></td>
             <td th:text="${dispositivo.nombreDelDispositivo}"></td>
+            <td th:text="${dispositivo.itemDeCatalogoDeDispositivos.getNombre()}"></td>
+            <td th:text="${dispositivo.obtenerEstadoDelDispositivo().name()}"></td>
+            <td th:text="${dispositivo.cantidadDeEnergiaConsumidaEnElUltimoMes().doubleValue()}"></td>
+            <td th:text="${dispositivo.cantidadDeHorasUsadoEnElUltimoMes().doubleValue()}"></td>
         </tr>
     </table>
-    <h1>Reglas activas</h1>
-    <table style="width:100%">
+    <h3>Reglas activas</h3>
+    <table class="table">
+        <thead>
         <tr>
-            <th>Id de regla</th>
-            <th>Id de dispositivo</th>
-            <th>Sensor</th>
+            <th>Tipo de regla</th>
+            <th>Dispositivo</th>
             <th>Accion</th>
             <th>Operador de la condicion</th>
             <th>Medicion esperada</th>
         </tr>
+        </thead>
         <tr th:each="regla : ${reglas}">
-            <td th:text="${regla.id}"></td>
-            <td th:text="${regla.dispositivoInteligente.id}"></td>
-            <td th:text="${regla.sensor.id}"></td>
-            <td th:text="${regla.accion.id}"></td>
-            <td th:text="${regla.condicion.operator}"></td>
+            <td th:text="${regla.condicion.getClass().getSimpleName()}"></td>
+            <td th:text="${regla.dispositivoInteligente.nombreDelDispositivo}"></td>
+            <td th:text="${regla.accion.accionARealizar.toString()}"></td>
+            <td th:text="${regla.condicion.operator.toString()}"></td>
             <td th:text="${regla.condicion.getMedicion()}"></td>
         </tr>
     </table>
-    <h1 th:text="${'Consumo en el ultimo periodo:' + consumo}"></h1>
 
-    <h1>Ultimas mediciones</h1>
-    <table style="width:100%">
+    <h3>Ultimas mediciones</h3>
+    <table class="table">
+        <thead>
         <tr>
             <th>Id de la medicion</th>
-            <th>Id del dispositivo</th>
+            <th>Nombre del dispositivo</th>
             <th>Id del sensor</th>
             <th>Medicion</th>
         </tr>
+        </thead>
         <tr th:each="medicion : ${mediciones}">
             <td th:text="${medicion.id}"></td>
-            <td th:text="${medicion.id}"></td>
-            <td th:text="${medicion.id}"></td>
-            <td th:text="${medicion.id}"></td>
+            <td th:text="${medicion.sensor.dispositivoInteligente.nombreDelDispositivo}"></td>
+            <td th:text="${medicion.sensor.id}"></td>
+            <td th:text="${medicion.getMedicion()}"></td>
         </tr>
     </table>
+</div>
 </div>
 </body>
 </html>
