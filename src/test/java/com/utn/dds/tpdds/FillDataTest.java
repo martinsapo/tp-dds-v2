@@ -36,7 +36,7 @@ public class FillDataTest {
     public void testFillData() {
 
         String jsonTablaDeDispositivos = "src/test/java/json/tablaDispositivos.json";
-        persistirTablaDispositivos(jsonTablaDeDispositivos);
+        //persistirTablaDispositivos(jsonTablaDeDispositivos);
 
         ItemDeCatalogoDeDispositivos disp1 = new ItemDeCatalogoDeDispositivos("Aire de 2200 frigorias", new BigDecimal(1.013));
         ItemDeCatalogoDeDispositivos disp2 = new ItemDeCatalogoDeDispositivos("TV de tubo fluorescente de 21", new BigDecimal(0.075));
@@ -48,14 +48,14 @@ public class FillDataTest {
         ItemDeCatalogoDeDispositivos disp8 = (new ItemDeCatalogoDeDispositivos("Heladera con freezer",  new BigDecimal(0.09)));
         ItemDeCatalogoDeDispositivos disp9 = (new ItemDeCatalogoDeDispositivos("Heladera sin freezer", new BigDecimal(0.075)));
 
-        //catalogoDispositivosJpaRepository.save(disp1);
+        catalogoDispositivosJpaRepository.save(disp1);
         catalogoDispositivosJpaRepository.save(disp2);
-        //catalogoDispositivosJpaRepository.save(disp3);
-        //catalogoDispositivosJpaRepository.save(disp4);
-        //catalogoDispositivosJpaRepository.save(disp5);
-        //catalogoDispositivosJpaRepository.save(disp6);
+        catalogoDispositivosJpaRepository.save(disp3);
+        catalogoDispositivosJpaRepository.save(disp4);
+        catalogoDispositivosJpaRepository.save(disp5);
+        catalogoDispositivosJpaRepository.save(disp6);
         catalogoDispositivosJpaRepository.save(disp7);
-        //catalogoDispositivosJpaRepository.save(disp8);
+        catalogoDispositivosJpaRepository.save(disp8);
         catalogoDispositivosJpaRepository.save(disp9);
 
 
@@ -81,11 +81,18 @@ public class FillDataTest {
         agregarConsumosAdispositivo(smarttv);
         agregarConsumosAdispositivo(heladera);
 
-        tv.agregarRegistroDeCambioDeEstadoPersonalizado(LocalDateTime.of(2018, 11, 12, 0, 0), EstadoDeDispositivo.PRENDIDO);
-        tv.agregarRegistroDeCambioDeEstadoPersonalizado(LocalDateTime.of(2018, 11, 13, 0, 0), EstadoDeDispositivo.APAGADO);
-        tv.agregarRegistroDeCambioDeEstadoPersonalizado(LocalDateTime.of(2018, 11, 14, 0, 0), EstadoDeDispositivo.PRENDIDO);
+        tv.agregarRegistroDeCambioDeEstadoPersonalizado(LocalDateTime.of(2019, 1, 12, 0, 0), EstadoDeDispositivo.PRENDIDO);
+        tv.agregarRegistroDeCambioDeEstadoPersonalizado(LocalDateTime.of(2018, 12, 5, 0, 0), EstadoDeDispositivo.APAGADO);
+        tv.agregarRegistroDeCambioDeEstadoPersonalizado(LocalDateTime.of(2019, 1, 14, 0, 0), EstadoDeDispositivo.PRENDIDO);
 
         Sensor sensor = new SensorDeValores(tv, "sensor de temperatura");
+        Sensor sensor2 = new SensorDeValores(heladera, "sensor de presion");
+
+        Medicion medicion = new MedicionPorValor();
+        ((MedicionPorValor) medicion).setMedicion(1.0);
+        medicion.setSensor(sensor);
+
+        sensor.agregarMedicion(medicion);
 
         Accion accion = new Accion(AccionesPosibles.APAGAR);
         CondicionDeUsoMensual condicion = new CondicionDeUsoMensual(360, Operador.MAYOR);

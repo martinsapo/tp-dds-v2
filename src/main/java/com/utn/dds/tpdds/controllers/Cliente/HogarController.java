@@ -22,10 +22,12 @@ public class HogarController {
 
         ModelAndView modelAndView = new ModelAndView("hogar");
 
-        modelAndView.addObject("dispositivos", cliente.getDispositivosInteligentes());
+        modelAndView.addObject("dispositivosInteligentes", cliente.getDispositivosInteligentes());
+        modelAndView.addObject("dispositivosEstandares", cliente.getDispositivosEstandars());
         modelAndView.addObject("reglas", cliente.obtenerReglasDeTodosLosDispositivos());
         modelAndView.addObject("consumo", cliente.obtenerTodosLosConsumosDeTodosLosDispositivosEnElUltimoMes().toString());
         modelAndView.addObject("mediciones", cliente.obtenerTodasLasMedicionesDeTodosLosDispositivos());
+
         return modelAndView;
     }
 }

@@ -76,9 +76,9 @@ public class ReglasABMController {
             break;
         }
         Accion accion = new Accion(AccionesPosibles.valueOf(accionParam));
-
         Optional<DispositivoInteligente> dispositivoInteligente = dispositivoInteligenteJpaRepository.findById(Integer.parseInt(dispositivoId));
         if (dispositivoInteligente.isPresent()) {
+            assert condicion != null;
             Regla regla = new Regla(condicion, accion, dispositivoInteligente.get(), dispositivoInteligente.get().getSensores().get(0));
             reglaRepository.save(regla);
         }

@@ -35,55 +35,70 @@
 
     </div>
 </nav>
+
 <div id="estadoDeDispositivos">
-    <h1>Estado de los dispositivos</h1>
-    <table style="width:100%">
-        <tr>
-            <th>Id</th>
-            <th>Nombre</th>
-            <th>Estado</th>
-        </tr>
-        <tr th:each="dispositivo : ${dispositivos}">
-            <td th:text="${dispositivo.id}"> </td>
-            <td th:text="${dispositivo.nombreDelDispositivo}"></td>
-        </tr>
-    </table>
-    <h1>Reglas activas</h1>
-    <table style="width:100%">
-        <tr>
-            <th>Id de regla</th>
-            <th>Id de dispositivo</th>
-            <th>Sensor</th>
-            <th>Accion</th>
-            <th>Operador de la condicion</th>
-            <th>Medicion esperada</th>
-        </tr>
-        <tr th:each="regla : ${reglas}">
-            <td th:text="${regla.id}"></td>
-            <td th:text="${regla.dispositivoInteligente.id}"></td>
-            <td th:text="${regla.sensor.id}"></td>
-            <td th:text="${regla.accion.id}"></td>
-            <td th:text="${regla.condicion.operator}"></td>
-            <td th:text="${regla.condicion.getMedicion()}"></td>
-        </tr>
-    </table>
+    <div style="width: 50%" id="Dispositivos" class="center">
+        <h1>Estado de los dispositivos</h1>
+        <table class="table table-dark">
+            <tr>
+                <td class="col-sm-3">Id</td>
+                <td class="col-sm-3">Nombre</td>
+                <td class="col-sm-3">Estado</td>
+            </tr>
+            <tr th:each="inteligente : ${dispositivosInteligentes}">
+                <td class="col-sm-3" th:text="${inteligente.id}"> </td>
+                <td class="col-sm-3" th:text="${inteligente.nombreDelDispositivo}"></td>
+                <td class="col-sm-3" th:text="${inteligente.obtenerEstadoDelDispositivo()}"></td>
+            </tr>
+            <tr th:each="estandar : ${dispositivosEstandares}">
+                <td class="col-sm-3" th:text="${estandar.id}"> </td>
+                <td class="col-sm-3" th:text="${estandar.nombreDelDispositivo}"></td>
+                <td class="col-sm-3"> - </td>
+            </tr>
+        </table>
+    </div>
+
+    <div style="width: 70%" id="Reglas" class="center">
+        <h1>Reglas activas</h1>
+        <table class="table table-dark">
+            <tr>
+                <th>Id de regla</th>
+                <th>Id de dispositivo</th>
+                <th>Sensor</th>
+                <th>Accion</th>
+                <th>Operador de la condicion</th>
+                <th>Medicion esperada</th>
+            </tr>
+            <tr th:each="regla : ${reglas}">
+                <td th:text="${regla.id}"></td>
+                <td th:text="${regla.dispositivoInteligente.id}"></td>
+                <td th:text="${regla.sensor.id}"></td>
+                <td th:text="${regla.accion.id}"></td>
+                <td th:text="${regla.condicion.operator}"></td>
+                <td th:text="${regla.condicion.getMedicion()}"></td>
+            </tr>
+        </table>
+    </div>
+
     <h1 th:text="${'Consumo en el ultimo periodo:' + consumo}"></h1>
 
-    <h1>Ultimas mediciones</h1>
-    <table style="width:100%">
-        <tr>
-            <th>Id de la medicion</th>
-            <th>Id del dispositivo</th>
-            <th>Id del sensor</th>
-            <th>Medicion</th>
-        </tr>
-        <tr th:each="medicion : ${mediciones}">
-            <td th:text="${medicion.id}"></td>
-            <td th:text="${medicion.id}"></td>
-            <td th:text="${medicion.id}"></td>
-            <td th:text="${medicion.id}"></td>
-        </tr>
-    </table>
+    <div style="width: 50%" id="Mediciones" class="center">
+        <h1>Ultimas mediciones</h1>
+        <table class="table table-dark">
+            <tr>
+                <th>Id de la medicion</th>
+                <th>Id del dispositivo</th>
+                <th>Id del sensor</th>
+                <th>Medicion</th>
+            </tr>
+            <tr th:each="medicion : ${mediciones}">
+                <td th:text="${medicion.id}"></td>
+                <td th:text="${medicion.id}"></td>
+                <td th:text="${medicion.id}"></td>
+                <td th:text="${medicion.id}"></td>
+            </tr>
+        </table>
+    </div>
 </div>
 </body>
 </html>

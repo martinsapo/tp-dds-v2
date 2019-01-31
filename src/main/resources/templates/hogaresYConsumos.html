@@ -6,9 +6,11 @@
 
     <title>Hogares y Consumos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <link href="/css/styles.css" rel="stylesheet" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/styles.css"  />
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.css">
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
 </head>
 <body>
 
@@ -41,18 +43,18 @@
     <h1 class="title" style="color: #ffffff; text-align: center;">Consumo de Hogares</h1>
     <hr>
 
-    <table style="width:70%; margin-left:15%; margin-right:15%; text-align:center; background-color:snow; border: 1px solid black;">
+    <table class="paleBlueRows">
         <tr>
-            <th style="border: 1px solid black; text-align:center; ">Hogar ID</th>
-            <th style="border: 1px solid black; text-align:center; ">Nombre del dueño del hogar</th>
-            <th style="border: 1px solid black; text-align:center; ">Consumo del hogar en el ultimo mes</th>
-            <th style="border: 1px solid black; text-align:center; ">Suma de todas los consumos por hora</th>
+            <th>Hogar ID</th>
+            <th>Nombre del dueño del hogar</th>
+            <th>Consumo del hogar en el ultimo mes</th>
+            <th>Suma de todas los consumos por hora</th>
         </tr>
         <tr th:each="hogar : ${hogares}">
-            <td style="border: 1px solid black;" th:text="${hogar.getId()}"></td>
-            <td style="border: 1px solid black;" th:text="${hogar.getCliente().getNombre()}"></td>
-            <td style="border: 1px solid black;" th:text="${hogar.getCliente().obtenerTodosLosConsumosDeTodosLosDispositivosEnElUltimoMes()}"></td>
-            <td style="border: 1px solid black;" th:text="${hogar.obtenerConsumosDeDispositivosPorHora()}"></td>
+            <td th:text="${hogar.getId()}"></td>
+            <td th:text="${hogar.getCliente().getNombre()}"></td>
+            <td th:text="${hogar.getCliente().obtenerTodosLosConsumosDeTodosLosDispositivosEnElUltimoMes()}"></td>
+            <td th:text="${hogar.obtenerConsumosDeDispositivosPorHora()}"></td>
         </tr>
     </table>
 

@@ -8,8 +8,8 @@
     <link rel="stylesheet" type="text/css" href="../css/styles.css"  />
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.css">
-    <link rel="stylesheet" href="../js/bootstrap.min.js">
     <script src="../js/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
 </head>
 <body>
 
@@ -18,7 +18,7 @@
 
         <div class="navbar-header">
             <ul class="nav navbar-nav">
-                <li class="active"> <a class="navbar-brand" href="#"> <span class="glyphicon glyphicon-user white" th:inline="text" >  </span>   ¡Bienvenido [[${session.username}]]!</a></li>
+                <li class="active"> <a class="navbar-brand" href="#"> <span class="glyphicon glyphicon glyphicon glyphicon-home white">  </span> &nbsp; SGE  </a></li>
             </ul>
         </div>
 
@@ -39,6 +39,10 @@
 
     </div>
 </nav>
+<div class="alert alert-success alert-dismissable" th:inline="text">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+     ¡Bienvenido <strong>[[${session.username}]]!</strong>
+</div>
 
 <div class="container">
     <div class="row">
