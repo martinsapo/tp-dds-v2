@@ -2349,6 +2349,12 @@ pre code {
 table {
   background-color: transparent;
 }
+
+.table-sm th,
+.table-sm td {
+  padding: 0.3rem;
+}
+
 table col[class*="col-"] {
   position: static;
   display: table-column;
