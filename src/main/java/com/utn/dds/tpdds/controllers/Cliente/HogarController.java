@@ -21,7 +21,6 @@ public class HogarController {
         ClienteResidencial cliente = ((ClienteResidencial) request.getSession().getAttribute("cliente"));
 
         ModelAndView modelAndView = new ModelAndView("hogar");
-
         modelAndView.addObject("dispositivosInteligentes", cliente.getDispositivosInteligentes());
         modelAndView.addObject("dispositivosEstandares", cliente.getDispositivosEstandars());
         modelAndView.addObject("reglas", cliente.obtenerReglasDeTodosLosDispositivos());

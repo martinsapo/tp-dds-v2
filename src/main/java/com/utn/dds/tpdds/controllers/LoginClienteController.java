@@ -1,6 +1,9 @@
 package com.utn.dds.tpdds.controllers;
 
 import com.utn.dds.tpdds.model.ClienteResidencial;
+import com.utn.dds.tpdds.model.ItemDeCatalogoDeDispositivos;
+import com.utn.dds.tpdds.model.TablaDeDispositivos;
+import com.utn.dds.tpdds.repository.CatalogoDispositivosJpaRepository;
 import com.utn.dds.tpdds.repository.ClienteResidencialJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,11 +15,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @Controller
 @RequestMapping(value = "/loginCliente")
 public class LoginClienteController {
     @Autowired ClienteResidencialJpaRepository clienteResidencialJPARepository;
+    @Autowired CatalogoDispositivosJpaRepository catalogoDispositivosJpaRepository;
 
     @RequestMapping(value = "")
     public String LoginCliente() {
@@ -32,6 +37,7 @@ public class LoginClienteController {
         }
 
         ClienteResidencial cliente = clienteResidencialJPARepository.findClienteResidencialByNombreDeUsuario(usuario);
+        List<ItemDeCatalogoDeDispositivos> tabla = catalogoDispositivosJpaRepository.findAll();
 
         if (cliente == null || !cliente.passwordMatch(contrasena)){
             model.addAttribute("errorMessage","Usuario o contraseña incorrecta");

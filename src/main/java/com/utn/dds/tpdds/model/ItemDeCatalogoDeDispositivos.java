@@ -33,6 +33,7 @@ public class ItemDeCatalogoDeDispositivos {
     }
 
     public ItemDeCatalogoDeDispositivos(JSONObject jsonDispositivoDeCatalogo) {
+        dispositivosAsociados = new ArrayList<>();
         if (jsonDispositivoDeCatalogo != null) {
             this.nombre = jsonDispositivoDeCatalogo.get("nombre").toString();
             this.consumo = new BigDecimal(jsonDispositivoDeCatalogo.get("consumo").toString());

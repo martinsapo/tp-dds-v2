@@ -2,12 +2,16 @@ package com.utn.dds.tpdds.model;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.utn.dds.tpdds.repository.CatalogoDeDispositivosRepository;
+import com.utn.dds.tpdds.repository.CatalogoDispositivosJpaRepository;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.apache.commons.math3.optim.PointValuePair;
 import org.apache.commons.math3.optim.linear.Relationship;
 import org.apache.commons.math3.optim.nonlinear.scalar.GoalType;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -24,10 +28,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Component
 @NoArgsConstructor
 @Getter
 @Setter
 public class Transformador {
+
+    @Autowired
+    public CatalogoDispositivosJpaRepository catalogoDispositivosJpaRepository;
+
     @javax.persistence.Id @javax.persistence.GeneratedValue(strategy= GenerationType.IDENTITY) @org.springframework.data.annotation.Transient
     private Integer id;
 
@@ -53,7 +62,6 @@ public class Transformador {
         this.zona = zona;
         this.latitud = latitud;
         this.longitud = longitud;
-        this.zona = zona;
         zona.agregarTransformador(this);
     }
 
@@ -106,7 +114,7 @@ public class Transformador {
                 for (int i = 0; i < cliente.dispositivos.size(); i++) {
                     Dispositivo dispositivo = cliente.dispositivos.get(i);
                     if(dispositivo instanceof DispositivoInteligente &&
-                            ((DispositivoInteligente) dispositivo).cantidadDeEnergiaConsumidaEnUnPeriodo(startOfMonth, LocalDateTime.now()).doubleValue() >= solucion.getPoint()[0]) {//MODIFICO PARA ADAPTAR A LOCALDATETIME DE JAVA
+                            ((DispositivoInteligente) dispositivo).cantidadDeEnergiaConsumidaEnUnPeriodo(startOfMonth, LocalDateTime.now()).doubleValue() >= solucion.getPoint()[i]) {//MODIFICO PARA ADAPTAR A LOCALDATETIME DE JAVA
                         System.out.println("Consumo Dispositivo: " + ((DispositivoInteligente) dispositivo).cantidadDeEnergiaConsumidaEnUnPeriodo(startOfMonth, LocalDateTime.now()).doubleValue());
                         System.out.println("Consumo Simplex Permitido: " + solucion.getPoint()[i]);
                         ((DispositivoInteligente) dispositivo).apagar();
@@ -151,12 +159,13 @@ public class Transformador {
     }
 
     private ArrayList<Double> crearArrayConConsumos(List<Dispositivo> dispositivos) {
+
         ArrayList<Double> arr = new ArrayList<>();
         for (Dispositivo dispositivo : dispositivos) {
             String aBuscar = dispositivo.getItemDeCatalogoDeDispositivos().getNombre();
-            for (TablaDeDispositivos tabla : this.tablaDeDispositivos) {
+            for (ItemDeCatalogoDeDispositivos tabla : catalogoDispositivosJpaRepository.findAll()) {
                 if (tabla.getNombre().equals(aBuscar)) {
-                    arr.add(tabla.getConsumo());
+                    arr.add(tabla.getConsumo().doubleValue());
                 }
 
             }
@@ -180,4 +189,5 @@ public class Transformador {
         }
         return target;
     }
+
 }

@@ -70,25 +70,25 @@
                     <td>
                         <form method="get" action="/cliente/abmDispositivos/encender">
                             <input type="hidden" name="id" th:value="${dispositivoInteligente.id}"/>
-                            <button class="btn" type="submit">Encender</button>
+                            <button class="btn btn-default" type="submit">Encender</button>
                         </form>
                     </td>
                     <td>
                         <form method="get" action="/cliente/abmDispositivos/apagar">
                             <input type="hidden" name="id" th:value="${dispositivoInteligente.id}"/>
-                            <button class="btn" type="submit">Apagar</button>
+                            <button class="btn btn-default" type="submit">Apagar</button>
                         </form>
                     </td>
                     <td>
                         <form method="get" action="/cliente/abmDispositivos/modoAhorro">
                             <input type="hidden" name="id" th:value="${dispositivoInteligente.id}"/>
-                            <button class="btn" type="submit">Modo ahorro</button>
+                            <button class="btn btn-warning" type="submit">Modo ahorro</button>
                         </form>
                     </td>
                     <td>
                         <form method="get" action="/cliente/abmDispositivos/baja/submit">
                             <input type="hidden" name="id" th:value="${dispositivoInteligente.id}"/>
-                            <button class="btn" type="submit">Eliminar</button>
+                            <button class="btn btn-danger" type="submit">Eliminar</button>
                         </form>
                     </td>
                 </tr>
@@ -104,7 +104,7 @@
                         <th>Nombre de dispositivo</th>
                         <th>Nombre del item del catalogo</th>
                         <th>Consumo aproximado diario en KW/H</th>
-                        <th>Eliminar</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tr th:each="dispositivoEstandar : ${dispositivosEstandar}">
@@ -116,7 +116,7 @@
                     <td>
                         <form method="get" action="/cliente/abmDispositivos/baja/submit">
                             <input type="hidden" name="id" th:value="${dispositivoEstandar.id}"/>
-                            <button class="btn" type="submit">Eliminar</button>
+                            <button class="btn btn-danger" type="submit">Eliminar</button>
                         </form>
                     </td>
                 </tr>

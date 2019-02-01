@@ -21,17 +21,19 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.NONE)
 @Rollback(false)
-@ActiveProfiles("test")
+@ActiveProfiles("dev")
 public class AAAAFillDataTest {
 
     @Autowired ClienteResidencialJpaRepository clienteResidencialJPARepository;
-    @Autowired CatalogoDispositivosJpaRepository catalogoDispositivosJpaRepository;
     @Autowired AdministradorJpaRepository administradorJpaRepository;
+    @Autowired CatalogoDispositivosJpaRepository catalogoDispositivosJpaRepository;
 
     public AAAAFillDataTest() {}
 
@@ -39,27 +41,27 @@ public class AAAAFillDataTest {
     public void testFillData() {
 
         String jsonTablaDeDispositivos = "src/test/java/json/tablaDispositivos.json";
-        //persistirTablaDispositivos(jsonTablaDeDispositivos);
+        persistirTablaDispositivos(jsonTablaDeDispositivos);
 
-        ItemDeCatalogoDeDispositivos disp1 = new ItemDeCatalogoDeDispositivos("Aire de 2200 frigorias", new BigDecimal(1.013));
-        ItemDeCatalogoDeDispositivos disp2 = new ItemDeCatalogoDeDispositivos("TV de tubo fluorescente de 21", new BigDecimal(0.075));
-        ItemDeCatalogoDeDispositivos disp3 = (new ItemDeCatalogoDeDispositivos("TV de tubo fluorescente de 29 a 34", new BigDecimal(0.175)));
-        ItemDeCatalogoDeDispositivos disp4 = (new ItemDeCatalogoDeDispositivos("TV LCD de 40",new BigDecimal(0.18)));
-        ItemDeCatalogoDeDispositivos disp5 = (new ItemDeCatalogoDeDispositivos("TV LED de 24",new BigDecimal(0.04)));
-        ItemDeCatalogoDeDispositivos disp6 = (new ItemDeCatalogoDeDispositivos("TV LED de 32",new BigDecimal(0.055)));
-        ItemDeCatalogoDeDispositivos disp7 = (new ItemDeCatalogoDeDispositivos("TV LED de 40",new BigDecimal(0.08)));
-        ItemDeCatalogoDeDispositivos disp8 = (new ItemDeCatalogoDeDispositivos("Heladera con freezer",  new BigDecimal(0.09)));
-        ItemDeCatalogoDeDispositivos disp9 = (new ItemDeCatalogoDeDispositivos("Heladera sin freezer", new BigDecimal(0.075)));
-
-        catalogoDispositivosJpaRepository.save(disp1);
-        catalogoDispositivosJpaRepository.save(disp2);
-        catalogoDispositivosJpaRepository.save(disp3);
-        catalogoDispositivosJpaRepository.save(disp4);
-        catalogoDispositivosJpaRepository.save(disp5);
-        catalogoDispositivosJpaRepository.save(disp6);
-        catalogoDispositivosJpaRepository.save(disp7);
-        catalogoDispositivosJpaRepository.save(disp8);
-        catalogoDispositivosJpaRepository.save(disp9);
+//        ItemDeCatalogoDeDispositivos disp1 = new ItemDeCatalogoDeDispositivos("Aire de 2200 frigorias", new BigDecimal(1.013));
+//        ItemDeCatalogoDeDispositivos disp2 = new ItemDeCatalogoDeDispositivos("TV de tubo fluorescente de 21", new BigDecimal(0.075));
+//        ItemDeCatalogoDeDispositivos disp3 = (new ItemDeCatalogoDeDispositivos("TV de tubo fluorescente de 29 a 34", new BigDecimal(0.175)));
+//        ItemDeCatalogoDeDispositivos disp4 = (new ItemDeCatalogoDeDispositivos("TV LCD de 40",new BigDecimal(0.18)));
+//        ItemDeCatalogoDeDispositivos disp5 = (new ItemDeCatalogoDeDispositivos("TV LED de 24",new BigDecimal(0.04)));
+//        ItemDeCatalogoDeDispositivos disp6 = (new ItemDeCatalogoDeDispositivos("TV LED de 32",new BigDecimal(0.055)));
+//        ItemDeCatalogoDeDispositivos disp7 = (new ItemDeCatalogoDeDispositivos("TV LED de 40",new BigDecimal(0.08)));
+//        ItemDeCatalogoDeDispositivos disp8 = (new ItemDeCatalogoDeDispositivos("Heladera con freezer",  new BigDecimal(0.09)));
+//        ItemDeCatalogoDeDispositivos disp9 = (new ItemDeCatalogoDeDispositivos("Heladera sin freezer", new BigDecimal(0.075)));
+//
+//        catalogoDispositivosJpaRepository.save(disp1);
+//        catalogoDispositivosJpaRepository.save(disp2);
+//        catalogoDispositivosJpaRepository.save(disp3);
+//        catalogoDispositivosJpaRepository.save(disp4);
+//        catalogoDispositivosJpaRepository.save(disp5);
+//        catalogoDispositivosJpaRepository.save(disp6);
+//        catalogoDispositivosJpaRepository.save(disp7);
+//        catalogoDispositivosJpaRepository.save(disp8);
+//        catalogoDispositivosJpaRepository.save(disp9);
 
 
         ZonaGeografica zonaGeografica = new ZonaGeografica("Mitre", 1.0, 1.0, 1.0);
@@ -72,10 +74,13 @@ public class AAAAFillDataTest {
         ClienteResidencial otroCliente =  new ClienteResidencial("Eric", "Cano", "san martin", "ecano", "1234",
                 new Documento("367282827", TipoDeDocumento.DNI), "1364748373", new Categoria(10.0));
 
+
         otroCliente.setFechaDeAlta(new DateTime());
 
         Hogar hogar = new Hogar(otroCliente, 3.0, 2.0, transformador);
-
+        ItemDeCatalogoDeDispositivos disp2 = catalogoDispositivosJpaRepository.findDispositivoDeCatalogoById(3);
+        ItemDeCatalogoDeDispositivos disp7 = catalogoDispositivosJpaRepository.findDispositivoDeCatalogoById(8);
+        ItemDeCatalogoDeDispositivos disp9 = catalogoDispositivosJpaRepository.findDispositivoDeCatalogoById(10);
 
         DispositivoInteligente tv = new DispositivoInteligente("TV tubo", otroCliente, disp2);
         DispositivoInteligente heladera = new DispositivoInteligente("Heladera", otroCliente,disp9);

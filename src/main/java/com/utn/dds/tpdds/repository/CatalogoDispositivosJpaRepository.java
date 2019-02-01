@@ -8,5 +8,5 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface CatalogoDispositivosJpaRepository extends JpaRepository<ItemDeCatalogoDeDispositivos, Integer> {
-    ItemDeCatalogoDeDispositivos findClienteResidencialById(Integer id);
+    ItemDeCatalogoDeDispositivos findDispositivoDeCatalogoById(Integer id);
 }

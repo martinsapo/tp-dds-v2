@@ -188,7 +188,7 @@ public class ClienteResidencial{
     public BigDecimal obtenerTodosLosConsumosDeTodosLosDispositivosEnElUltimoMes() {
         LocalDateTime initial = LocalDateTime.now();
         LocalDateTime start = initial.withDayOfMonth(1);
-        LocalDateTime end = initial.withDayOfMonth(30);
+        LocalDateTime end = initial.withDayOfMonth(28);
 
         BigDecimal consumos = new BigDecimal(0);
         for (DispositivoInteligente dispositivoInteligente : getDispositivosInteligentes()) {

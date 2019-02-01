@@ -16,7 +16,7 @@
     "usoMaximo": 360
   },
   {
-    "nombre": "Televisor de 21”",
+    "nombre": "TV de tubo fluorescente de 21",
     "esInteligente": false,
     "esBajoConsumo": false,
     "consumo":0.075,
@@ -24,7 +24,7 @@
     "usoMaximo": 360
   },
   {
-    "nombre": "Televisor de 29” a 34”",
+    "nombre": "TV de tubo fluorescente de 29 a 34",
     "esInteligente": false,
     "esBajoConsumo": false,
     "consumo":0.175,
@@ -32,7 +32,7 @@
     "usoMaximo": 360
   },
   {
-    "nombre": "Televisor LCD 40”",
+    "nombre": "TV LCD de 40",
     "esInteligente": false,
     "esBajoConsumo": false,
     "consumo":0.18,
@@ -40,7 +40,7 @@
     "usoMaximo": 360
   },
   {
-    "nombre": "Televisor LED 24”",
+    "nombre": "TV LED de 24",
     "esInteligente": true,
     "esBajoConsumo": true,
     "consumo":0.04,
@@ -48,7 +48,7 @@
     "usoMaximo": 360
   },
   {
-    "nombre": "Televisor LED 32”",
+    "nombre": "TV LED de 32",
     "esInteligente": true,
     "esBajoConsumo": true,
     "consumo":0.055,
@@ -56,7 +56,7 @@
     "usoMaximo": 360
   },
   {
-    "nombre": "Televisor LED 40”",
+    "nombre": "TV LED de 40",
     "esInteligente": true,
     "esBajoConsumo": true,
     "consumo":0.08,

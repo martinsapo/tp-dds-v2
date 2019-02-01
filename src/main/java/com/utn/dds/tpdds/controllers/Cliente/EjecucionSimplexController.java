@@ -59,11 +59,11 @@ public class EjecucionSimplexController {
 
             SimpleTriggerFactoryBean trigger = new SimpleTriggerFactoryBean();
             trigger.setBeanName("MyTrigger");
-            trigger.setJobDetail((JobDetail) jobDetail.getObject());
+            trigger.setJobDetail(jobDetail.getObject());
             trigger.setRepeatInterval(5000);
             trigger.afterPropertiesSet();
 
-            scheduler.scheduleJob((JobDetail) jobDetail.getObject(), trigger.getObject());
+            scheduler.scheduleJob(jobDetail.getObject(), trigger.getObject());
 
             // Start Scheduler
             scheduler.start();

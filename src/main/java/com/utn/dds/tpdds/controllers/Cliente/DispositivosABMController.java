@@ -214,6 +214,7 @@ public class DispositivosABMController {
     public ModelAndView bajaSubmit(HttpServletRequest request) {
         Integer id = Integer.parseInt(request.getParameter("id"));
         dispositivoJpaRepository.deleteById(id);
+
         return new ModelAndView("redirect:/cliente/abmDispositivos");
     }
 }

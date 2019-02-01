@@ -13,7 +13,7 @@
 
 
     <!-- The Task Bean-->
-    <bean id="myTask" class="com.utn.dds.tpdds.model.MyTask"/>
+    <bean id="myTask" class="com.utn.dds.tpdds.model.Hogar"/>
 
     <!-- The quartz scheduler configuration -->
     <bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean"/>

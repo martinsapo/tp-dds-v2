@@ -52,7 +52,7 @@
                 <tr th:each="dispositivo,iter : ${dispositivos}">
                     <th scope="row" th:text="${dispositivo.id}"></th>
                     <td th:text="${dispositivo.nombreDelDispositivo}"></td>
-                    <td th:text="${hogar.recomendacion[iter]}"> Horas</td>
+                    <td th:text="${hogar.recomendacion.getPoint()[iter]}"> Horas</td>
                 </tr>
             </tbody>
         </table>
