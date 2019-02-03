@@ -6,8 +6,13 @@
 
         <title>Alta Dispositivo</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-        <link href="css/styles.css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="../../css/styles.css"  />
+        <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.css">
+        <link rel="stylesheet" href="../../css/leaflet.css">
+        <script src="../../js/leaflet.js"></script>
+        <script src="../../js/jquery.min.js"></script>
+        <script src="../../js/bootstrap.min.js"></script>
     </head>
 </head>
 <body>
@@ -16,6 +21,10 @@
         <form class="form-signin" method="get" action="/admin/abmCatalogoDispositivos/alta/submit">
             <input type="text" id="inputNombre" name="nombre" class="form-control" placeholder="Nombre Dispositivo" required autofocus>
             <input type="text" id="inputKw" name="kwPorHora" class="form-control" placeholder="Kw por Hora" required>
+            <input type="text" id="inputMinimo" name="usoMinimo" class="form-control" placeholder="Uso Minimo" required>
+            <input type="text" id="inputMaximo" name="usoMaximo" class="form-control" placeholder="Uso Maximo" required>
+            <input type="checkbox" id="bajoConsumo" name="esBajoConsumo" class="form-control" placeholder="Bajo Consumo?" required>
+            <input type="checkbox" id="inteligente" name="esInteligente" class="form-control" placeholder="Es inteligente?" required>
 
             <div th:if="${errorMessage} != ''">
                 <label th:text="${errorMessage}"></label>

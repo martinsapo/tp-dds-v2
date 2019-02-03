@@ -1,4 +1,4 @@
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <title>Subir archivo</title>
     <meta charset="utf-8">
@@ -14,11 +14,29 @@
 </head>
 
 <body>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+
+        <div class="navbar-header">
+            <ul class="nav navbar-nav">
+                <li class="navbar-brand active"> <span class="glyphicon glyphicon glyphicon-pawn white" th:inline="text" >   </span>   Formulario de alta de dispositivoss</li>
+            </ul>
+        </div>
+
+        <div class="floatright">
+            <ul class="nav navbar-nav">
+                <li><a class="navbar-brand" href="/cliente/abmDispositivos/">Volver <span class="glyphicon glyphicon-arrow-left"></span></a>
+            </ul>
+        </div>
+
+    </div>
+</nav>
+
 <h1>Subir archivo</h1>
 <form action = "/cliente/abmDispositivos/altaDesdeArchivo/submit" method = "post" enctype = "multipart/form-data">
-    <input  type = "file" name = "file" size = "50" />
+    <input  class="form-control" type = "file" name = "file" size = "50" style="width:20%"/>
     <br />
-    <input class="btn-dark" type = "submit" value = "Upload File" />
+    <input class="form-control" type = "submit" value = "Upload File" style="width:20%"/>
 </form>
 </body>
 

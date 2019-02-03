@@ -2,9 +2,12 @@ package com.utn.dds.tpdds.controllers.Cliente;
 
 import com.utn.dds.tpdds.model.ClienteResidencial;
 import com.utn.dds.tpdds.model.Hogar;
+import com.utn.dds.tpdds.repository.CatalogoDispositivosJpaRepository;
+import com.utn.dds.tpdds.repository.DispositivoInteligenteJpaRepository;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean;
@@ -20,6 +23,8 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 @RequestMapping(value = "/cliente/simplex")
 public class EjecucionSimplexController {
+    @Autowired
+    CatalogoDispositivosJpaRepository catalogoDispositivosJpaRepository;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView submitsimplex(HttpServletRequest request) {
@@ -27,7 +32,7 @@ public class EjecucionSimplexController {
 
         String jsonTablaDeDispositivos = "/Users/msaposnic/Documents/tp-dds/src/test/java/json";
         ClienteResidencial cliente = ((ClienteResidencial) request.getSession().getAttribute("cliente"));
-        cliente.getHogar().getTransformador().agregarTablaDeDispositivos(jsonTablaDeDispositivos);
+        cliente.getHogar().getTransformador().agregarTodosLosDispositivosAlTransformador(catalogoDispositivosJpaRepository.findAll());
         cliente.getHogar().obtenerRecomendacion();
 
         model.addAttribute("dispositivos", cliente.getDispositivos());

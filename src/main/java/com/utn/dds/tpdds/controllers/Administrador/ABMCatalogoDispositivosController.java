@@ -35,8 +35,12 @@ public class ABMCatalogoDispositivosController {
 
         String nombre = request.getParameter("nombre");
         BigDecimal consumo = BigDecimal.valueOf(Double.parseDouble(request.getParameter("kwPorHora")));
+        Integer usoMinimo = new Integer(request.getParameter("usoMinimo"));
+        Integer usoMaximo = new Integer(request.getParameter("usoMaximo"));
+        Boolean esBajoConsumo = new Boolean(request.getParameter("esBajoConsumo"));
+        Boolean esInteligente = new Boolean(request.getParameter("esInteligente"));
 
-        ItemDeCatalogoDeDispositivos item = new ItemDeCatalogoDeDispositivos(nombre, consumo);
+        ItemDeCatalogoDeDispositivos item = new ItemDeCatalogoDeDispositivos(nombre, consumo,usoMinimo,usoMaximo,esBajoConsumo,esInteligente);
         catalogoDispositivosJpaRepository.save(item);
         return new ModelAndView("redirect:/admin/abmCatalogoDispositivos");
     }

@@ -38,23 +38,24 @@
     </div>
 </nav>
     <form action="/cliente/calculoDeConsumo/submit" method="get">
-        <div>
-            <label>Fecha de inicio: </label>
-            <input type="date" name="inicio"/>
+        <div class="col-sm-3">
+            <h2>Fecha de inicio: </h2>
+            <input class="form-control" type="date" name="inicio"/>
         </div>
-        <div>
-            <label>Fecha de fin: </label>
-            <input type="date" name="fin"/>
+        <div class="col-sm-3">
+            <h2>Fecha de fin: </h2>
+            <input class="form-control" type="date" name="fin"/>
         </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Calcular consumo</button>
+        <div th:if="${consumo} != ''" class="col-sm-3">
+            <h2>El consumo desde </h2>
+            <strong><h3 th:text="${inicio}"></h3></strong>
+            <h2> hasta </h2>
+            <strong><h3 th:text="${fin}"></h3></strong>
+            <h2> fue de: </h2>
+            <strong><h3 th:text="${consumo}"></h3></strong>
+        </div><br><br>
+        <button class="btn btn-lg btn-primary btn-block btn-signin center" type="submit" style="width:20%">Calcular consumo</button>
     </form>
-    <div th:if="${consumo} != ''">
-        <label>El consumo desde </label>
-        <label th:text="${inicio}"></label>
-        <label> hasta </label>
-        <label th:text="${fin}"></label>
-        <label> fue de: </label>
-        <label th:text="${consumo}"></label>
-    </div>
+
 </body>
 </html>

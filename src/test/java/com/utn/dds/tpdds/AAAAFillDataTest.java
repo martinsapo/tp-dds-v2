@@ -66,7 +66,7 @@ public class AAAAFillDataTest {
 
         ZonaGeografica zonaGeografica = new ZonaGeografica("Mitre", 1.0, 1.0, 1.0);
         Transformador transformador = new Transformador(zonaGeografica, -34.612985, -58.470673);
-        transformador.agregarTablaDeDispositivos(jsonTablaDeDispositivos);
+        transformador.agregarTodosLosDispositivosAlTransformador(catalogoDispositivosJpaRepository.findAll());
 
         ClienteResidencial clienteResidencial = new ClienteResidencial("Martin","Saposnic", "gaona", "martinsapo", "123",
                 new Documento("40136136", TipoDeDocumento.DNI), "123123123", new Categoria(100.0));
@@ -96,11 +96,11 @@ public class AAAAFillDataTest {
         Sensor sensor = new SensorDeValores(tv, "sensor de temperatura");
         Sensor sensor2 = new SensorDeValores(heladera, "sensor de presion");
 
-        Medicion medicion = new MedicionPorValor();
-        ((MedicionPorValor) medicion).setMedicion(1.0);
-        medicion.setSensor(sensor);
-
-        sensor.agregarMedicion(medicion);
+//        Medicion medicion = new MedicionPorValor();
+//        ((MedicionPorValor) medicion).setMedicion(1.0);
+//        medicion.setSensor(sensor);
+//
+//        sensor.agregarMedicion(medicion);
 
         Accion accion = new Accion(AccionesPosibles.APAGAR);
         CondicionDeUsoMensual condicion = new CondicionDeUsoMensual(360, Operador.MAYOR);
@@ -177,7 +177,10 @@ public class AAAAFillDataTest {
             JSONObject object = (JSONObject) catalogoDispositivo;
             ItemDeCatalogoDeDispositivos dispositivoDeCatalogo = new ItemDeCatalogoDeDispositivos(object);
             catalogoDispositivosJpaRepository.save(dispositivoDeCatalogo);
+
         }
     }
+
+
 
 }

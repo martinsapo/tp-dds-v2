@@ -9,40 +9,55 @@
 </head>
 
 <body>
-<form class="form-signin" method="get" action="/cliente/abmReglas">
-    <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Volver</button>
-</form>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+
+        <div class="navbar-header">
+            <ul class="nav navbar-nav">
+                <li class="navbar-brand active"> <span class="glyphicon glyphicon glyphicon-pawn white" th:inline="text" >   </span>   Formulario de alta de reglas</li>
+            </ul>
+        </div>
+
+        <div class="floatright">
+            <ul class="nav navbar-nav">
+                <li><a class="avbar-brand" href="/cliente/abmReglas/">Volver <span class="glyphicon glyphicon-arrow-left"></span></a>
+            </ul>
+        </div>
+
+    </div>
+</nav>
 
 <form method="get" action="/cliente/abmReglas/alta/submit">
-    <div>
+    <div class="col-sm-4">
         <h3>Acciones posibles</h3>
-        <select title="acciones" name="accion">
+        <select class="form-control" title="acciones" name="accion">
             <option th:each="accion : ${accionesPosibles}" th:value="${accion.name()}" th:text="${accion.name()}"></option>
         </select>
     </div>
-    <div>
+    <div class="col-sm-4">
         <h3>Dispositivo</h3>
-        <select title="dispositivo" name="dispositivo">
+        <select class="form-control" title="dispositivo" name="dispositivo">
             <option th:each="dispositivo : ${dispositivosInteligentes}" th:value="${dispositivo.id}" th:text="${dispositivo.nombreDelDispositivo}"></option>
         </select>
     </div>
 
-    <div>
+    <div class="col-sm-4">
         <h3>Condicion</h3>
-        <select title = "tipoDeCondicion" name="tipoCondicion">
+        <select class="form-control" title = "tipoDeCondicion" name="tipoCondicion">
             <option value="valor">Por valor</option>
             <option value="binaria">Binaria</option>
             <option value="consumo">Por consumo mensual</option>
             <option value="uso">Por uso mensual</option>
         </select>
-        <select name="operador">
+        <br>
+        <select class="form-control" name="operador">
             <option th:each="operador : ${operadores}" th:value="${operador.name()}" th:text="${operador.name()}"></option>
-        </select>
-        <label>Valor (si aplica)</label>
-        <input title="valor" type="text" name="value"/>
+        </select><br>
+        <label class="label-default">Valor (si aplica)</label>
+        <input class="form-control" title="valor" type="text" name="value"/>
     </div>
 
-    <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Gurdar</button>
+    <br><br><br><button class="btn btn-lg btn-primary btn-block btn-signin center" type="submit" style="width:20%">Guardar</button>
 </form>
 </body>
 </html>

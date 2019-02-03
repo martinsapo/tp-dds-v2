@@ -43,12 +43,12 @@
     <h1 class="title" style="color: #ffffff; text-align: center;">Consumo de Hogares</h1>
     <hr>
 
-    <table class="paleBlueRows">
+    <table class="table">
         <tr>
             <th>Hogar ID</th>
-            <th>Nombre del dueño del hogar</th>
+            <th>Dueño del hogar</th>
             <th>Consumo del hogar en el ultimo mes</th>
-            <th>Suma de todas los consumos por hora</th>
+            <th>Suma de consumos</th>
         </tr>
         <tr th:each="hogar : ${hogares}">
             <td th:text="${hogar.getId()}"></td>

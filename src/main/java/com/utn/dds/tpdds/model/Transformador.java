@@ -34,9 +34,6 @@ import java.util.List;
 @Setter
 public class Transformador {
 
-    @Autowired
-    public CatalogoDispositivosJpaRepository catalogoDispositivosJpaRepository;
-
     @javax.persistence.Id @javax.persistence.GeneratedValue(strategy= GenerationType.IDENTITY) @org.springframework.data.annotation.Transient
     private Integer id;
 
@@ -52,8 +49,8 @@ public class Transformador {
     @OneToMany(mappedBy = "transformador", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Hogar> listaDeHogares = new ArrayList<>();
 
-    @Transient
-    private List<TablaDeDispositivos> tablaDeDispositivos = new ArrayList<>();
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL,mappedBy = "trafo")
+    private List<ItemDeCatalogoDeDispositivos> tablaDeDispositivos = new ArrayList<>();
 
     @Transient
     private double consumo;
@@ -87,7 +84,7 @@ public class Transformador {
 
     public void agregarTablaDeDispositivos(String jsonTablaDeDispositivos){
         ObjectMapper mapper = new ObjectMapper();
-        JavaType type = mapper.getTypeFactory().constructCollectionType(ArrayList.class, TablaDeDispositivos.class);
+        JavaType type = mapper.getTypeFactory().constructCollectionType(ArrayList.class, ItemDeCatalogoDeDispositivos.class);
         try{
             this.tablaDeDispositivos = mapper.readValue(new File(jsonTablaDeDispositivos),type);
         } catch (IOException e){
@@ -95,7 +92,14 @@ public class Transformador {
         }
     }
 
-    public List<TablaDeDispositivos> getTablaDeDispositivos() {
+    public void agregarTodosLosDispositivosAlTransformador(List <ItemDeCatalogoDeDispositivos> catalogoDeDispositivos){
+
+        //JSONArray catalogoArray = (JSONArray) Helper.mapJsonToArrayJSON(jsonCatalogo);
+
+        this.tablaDeDispositivos.addAll(catalogoDeDispositivos);
+    }
+
+    public List<ItemDeCatalogoDeDispositivos> getTablaDeDispositivos() {
         return this.tablaDeDispositivos;
     }
 
@@ -144,7 +148,7 @@ public class Transformador {
         int i = 0;
         for (Dispositivo dispositivo : dispositivos) {
             String aBuscar = dispositivo.nombreDelDispositivo;
-            for (TablaDeDispositivos table : this.tablaDeDispositivos) {
+            for (ItemDeCatalogoDeDispositivos table : this.tablaDeDispositivos) {
                 if (table.getNombre().equals(aBuscar)) {
                     usoMaximo = table.getUsoMaximo();
                     usoMinimo = table.getUsoMinimo();
@@ -163,7 +167,7 @@ public class Transformador {
         ArrayList<Double> arr = new ArrayList<>();
         for (Dispositivo dispositivo : dispositivos) {
             String aBuscar = dispositivo.getItemDeCatalogoDeDispositivos().getNombre();
-            for (ItemDeCatalogoDeDispositivos tabla : catalogoDispositivosJpaRepository.findAll()) {
+            for (ItemDeCatalogoDeDispositivos tabla : this.tablaDeDispositivos) {
                 if (tabla.getNombre().equals(aBuscar)) {
                     arr.add(tabla.getConsumo().doubleValue());
                 }
