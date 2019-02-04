@@ -9,21 +9,38 @@
 </head>
 
 <body>
-<form class="form-signin" method="get" action="/cliente/abmDispositivos">
-    <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Volver</button>
-</form>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+
+        <div class="navbar-header">
+            <ul class="nav navbar-nav">
+                <li class="navbar-brand active"> <span class="glyphicon glyphicon glyphicon-pawn white" th:inline="text" >   </span>   Formulario de alta de dispositivo</li>
+            </ul>
+        </div>
+
+        <div class="floatright">
+            <ul class="nav navbar-nav">
+                <li><a class="avbar-brand" href="/cliente/abmDispositivos/">Volver <span class="glyphicon glyphicon-arrow-left"></span></a>
+            </ul>
+        </div>
+
+    </div>
+</nav>
 
 <form method="get" action="/cliente/abmDispositivos/altaInteligente/submit">
-    <div>
+    <div class="col-sm-4">
         <h3>Catalogo</h3>
-        <select title="catalogo" name="catalogo">
+        <select class="form-control" title="catalogo" name="catalogo">
             <option th:each="item : ${catalogo}" th:value="${item.id}" th:text="${item.nombre}"></option>
         </select>
     </div>
-    <label>Nombre del dispositivo: </label>
-    <input title="nombre" type="text" name="nombre"/>
-
-    <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Guardar</button>
+    <div class="col-sm-4">
+        <h3>Nombre del dispositivo: </h3>
+        <input class="form-control" title="nombre" type="text" name="nombre"/>
+    </div>
+    <div class="col-sm-4">
+        <button class="btn btn-primary btn-signin" style="width:20%" type="submit">Guardar</button>
+    </div>
 </form>
 </body>
 </html>

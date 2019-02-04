@@ -32,11 +32,16 @@ import java.util.Optional;
 @RequestMapping(value = "cliente/abmDispositivos")
 public class DispositivosABMController {
 
-    @Autowired ClienteResidencialJpaRepository clienteResidencialJPARepository;
-    @Autowired DispositivoInteligenteJpaRepository dispositivoInteligenteJpaRepository;
-    @Autowired DispositivoEstandarJpaRepository dispositivoEstandarJpaRepository;
-    @Autowired DispositivoJpaRepository dispositivoJpaRepository;
-    @Autowired CatalogoDispositivosJpaRepository catalogoDispositivosJpaRepository;
+    @Autowired
+    ClienteResidencialJpaRepository clienteResidencialJPARepository;
+    @Autowired
+    DispositivoInteligenteJpaRepository dispositivoInteligenteJpaRepository;
+    @Autowired
+    DispositivoEstandarJpaRepository dispositivoEstandarJpaRepository;
+    @Autowired
+    DispositivoJpaRepository dispositivoJpaRepository;
+    @Autowired
+    CatalogoDispositivosJpaRepository catalogoDispositivosJpaRepository;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView index(HttpServletRequest request) {
@@ -117,7 +122,7 @@ public class DispositivosABMController {
     }
 
     @RequestMapping(value = "/altaDesdeArchivo/submit", method = RequestMethod.POST)
-    public ModelAndView altaDesdeArchivoSubmit(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes,HttpServletRequest request) {
+    public ModelAndView altaDesdeArchivoSubmit(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes, HttpServletRequest request) {
 
         if (file.isEmpty()) {
             redirectAttributes.addFlashAttribute("message", "Seleccione un archivo a cargar");
@@ -173,7 +178,7 @@ public class DispositivosABMController {
                 Double consumo = (Double) map.get("consumo");
 
                 if (optionalClienteResidencial.isPresent() && optionalItemDeCatalogoDeDispositivos.isPresent()) {
-                    DispositivoEstandar dispositivoEstandar = new DispositivoEstandar(nombre, optionalClienteResidencial.get(),consumo, optionalItemDeCatalogoDeDispositivos.get());
+                    DispositivoEstandar dispositivoEstandar = new DispositivoEstandar(nombre, optionalClienteResidencial.get(), consumo, optionalItemDeCatalogoDeDispositivos.get());
                     dispositivoEstandarJpaRepository.save(dispositivoEstandar);
                 }
             }
@@ -205,7 +210,7 @@ public class DispositivosABMController {
         Double usodiario = Double.parseDouble(request.getParameter("usoDiario"));
         ItemDeCatalogoDeDispositivos itemDeCatalogoDeDispositivos = catalogoDispositivosJpaRepository.findById(idCatalogo).get();
         DispositivoEstandar dispositivoEstandar = new DispositivoEstandar(
-                nombre, cliente, usodiario,itemDeCatalogoDeDispositivos);
+                nombre, cliente, usodiario, itemDeCatalogoDeDispositivos);
         dispositivoEstandarJpaRepository.save(dispositivoEstandar);
         return new ModelAndView("redirect:/cliente/abmDispositivos");
     }

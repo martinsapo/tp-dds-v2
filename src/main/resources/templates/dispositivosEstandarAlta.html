@@ -9,24 +9,40 @@
 </head>
 
 <body>
-<form class="form-signin" method="get" action="/cliente/abmDispositivos">
-    <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Volver</button>
-</form>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+
+        <div class="navbar-header">
+            <ul class="nav navbar-nav">
+                <li class="navbar-brand active"> <span class="glyphicon glyphicon glyphicon-pawn white" th:inline="text" >   </span>   Formulario de alta de dispositivo</li>
+            </ul>
+        </div>
+
+        <div class="floatright">
+            <ul class="nav navbar-nav">
+                <li><a class="avbar-brand" href="/cliente/abmDispositivos/">Volver <span class="glyphicon glyphicon-arrow-left"></span></a>
+            </ul>
+        </div>
+
+    </div>
+</nav>
 
 <form method="get" action="/cliente/abmDispositivos/altaEstandar/submit">
-    <div>
+    <div class="col-sm-4">
         <h3>Catalogo</h3>
-        <select title="catalogo" name="catalogo">
+        <select class="form-control" title="catalogo" name="catalogo">
             <option th:each="item : ${catalogo}" th:value="${item.id}" th:text="${item.nombre}"></option>
         </select>
     </div>
-    <label>Nombre del dispositivo: </label>
-    <input title="nombre" type="text" name="nombre"/>
-
-    <label>Horas de uso diario: </label>
-    <input title="nombre" type="text" name="usoDiario"/>
-
-    <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Guardar</button>
+    <div class="col-sm-4">
+        <h3>Nombre del dispositivo: </h3>
+        <input class="form-control" title="nombre" type="text" name="nombre"/>
+    </div>
+    <div class="col-sm-4">
+        <h3>Horas de uso diario: </h3>
+        <input class="form-control" title="nombre" type="text" name="usoDiario"/><br><br><br>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block btn-signin center" type="submit" style="width:20%">Guardar</button>
 </form>
 </body>
 </html>
