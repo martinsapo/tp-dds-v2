@@ -82,7 +82,7 @@ public class AdministratorController {
         }
 
 
-        return new ModelAndView("reportes", model);
+        return new ModelAndView("reporteConsumoPorHogar", model);
     }
 
     @RequestMapping(value = "/reportes/consumoPromedioPorTipo", method = RequestMethod.GET)
@@ -110,7 +110,7 @@ public class AdministratorController {
             reporteDeConsumoPromedioPorTipoDeDispositivoMongoRepository.save(reporteConsumoPromedioPorTipoDeDispositivo);
         }
 
-        return new ModelAndView("reportes", model);
+        return new ModelAndView("reporteConsumoPorTipoDispositivo", model);
     }
 
     @RequestMapping(value = "/reportes/consumoPorTransformador", method = RequestMethod.GET)
@@ -136,6 +136,6 @@ public class AdministratorController {
             model.addAttribute("reporteConsumoPorTransformador", reporteConsumoPorTransformador);
             reporteDeConsumoPorTransformadorMongoRepository.save(reporteConsumoPorTransformador);
         }
-        return new ModelAndView("reportes", model);
+        return new ModelAndView("reporteConsumoPorTransformador", model);
     }
 }

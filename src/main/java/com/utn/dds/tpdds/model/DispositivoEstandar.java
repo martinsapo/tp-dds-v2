@@ -51,7 +51,9 @@ public class DispositivoEstandar extends Dispositivo implements Serializable{
     public BigDecimal cantidadDeEnergiaConsumidaEnElUltimoMes() {
         LocalDateTime initial = LocalDateTime.now();
         LocalDateTime start = initial.withDayOfMonth(1);
-        LocalDateTime end = initial.withDayOfMonth(30);
+        LocalDateTime end = initial.withDayOfMonth(initial.toLocalDate().lengthOfMonth());
+
+       // LocalDateTime end = initial.withDayOfMonth(30);
         return cantidadDeEnergiaConsumidaEnUnPeriodo(start, end);
     }
 

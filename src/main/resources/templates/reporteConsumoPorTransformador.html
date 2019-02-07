@@ -1,0 +1,33 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>Reporte Consumo Por Hogar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="../css/styles.css"  />
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.css">
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+</head>
+<h1>Reporte Consumo Por Transformador</h1>
+<body>
+<div class="btn-group">
+    <form class="form-signin" method="get" action="/admin/reportes">
+        <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Volver</button>
+    </form>
+</div>
+<div th:if="${reporteConsumoPorTransformador != null}">
+    <table style="width:70%; margin-left:15%; margin-right:15%; text-align:center; background-color:snow; border: 1px solid black;">
+        <tr>
+            <th style="border: 1px solid black; text-align:center; ">Transformador</th>
+            <th style="border: 1px solid black; text-align:center; ">Consumo</th>
+        </tr>
+        <tr th:each="map : ${reporteConsumoPorTransformador.mapaDeIdYConsumo}">
+            <td style="border: 1px solid black;" th:text="${map.key}"></td>
+            <td style="border: 1px solid black;" th:text="${map.value}"></td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>

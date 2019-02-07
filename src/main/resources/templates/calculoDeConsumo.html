@@ -11,6 +11,7 @@
     <script src="../../js/bootstrap.min.js"></script>
 </head>
 <body>
+<h1>Cálculo del Consumo</h1>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
 
@@ -37,10 +38,14 @@
 
     </div>
 </nav>
-    <form action="/cliente/calculoDeConsumo/submit" method="get">
+
+<div class="panel panel-default">
+    <div class="panel-heading">Alta de Dispositivos</div>
+    <div class="panel-body">
+        <form action="/cliente/calculoDeConsumo/submit" method="get">
         <div>
             <label>Fecha de inicio: </label>
-            <input type="date" name="inicio"/>
+            <input type="date" name="inicio" />
         </div>
         <div>
             <label>Fecha de fin: </label>
@@ -54,7 +59,10 @@
         <label> hasta </label>
         <label th:text="${fin}"></label>
         <label> fue de: </label>
-        <label th:text="${consumo}"></label>
+        <span class="label label-default" th:text="${consumo}"></span>
     </div>
+    </div>
+</div>
+
 </body>
 </html>

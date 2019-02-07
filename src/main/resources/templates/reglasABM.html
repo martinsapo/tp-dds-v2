@@ -11,6 +11,8 @@
 </head>
 <body>
 
+<h3>ABM Reglas</h3>
+
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
 
@@ -37,13 +39,15 @@
 
     </div>
 </nav>
-
+<div class="btn-group">
 <form class="form-signin" method="get" action="/cliente/abmReglas/alta">
     <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Dar de alta regla</button>
 </form>
+</div>
 
 <h1>Reglas activas</h1>
-<table style="width:100%">
+<table class="table">
+        <thead class="thead-dark">
     <tr>
         <th>Id de regla</th>
         <th>Id de dispositivo</th>
@@ -53,6 +57,8 @@
         <th>Medicion esperada</th>
         <th>Eliminar</th>
     </tr>
+    </thead>
+    <tbody>
     <tr th:each="regla : ${reglas}">
         <td th:text="${regla.id}"></td>
         <td th:text="${regla.dispositivoInteligente.id}"></td>
@@ -67,6 +73,7 @@
             </form>
         </td>
     </tr>
+    </tbody>
 </table>
 </body>
 </html>

@@ -39,25 +39,32 @@
     </div>
 </nav>
 
-<div class="container">
-    <h1 class="title" style="color: #ffffff; text-align: center;">Consumo de Hogares</h1>
+<div class="panel">
+    <div class="panel-heading">Hogares y Consumos</div>
+    <div class="panel-body">
     <hr>
-
-    <table class="paleBlueRows">
-        <tr>
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
             <th>Hogar ID</th>
             <th>Nombre del dueño del hogar</th>
             <th>Consumo del hogar en el ultimo mes</th>
             <th>Suma de todas los consumos por hora</th>
         </tr>
+            </thead>
+            <tbody>
         <tr th:each="hogar : ${hogares}">
             <td th:text="${hogar.getId()}"></td>
             <td th:text="${hogar.getCliente().getNombre()}"></td>
             <td th:text="${hogar.getCliente().obtenerTodosLosConsumosDeTodosLosDispositivosEnElUltimoMes()}"></td>
             <td th:text="${hogar.obtenerConsumosDeDispositivosPorHora()}"></td>
         </tr>
-    </table>
+            </tbody>
+        </table>
 
 </div>
+
+</div>
+
 </body>
 </html>

@@ -15,11 +15,22 @@
 
 <body>
 <h1>Subir archivo</h1>
+<div class="btn-group">
+    <form class="form-signin" method="get" action="/cliente/abmDispositivos">
+        <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Volver</button>
+    </form>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">Alta de Dispositivos Estandar</div>
+    <div class="panel-body">
 <form action = "/cliente/abmDispositivos/altaDesdeArchivo/submit" method = "post" enctype = "multipart/form-data">
     <input  type = "file" name = "file" size = "50" />
     <br />
     <input class="btn-dark" type = "submit" value = "Upload File" />
 </form>
+    </div>
+</div>
+
 </body>
 
 </html>
