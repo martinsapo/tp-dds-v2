@@ -67,7 +67,19 @@
             </div>
         </div>
     </div>
+    <div th:if="${cliente.getAhorroAutomatico() == false}">
+        <form method="get" action="/cliente/ahorroAutomatico/habilitar">
+            <button class="btn btn-lg btn-primary btn-block btn-signin center" type="submit" style="width:20%">Habilitar ahorro automatico</button>
+        </form>
+    </div>
+    <div th:if="${cliente.getAhorroAutomatico() == true}">
+        <form method="get" action="/cliente/ahorroAutomatico/deshabilitar">
+            <button class="btn btn-lg btn-primary btn-block btn-signin center" type="submit" style="width:20%">Deshabilitar ahorro automatico</button>
+        </form>
+    </div>
 </div>
+
+
 
 
 </body>

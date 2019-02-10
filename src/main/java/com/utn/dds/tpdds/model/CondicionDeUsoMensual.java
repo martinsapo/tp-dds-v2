@@ -4,9 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import java.math.BigDecimal;
 
 @Entity
 @NoArgsConstructor
@@ -22,7 +20,7 @@ public class CondicionDeUsoMensual extends Condicion{
 
     @Override Boolean applies(DispositivoInteligente dispositivoInteligente, Sensor sensor) {
         if (dispositivoInteligente != null) {
-            return operator.apply(dispositivoInteligente.cantidadDeHorasUsadoEnElUltimoMes().doubleValue(), Double.parseDouble(medicionEsperada.toString()) );
+            return operator.apply(dispositivoInteligente.cantidadDeHorasUsadoEnEsteMes().doubleValue(), Double.parseDouble(medicionEsperada.toString()) );
         }
         return false;
     }

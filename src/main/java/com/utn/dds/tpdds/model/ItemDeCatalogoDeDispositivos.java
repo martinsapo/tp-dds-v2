@@ -15,7 +15,8 @@ import java.util.List;
 @NoArgsConstructor
 public class ItemDeCatalogoDeDispositivos {
 
-    @javax.persistence.Id @javax.persistence.GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
     private String nombre;
     private BigDecimal consumo;
@@ -26,9 +27,6 @@ public class ItemDeCatalogoDeDispositivos {
 
     @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "itemDeCatalogoDeDispositivos")
     private List<Dispositivo> dispositivosAsociados;
-
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    Transformador trafo;
 
     public ItemDeCatalogoDeDispositivos(String nombre, BigDecimal consumo ,Integer usoMinimo, Integer usoMaximo, Boolean esBajoConsumo, Boolean esInteligente){
         this.nombre = nombre;
@@ -48,6 +46,8 @@ public class ItemDeCatalogoDeDispositivos {
             this.consumo = new BigDecimal(jsonDispositivoDeCatalogo.get("consumo").toString());
             this.usoMinimo = new Integer(jsonDispositivoDeCatalogo.get("usoMinimo").toString());
             this.usoMaximo = new Integer(jsonDispositivoDeCatalogo.get("usoMaximo").toString());
+            this.esBajoConsumo = Boolean.valueOf(jsonDispositivoDeCatalogo.get("esBajoConsumo").toString());
+            this.esInteligente = Boolean.valueOf(jsonDispositivoDeCatalogo.get("esInteligente").toString());;
         }
 
     }

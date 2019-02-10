@@ -65,8 +65,8 @@
                     <td th:text="${dispositivoInteligente.itemDeCatalogoDeDispositivos.getNombre()}"></td>
                     <td th:text="${dispositivoInteligente.obtenerEstadoDelDispositivo().name()}"></td>
                     <td th:text="${dispositivoInteligente.itemDeCatalogoDeDispositivos.getConsumo()}"></td>
-                    <td th:text="${dispositivoInteligente.cantidadDeEnergiaConsumidaEnElUltimoMes().doubleValue()}"></td>
-                    <td th:text="${dispositivoInteligente.cantidadDeHorasUsadoEnElUltimoMes().doubleValue()}"></td>
+                    <td th:text="${dispositivoInteligente.cantidadDeEnergiaConsumidaEnEsteMes().doubleValue()}"></td>
+                    <td th:text="${dispositivoInteligente.cantidadDeHorasUsadoEnEsteMes().doubleValue()}"></td>
                     <td>
                         <form method="get" action="/cliente/abmDispositivos/encender">
                             <input type="hidden" name="id" th:value="${dispositivoInteligente.id}"/>
@@ -79,7 +79,7 @@
                             <button class="btn btn-default" type="submit">Apagar</button>
                         </form>
                     </td>
-                    <td>
+                    <td th:if="${dispositivoInteligente.itemDeCatalogoDeDispositivos.esBajoConsumo == true}">
                         <form method="get" action="/cliente/abmDispositivos/modoAhorro">
                             <input type="hidden" name="id" th:value="${dispositivoInteligente.id}"/>
                             <button class="btn btn-warning" type="submit">Modo ahorro</button>
@@ -112,7 +112,7 @@
                     <td th:text="${dispositivoEstandar.itemDeCatalogoDeDispositivos.getConsumo()}"></td>
                     <td th:text="${dispositivoEstandar.nombreDelDispositivo}"></td>
                     <td th:text="${dispositivoEstandar.itemDeCatalogoDeDispositivos.getNombre()}"></td>
-                    <td th:text="${dispositivoEstandar.cantidadDeEnergiaConsumidaEnElUltimoMes()}"></td>
+                    <td th:text="${dispositivoEstandar.cantidadDeEnergiaConsumidaEnEsteMes()}"></td>
                     <td>
                         <form method="get" action="/cliente/abmDispositivos/baja/submit">
                             <input type="hidden" name="id" th:value="${dispositivoEstandar.id}"/>

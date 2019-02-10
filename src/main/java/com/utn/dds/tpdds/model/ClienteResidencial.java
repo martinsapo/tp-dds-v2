@@ -188,15 +188,11 @@ public class ClienteResidencial{
         return dispositivoEstandars;
     }
 
-    public BigDecimal obtenerTodosLosConsumosDeTodosLosDispositivosEnElUltimoMes() {
-        LocalDateTime initial = LocalDateTime.now();
-        LocalDateTime start = initial.withDayOfMonth(1);
-        LocalDateTime end = initial.withDayOfMonth(28);
-
+    public BigDecimal obtenerTodosLosConsumosDeTodosLosDispositivosEnEsteMes() {
         BigDecimal consumos = new BigDecimal(0);
         for (DispositivoInteligente dispositivoInteligente : getDispositivosInteligentes()) {
             consumos = consumos.add(dispositivoInteligente
-                    .cantidadDeEnergiaConsumidaEnUnPeriodo(start, end));
+                    .cantidadDeEnergiaConsumidaEnUnPeriodo(LocalDateTime.now().withDayOfMonth(1), LocalDateTime.now()));
         }
         return consumos;
     }
@@ -219,21 +215,21 @@ public class ClienteResidencial{
 
     PointValuePair calcularRecomendacion() {
         SimplexFacade simplexFacade = new SimplexFacade(GoalType.MAXIMIZE, true);
-        ArrayList<Double> arr = crearArrayConConsumos(this.getDispositivosInteligentes());
-        double[] consumos = aArray(arr);
-        simplexFacade.crearFuncionEconomica(calcularCoeficientesParaFuncionEconomica(arr));
-        simplexFacade.agregarRestriccion(Relationship.LEQ, 440640, consumos);
-        agregarRestricciones(simplexFacade, this.getDispositivosInteligentes(), consumos);
+        double[] consumos = crearArrayConConsumos(dispositivos);
+        simplexFacade.crearFuncionEconomica(calcularCoeficientesParaFuncionEconomica(consumos));
+        simplexFacade.agregarRestriccion(Relationship.LEQ, 612 * 24 * 30, consumos);
+        agregarRestricciones(simplexFacade, dispositivos, consumos);
         PointValuePair solucion = simplexFacade.resolver();
 
         if (this.getAhorroAutomatico()) {
             int i = 0;
             for (DispositivoInteligente dispositivoInteligente : getDispositivosInteligentes()) {
-                System.out.println("Consumo Dispositivo: " + dispositivoInteligente.cantidadDeEnergiaConsumidaEnElUltimoMes().doubleValue());
-                System.out.println("Consumo Simplex Permitido: " + solucion.getPoint()[i]);
-                if (dispositivoInteligente.cantidadDeEnergiaConsumidaEnElUltimoMes().doubleValue() >= solucion.getPoint()[i]) {
+                System.out.println("Analisis para el dispositivo: " + dispositivoInteligente.nombreDelDispositivo);
+                System.out.println("Cantidad de horas usado en el ultimo mes: " + dispositivoInteligente.cantidadDeHorasUsadoEnEsteMes().doubleValue());
+                System.out.println("Calculo Simplex Permitido: " + solucion.getPoint()[i]);
+                if (dispositivoInteligente.cantidadDeHorasUsadoEnEsteMes().doubleValue() >= solucion.getPoint()[i]) {
                     dispositivoInteligente.apagar();
-                    System.out.println("Consumo Simplex Permitido: " + solucion.getPoint()[i]);
+                    System.out.println("se apago pues supero el limite");
                 }
                 i++;
             }
@@ -241,39 +237,35 @@ public class ClienteResidencial{
         return solucion;
     }
 
-    private void agregarRestricciones(SimplexFacade simplexFacade, List<DispositivoInteligente> dispositivos, double[] consumos) {
+    private void agregarRestricciones(SimplexFacade simplexFacade, List<Dispositivo> dispositivos, double[] consumos) {
         double[] coeficiente = new double[consumos.length];
         setToZero(coeficiente);
         int i = 0;
-        for (DispositivoInteligente dispositivoInteligente : dispositivos) {
+        for (Dispositivo dispositivo : dispositivos) {
             coeficiente[i] = 1;
-            simplexFacade.agregarRestriccion(Relationship.GEQ, dispositivoInteligente.getItemDeCatalogoDeDispositivos().getUsoMinimo(), coeficiente);
-            simplexFacade.agregarRestriccion(Relationship.LEQ, dispositivoInteligente.getItemDeCatalogoDeDispositivos().getUsoMaximo(), coeficiente);
+            simplexFacade.agregarRestriccion(Relationship.GEQ, dispositivo.getItemDeCatalogoDeDispositivos().getUsoMinimo(), coeficiente);
+            simplexFacade.agregarRestriccion(Relationship.LEQ, dispositivo.getItemDeCatalogoDeDispositivos().getUsoMaximo(), coeficiente);
             i++;
             setToZero(coeficiente);
         }
     }
 
-    private ArrayList<Double> crearArrayConConsumos(List<DispositivoInteligente> dispositivoInteligentes) {
+    private double[] crearArrayConConsumos(List<Dispositivo> dispositivos) {
         ArrayList<Double> arr = new ArrayList<>();
-        for (DispositivoInteligente dispositivoInteligente : dispositivoInteligentes) {
-            arr.add(dispositivoInteligente.cantidadDeEnergiaConsumidaEnElUltimoMes().doubleValue());
+        for (Dispositivo dispositivo : dispositivos) {
+            arr.add(dispositivo.getItemDeCatalogoDeDispositivos().getConsumo().doubleValue());
         }
-        return arr;
-    }
-
-    private double[] aArray(ArrayList<Double> consumos) {
-        double[] target = new double[consumos.size()];
-        for (int i = 0; i < consumos.size(); i++) {
-            target[i] = consumos.get(i);
+        double[] target = new double[arr.size()];
+        for (int i = 0; i < arr.size(); i++) {
+            target[i] = arr.get(i);
         }
         return target;
+
     }
 
-    private double[] calcularCoeficientesParaFuncionEconomica(
-            ArrayList<Double> consumos) {
-        double[] target = new double[consumos.size()];
-        for (int i = 0; i < consumos.size(); i++) {
+    private double[] calcularCoeficientesParaFuncionEconomica(double[] consumos) {
+        double[] target = new double[consumos.length];
+        for (int i = 0; i < consumos.length; i++) {
             target[i] = 1;
         }
         return target;

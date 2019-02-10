@@ -2,7 +2,6 @@ package com.utn.dds.tpdds.controllers;
 
 import com.utn.dds.tpdds.model.ClienteResidencial;
 import com.utn.dds.tpdds.model.ItemDeCatalogoDeDispositivos;
-import com.utn.dds.tpdds.model.TablaDeDispositivos;
 import com.utn.dds.tpdds.repository.CatalogoDispositivosJpaRepository;
 import com.utn.dds.tpdds.repository.ClienteResidencialJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Controller

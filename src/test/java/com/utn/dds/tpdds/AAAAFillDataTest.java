@@ -57,9 +57,9 @@ public class AAAAFillDataTest {
         otroCliente.setFechaDeAlta(new DateTime());
 
         Hogar hogar = new Hogar(otroCliente, 3.0, 2.0, transformador);
-        ItemDeCatalogoDeDispositivos disp2 = catalogoDispositivosJpaRepository.findDispositivoDeCatalogoById(3);
-        ItemDeCatalogoDeDispositivos disp7 = catalogoDispositivosJpaRepository.findDispositivoDeCatalogoById(8);
-        ItemDeCatalogoDeDispositivos disp9 = catalogoDispositivosJpaRepository.findDispositivoDeCatalogoById(10);
+        ItemDeCatalogoDeDispositivos disp2 = catalogoDispositivosJpaRepository.findById(3).get();
+        ItemDeCatalogoDeDispositivos disp7 = catalogoDispositivosJpaRepository.findById(8).get();
+        ItemDeCatalogoDeDispositivos disp9 = catalogoDispositivosJpaRepository.findById(10).get();
 
         DispositivoInteligente tv = new DispositivoInteligente("TV tubo", otroCliente, disp2);
         DispositivoInteligente heladera = new DispositivoInteligente("Heladera", otroCliente,disp9);

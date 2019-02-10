@@ -5,11 +5,8 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.utn.dds.tpdds.repository.CatalogoDeDispositivosRepository;
-import com.utn.dds.tpdds.repository.CatalogoDispositivosJpaRepository;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
 import java.io.FileInputStream;

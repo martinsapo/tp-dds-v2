@@ -120,7 +120,7 @@
     "usoMaximo": 360
   },
   {
-    "nombre": "Lámpara de 40 W",
+    "nombre": "Lampara de 40 W",
     "esInteligente": true,
     "esBajoConsumo": false,
     "consumo":0.04,
@@ -128,7 +128,7 @@
     "usoMaximo": 360
   },
   {
-    "nombre": "Lámpara de 60 W",
+    "nombre": "Lampara de 60 W",
     "esInteligente": true,
     "esBajoConsumo": false,
     "consumo":0.06,
@@ -136,7 +136,7 @@
     "usoMaximo": 360
   },
   {
-    "nombre": "Lámpara de 110 W",
+    "nombre": "Lampara de 110 W",
     "esInteligente": true,
     "esBajoConsumo": false,
     "consumo":0.015,
@@ -144,7 +144,7 @@
     "usoMaximo": 360
   },
   {
-    "nombre": "Lámpara de 11 W",
+    "nombre": "Lampara de 11 W",
     "esInteligente": true,
     "esBajoConsumo": true,
     "consumo":0.011,
@@ -152,7 +152,7 @@
     "usoMaximo": 360
   },
   {
-    "nombre": "Lámpara de 15 W",
+    "nombre": "Lampara de 15 W",
     "esInteligente": true,
     "esBajoConsumo": true,
     "consumo":0.015,
@@ -160,7 +160,7 @@
     "usoMaximo": 360
   },
   {
-    "nombre": "Lámpara de 20 W",
+    "nombre": "Lampara de 20 W",
     "esInteligente": true,
     "esBajoConsumo": true,
     "consumo":0.02,

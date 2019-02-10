@@ -22,7 +22,7 @@ public class CondicionDeConsumoMensual extends Condicion{
 
     @Override Boolean applies(DispositivoInteligente dispositivoInteligente, Sensor sensor) {
         if (dispositivoInteligente != null) {
-            return operator.apply(new BigDecimal(medicionEsperada), dispositivoInteligente.cantidadDeEnergiaConsumidaEnElUltimoMes());
+            return operator.apply(new BigDecimal(medicionEsperada), dispositivoInteligente.cantidadDeEnergiaConsumidaEnEsteMes());
         }
         return false;
     }

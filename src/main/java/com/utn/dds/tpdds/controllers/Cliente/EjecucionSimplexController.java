@@ -3,10 +3,7 @@ package com.utn.dds.tpdds.controllers.Cliente;
 import com.utn.dds.tpdds.model.ClienteResidencial;
 import com.utn.dds.tpdds.model.Hogar;
 import com.utn.dds.tpdds.repository.CatalogoDispositivosJpaRepository;
-import com.utn.dds.tpdds.repository.DispositivoInteligenteJpaRepository;
-import org.quartz.JobDetail;
 import org.quartz.Scheduler;
-import org.quartz.SchedulerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -35,6 +32,13 @@ public class EjecucionSimplexController {
 
         model.addAttribute("dispositivos", cliente.getDispositivos());
         model.addAttribute("hogar", cliente.getHogar());
+        String mensajeDeEficiencia = "";
+        if (cliente.obtenerTodosLosConsumosDeTodosLosDispositivosEnEsteMes().doubleValue() <= (612 * 24 * 30)) {
+            mensajeDeEficiencia = "Su hogar es eficiente";
+        } else{
+            mensajeDeEficiencia = "Su hogar NO es eficiente, por favor use menos los dispositivos";
+        }
+        model.addAttribute("esEficiente", mensajeDeEficiencia);
 
         if (cliente.getAhorroAutomatico()){
             disparaEjecucionAutomaticaDelSimplex(cliente.getHogar());

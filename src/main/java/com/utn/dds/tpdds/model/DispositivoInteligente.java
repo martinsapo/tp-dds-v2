@@ -113,8 +113,8 @@ public class DispositivoInteligente extends Dispositivo implements Serializable{
         return cantidadDeHorasEncendida.multiply(getItemDeCatalogoDeDispositivos().getConsumo());
     }
 
-    public BigDecimal cantidadDeEnergiaConsumidaEnElUltimoMes() {
-        return cantidadDeEnergiaConsumidaEnUnPeriodo(LocalDateTime.now().minusDays(30), LocalDateTime.now());
+    public BigDecimal cantidadDeEnergiaConsumidaEnEsteMes() {
+        return cantidadDeEnergiaConsumidaEnUnPeriodo(LocalDateTime.now().withDayOfMonth(1), LocalDateTime.now());
     }
 
     public void agregarRegistroARegistrosDeCambioDeEstadoDeDispositivo(EstadoDeDispositivo estado) {
@@ -160,8 +160,8 @@ public class DispositivoInteligente extends Dispositivo implements Serializable{
         return mediciones;
     }
 
-    public BigDecimal cantidadDeHorasUsadoEnElUltimoMes() {
-        return cantidadDeHorasUsadoEnUnPeriodo(LocalDateTime.now().minusDays(30), LocalDateTime.now() );
+    public BigDecimal cantidadDeHorasUsadoEnEsteMes() {
+        return cantidadDeHorasUsadoEnUnPeriodo(LocalDateTime.now().withDayOfMonth(1), LocalDateTime.now());
     }
 
     private BigDecimal cantidadDeHorasUsadoEnUnPeriodo(LocalDateTime startTime, LocalDateTime endTime) {
