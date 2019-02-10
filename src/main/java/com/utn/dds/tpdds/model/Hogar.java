@@ -46,7 +46,7 @@ public class Hogar {
     }
 
     public void obtenerRecomendacion() {
-        this.recomendacion = this.transformador.calcularRecomendacion(this.cliente);
+        this.recomendacion = this.cliente.calcularRecomendacion();
     }
 
     BigDecimal consumoTotalEnHogar(LocalDateTime startTime, LocalDateTime endTime) {

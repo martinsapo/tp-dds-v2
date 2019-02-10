@@ -30,9 +30,7 @@ public class EjecucionSimplexController {
     public ModelAndView submitsimplex(HttpServletRequest request) {
         ModelMap model = new ModelMap();
 
-        String jsonTablaDeDispositivos = "/Users/msaposnic/Documents/tp-dds/src/test/java/json";
         ClienteResidencial cliente = ((ClienteResidencial) request.getSession().getAttribute("cliente"));
-        cliente.getHogar().getTransformador().agregarTodosLosDispositivosAlTransformador(catalogoDispositivosJpaRepository.findAll());
         cliente.getHogar().obtenerRecomendacion();
 
         model.addAttribute("dispositivos", cliente.getDispositivos());

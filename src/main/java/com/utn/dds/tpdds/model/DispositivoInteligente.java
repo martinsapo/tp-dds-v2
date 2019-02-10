@@ -114,10 +114,7 @@ public class DispositivoInteligente extends Dispositivo implements Serializable{
     }
 
     public BigDecimal cantidadDeEnergiaConsumidaEnElUltimoMes() {
-        LocalDateTime initial = LocalDateTime.now();
-        LocalDateTime start = initial.withDayOfMonth(1);
-        LocalDateTime end = initial.withDayOfMonth(28);
-        return cantidadDeEnergiaConsumidaEnUnPeriodo(start, end);
+        return cantidadDeEnergiaConsumidaEnUnPeriodo(LocalDateTime.now().minusDays(30), LocalDateTime.now());
     }
 
     public void agregarRegistroARegistrosDeCambioDeEstadoDeDispositivo(EstadoDeDispositivo estado) {
@@ -164,10 +161,7 @@ public class DispositivoInteligente extends Dispositivo implements Serializable{
     }
 
     public BigDecimal cantidadDeHorasUsadoEnElUltimoMes() {
-        LocalDateTime initial = LocalDateTime.now();
-        LocalDateTime start = initial.withDayOfMonth(1);
-        LocalDateTime end = initial.withDayOfMonth(28);
-        return cantidadDeHorasUsadoEnUnPeriodo(start, end);
+        return cantidadDeHorasUsadoEnUnPeriodo(LocalDateTime.now().minusDays(30), LocalDateTime.now() );
     }
 
     private BigDecimal cantidadDeHorasUsadoEnUnPeriodo(LocalDateTime startTime, LocalDateTime endTime) {

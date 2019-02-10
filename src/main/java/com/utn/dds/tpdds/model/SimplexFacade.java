@@ -24,7 +24,7 @@ public class SimplexFacade {
     public SimplexFacade(GoalType objetivo, boolean variablesPositivas) {
         this.variablesPositivas = variablesPositivas;
         this.objetivo = objetivo;
-        this.restricciones = new ArrayList<LinearConstraint>();
+        this.restricciones = new ArrayList<>();
         this.simplex = new SimplexSolver();
     }
 

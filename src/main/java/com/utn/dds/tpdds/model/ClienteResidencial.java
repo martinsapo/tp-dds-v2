@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.apache.commons.math3.optim.PointValuePair;
+import org.apache.commons.math3.optim.linear.Relationship;
+import org.apache.commons.math3.optim.nonlinear.scalar.GoalType;
 import org.hibernate.Hibernate;
 import org.joda.time.DateTime;
 
@@ -212,5 +215,73 @@ public class ClienteResidencial{
 
     public Boolean passwordMatch(String password) {
         return Objects.equals(this.password, password);
+    }
+
+    PointValuePair calcularRecomendacion() {
+        SimplexFacade simplexFacade = new SimplexFacade(GoalType.MAXIMIZE, true);
+        ArrayList<Double> arr = crearArrayConConsumos(this.getDispositivosInteligentes());
+        double[] consumos = aArray(arr);
+        simplexFacade.crearFuncionEconomica(calcularCoeficientesParaFuncionEconomica(arr));
+        simplexFacade.agregarRestriccion(Relationship.LEQ, 440640, consumos);
+        agregarRestricciones(simplexFacade, this.getDispositivosInteligentes(), consumos);
+        PointValuePair solucion = simplexFacade.resolver();
+
+        if (this.getAhorroAutomatico()) {
+            int i = 0;
+            for (DispositivoInteligente dispositivoInteligente : getDispositivosInteligentes()) {
+                System.out.println("Consumo Dispositivo: " + dispositivoInteligente.cantidadDeEnergiaConsumidaEnElUltimoMes().doubleValue());
+                System.out.println("Consumo Simplex Permitido: " + solucion.getPoint()[i]);
+                if (dispositivoInteligente.cantidadDeEnergiaConsumidaEnElUltimoMes().doubleValue() >= solucion.getPoint()[i]) {
+                    dispositivoInteligente.apagar();
+                    System.out.println("Consumo Simplex Permitido: " + solucion.getPoint()[i]);
+                }
+                i++;
+            }
+        }
+        return solucion;
+    }
+
+    private void agregarRestricciones(SimplexFacade simplexFacade, List<DispositivoInteligente> dispositivos, double[] consumos) {
+        double[] coeficiente = new double[consumos.length];
+        setToZero(coeficiente);
+        int i = 0;
+        for (DispositivoInteligente dispositivoInteligente : dispositivos) {
+            coeficiente[i] = 1;
+            simplexFacade.agregarRestriccion(Relationship.GEQ, dispositivoInteligente.getItemDeCatalogoDeDispositivos().getUsoMinimo(), coeficiente);
+            simplexFacade.agregarRestriccion(Relationship.LEQ, dispositivoInteligente.getItemDeCatalogoDeDispositivos().getUsoMaximo(), coeficiente);
+            i++;
+            setToZero(coeficiente);
+        }
+    }
+
+    private ArrayList<Double> crearArrayConConsumos(List<DispositivoInteligente> dispositivoInteligentes) {
+        ArrayList<Double> arr = new ArrayList<>();
+        for (DispositivoInteligente dispositivoInteligente : dispositivoInteligentes) {
+            arr.add(dispositivoInteligente.cantidadDeEnergiaConsumidaEnElUltimoMes().doubleValue());
+        }
+        return arr;
+    }
+
+    private double[] aArray(ArrayList<Double> consumos) {
+        double[] target = new double[consumos.size()];
+        for (int i = 0; i < consumos.size(); i++) {
+            target[i] = consumos.get(i);
+        }
+        return target;
+    }
+
+    private double[] calcularCoeficientesParaFuncionEconomica(
+            ArrayList<Double> consumos) {
+        double[] target = new double[consumos.size()];
+        for (int i = 0; i < consumos.size(); i++) {
+            target[i] = 1;
+        }
+        return target;
+    }
+
+    private void setToZero(double[] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = 0;
+        }
     }
 }
