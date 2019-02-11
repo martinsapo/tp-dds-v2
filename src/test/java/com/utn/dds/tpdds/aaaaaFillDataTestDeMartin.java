@@ -34,7 +34,7 @@ import java.time.LocalDateTime;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.NONE)
 @Rollback(false)
-@ActiveProfiles("prod")
+@ActiveProfiles("dev")
 public class aaaaaFillDataTestDeMartin {
     @Autowired ClienteResidencialJpaRepository clienteResidencialJPARepository;
     @Autowired CatalogoDispositivosJpaRepository catalogoDispositivosJpaRepository;
@@ -42,8 +42,7 @@ public class aaaaaFillDataTestDeMartin {
 
     @Test
     public void testFillData() {
-        String jsonTablaDeDispositivos = "src/test/java/json/tablaDispositivos.json";
-        persistirTablaDispositivos(jsonTablaDeDispositivos);
+        persistirTablaDispositivos();
 
         ZonaGeografica zonaGeografica = new ZonaGeografica("Mitre", 1.0, 1.0, 1.0);
         Transformador transformador = new Transformador(zonaGeografica, -34.612985, -58.470673);
@@ -97,9 +96,9 @@ public class aaaaaFillDataTestDeMartin {
 
     }
 
-    private void persistirTablaDispositivos(String jsonCatalogo){
+    private void persistirTablaDispositivos(){
 
-        JSONArray catalogoArray = (JSONArray) Helper.mapJsonToArrayJSON(jsonCatalogo);
+        JSONArray catalogoArray = (JSONArray) Helper.mapJsonToArrayJSON("src/test/java/json/tablaDispositivos.json");
 
         assert catalogoArray != null;
         for (Object catalogoDispositivo : catalogoArray) {

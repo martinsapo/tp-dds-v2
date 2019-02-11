@@ -48,13 +48,13 @@
             <th>Hogar ID</th>
             <th>Dueño del hogar</th>
             <th>Consumo del hogar en el ultimo mes</th>
-            <th>Suma de consumos</th>
+            <th>Suma de consumos por hora de todos los dispositivos</th>
         </tr>
         <tr th:each="hogar : ${hogares}">
             <td th:text="${hogar.getId()}"></td>
             <td th:text="${hogar.getCliente().getNombre()}"></td>
-            <td th:text="${hogar.getCliente().obtenerTodosLosConsumosDeTodosLosDispositivosEnElUltimoMes()}"></td>
-            <td th:text="${hogar.obtenerConsumosDeDispositivosPorHora()}"></td>
+            <td th:text="${hogar.getCliente().obtenerTodosLosConsumosDeTodosLosDispositivosEnEsteMes()+ 'kw'}"></td>
+            <td th:text="${hogar.obtenerConsumosDeDispositivosPorHora()} + 'kwh'"></td>
         </tr>
     </table>
 

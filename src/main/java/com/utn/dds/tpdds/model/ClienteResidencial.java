@@ -190,9 +190,8 @@ public class ClienteResidencial{
 
     public BigDecimal obtenerTodosLosConsumosDeTodosLosDispositivosEnEsteMes() {
         BigDecimal consumos = new BigDecimal(0);
-        for (DispositivoInteligente dispositivoInteligente : getDispositivosInteligentes()) {
-            consumos = consumos.add(dispositivoInteligente
-                    .cantidadDeEnergiaConsumidaEnUnPeriodo(LocalDateTime.now().withDayOfMonth(1), LocalDateTime.now()));
+        for (Dispositivo dispositivo : dispositivos) {
+            consumos = consumos.add(dispositivo.cantidadDeEnergiaConsumidaEnEsteMes());
         }
         return consumos;
     }

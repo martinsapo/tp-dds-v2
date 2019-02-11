@@ -49,6 +49,8 @@ public abstract class Dispositivo implements Serializable {
 	public abstract Integer getPuntosASumar();
 
 	public abstract BigDecimal cantidadDeEnergiaConsumidaEnUnPeriodo(LocalDateTime startDate, LocalDateTime endDate);
+	public abstract BigDecimal cantidadDeEnergiaConsumidaEnEsteMes();
+
 
 }
 
