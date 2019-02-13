@@ -38,9 +38,10 @@
 
     </div>
 </nav>
-
-<div class="panel panel-default">
-    <div class="panel-heading">Alta de Dispositivos</div>
+<div id="estadoDeDispositivos">
+    <div style="width: 50%" id="Dispositivos" class="center">
+<div class="panel panel-primary">
+    <div class="panel-heading">Calculo de Consumos</div>
     <div class="panel-body">
         <form action="/cliente/calculoDeConsumo/submit" method="get">
         <div>
@@ -62,7 +63,9 @@
         <span class="label label-default" th:text="${consumo}"></span>
     </div>
     </div>
-</div>
 
+</div>
+    </div>
+</div>
 </body>
 </html>
