@@ -23,8 +23,10 @@
             <input type="text" id="inputKw" name="kwPorHora" class="form-control" placeholder="Kw por Hora" required>
             <input type="text" id="inputMinimo" name="usoMinimo" class="form-control" placeholder="Uso Minimo" required>
             <input type="text" id="inputMaximo" name="usoMaximo" class="form-control" placeholder="Uso Maximo" required>
-            <input type="checkbox" id="bajoConsumo" name="esBajoConsumo" class="form-control" placeholder="Bajo Consumo?" required>
-            <input type="checkbox" id="inteligente" name="esInteligente" class="form-control" placeholder="Es inteligente?" required>
+            <label>Es bajo consumo?</label>
+            <input type="checkbox" id="bajoConsumo" name="esBajoConsumo" class="form-control" placeholder="Bajo Consumo?">
+            <label>Es inteligente?</label>
+            <input type="checkbox" id="inteligente" name="esInteligente" class="form-control" placeholder="Es inteligente?">
 
             <div th:if="${errorMessage} != ''">
                 <label th:text="${errorMessage}"></label>

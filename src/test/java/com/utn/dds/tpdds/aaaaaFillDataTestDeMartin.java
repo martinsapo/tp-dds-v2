@@ -36,7 +36,7 @@ import java.time.LocalDateTime;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.NONE)
 @Rollback(false)
-@ActiveProfiles("prod")
+@ActiveProfiles("dev")
 public class aaaaaFillDataTestDeMartin {
     @Autowired ClienteResidencialJpaRepository clienteResidencialJPARepository;
     @Autowired CatalogoDispositivosJpaRepository catalogoDispositivosJpaRepository;
@@ -74,10 +74,12 @@ public class aaaaaFillDataTestDeMartin {
         Sensor sensor4 = new SensorDeValores(ventiladorDeTecho, "sensor");
 
 
-        tv.agregarRegistroDeCambioDeEstadoPersonalizado(LocalDateTime.of(2019, 2, 5, 0, 0), EstadoDeDispositivo.PRENDIDO);
-        tv.agregarRegistroDeCambioDeEstadoPersonalizado(LocalDateTime.of(2019, 2, 5, 12, 0), EstadoDeDispositivo.APAGADO);
-        tv.agregarRegistroDeCambioDeEstadoPersonalizado(LocalDateTime.of(2019, 2, 6, 0, 0), EstadoDeDispositivo.PRENDIDO);
-        tv.agregarRegistroDeCambioDeEstadoPersonalizado(LocalDateTime.of(2019, 2, 8, 14, 0), EstadoDeDispositivo.APAGADO);
+        aireAcond.agregarRegistroDeCambioDeEstadoPersonalizado(LocalDateTime.of(2018, 2, 5, 0, 0), EstadoDeDispositivo.PRENDIDO);
+        aireAcond.agregarRegistroDeCambioDeEstadoPersonalizado(LocalDateTime.of(2019, 2, 5, 12, 0), EstadoDeDispositivo.APAGADO);
+        aireAcond.agregarRegistroDeCambioDeEstadoPersonalizado(LocalDateTime.of(2019, 2, 6, 0, 0), EstadoDeDispositivo.PRENDIDO);
+        aireAcond.agregarRegistroDeCambioDeEstadoPersonalizado(LocalDateTime.of(2019, 2, 8, 14, 0), EstadoDeDispositivo.APAGADO);
+        aireAcond.agregarRegistroDeCambioDeEstadoPersonalizado(LocalDateTime.of(2019, 2, 8, 14, 0), EstadoDeDispositivo.PRENDIDO);
+        aireAcond.agregarRegistroDeCambioDeEstadoPersonalizado(LocalDateTime.of(2019, 2, 8, 14, 0), EstadoDeDispositivo.APAGADO);
 
         pc.agregarRegistroDeCambioDeEstadoPersonalizado(LocalDateTime.of(2019, 2, 2, 0, 0), EstadoDeDispositivo.PRENDIDO);
         pc.agregarRegistroDeCambioDeEstadoPersonalizado(LocalDateTime.of(2019, 2, 3, 12, 0), EstadoDeDispositivo.APAGADO);

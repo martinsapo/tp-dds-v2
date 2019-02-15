@@ -70,7 +70,7 @@ public class AdministratorController {
 
         String id = "reporte_de_consumo_total_por_hogar_" + fechaInicio.toString() + "_" + fechaFin.toString();
 
-        Optional<ReporteConsumoPromedioPorTipoDeDispositivo> optionalReporteDeConsumoTotalPorHogar = reporteDeConsumoPromedioPorTipoDeDispositivoMongoRepository.findById(id);
+        Optional<ReporteDeConsumoTotalPorHogar> optionalReporteDeConsumoTotalPorHogar = reporteDeConsumoTotalPorHogarMongoRepository.findById(id);
 
         if (optionalReporteDeConsumoTotalPorHogar.isPresent()) {
             model.addAttribute("reporteDeConsumoTotalPorHogar", optionalReporteDeConsumoTotalPorHogar.get());

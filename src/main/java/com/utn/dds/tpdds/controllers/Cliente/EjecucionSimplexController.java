@@ -3,6 +3,7 @@ package com.utn.dds.tpdds.controllers.Cliente;
 import com.utn.dds.tpdds.model.ClienteResidencial;
 import com.utn.dds.tpdds.model.Hogar;
 import com.utn.dds.tpdds.repository.CatalogoDispositivosJpaRepository;
+import com.utn.dds.tpdds.repository.ClienteResidencialJpaRepository;
 import org.quartz.Scheduler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.AbstractApplicationContext;
@@ -22,12 +23,14 @@ import javax.servlet.http.HttpServletRequest;
 public class EjecucionSimplexController {
     @Autowired
     CatalogoDispositivosJpaRepository catalogoDispositivosJpaRepository;
+    @Autowired ClienteResidencialJpaRepository clienteResidencialJpaRepository;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView submitsimplex(HttpServletRequest request) {
         ModelMap model = new ModelMap();
 
         ClienteResidencial cliente = ((ClienteResidencial) request.getSession().getAttribute("cliente"));
+        cliente = clienteResidencialJpaRepository.findById(cliente.getId()).get();
         cliente.getHogar().obtenerRecomendacion();
 
         model.addAttribute("dispositivos", cliente.getDispositivos());

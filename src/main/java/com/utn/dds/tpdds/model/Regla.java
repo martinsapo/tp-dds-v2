@@ -59,7 +59,7 @@ public class Regla implements Serializable {
     }
 
     Accion devolverAccionSiAplica(DispositivoInteligente dispositivoInteligente) {
-        if (this.applies(dispositivoInteligente)) {
+        if (this.applies(dispositivoInteligente) && dispositivoInteligente.getDueno().getAhorroAutomatico()) {
             return accion;
         }
         return new NoAction();

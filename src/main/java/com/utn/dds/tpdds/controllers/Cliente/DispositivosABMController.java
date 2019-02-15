@@ -48,8 +48,10 @@ public class DispositivosABMController {
     public ModelAndView index(HttpServletRequest request) {
         ModelMap model = new ModelMap();
         ClienteResidencial cliente = ((ClienteResidencial) request.getSession().getAttribute("cliente"));
+        cliente = clienteResidencialJPARepository.findById(cliente.getId()).get();
         List<DispositivoInteligente> dispositivosInteligentesDelCliente = dispositivoInteligenteJpaRepository.findDispositivoInteligentesByDueno(cliente);
         List<DispositivoEstandar> dispositivosEstandarDelCliente = dispositivoEstandarJpaRepository.findDispositivoEstandarByDueno(cliente);
+        dispositivosInteligentesDelCliente.forEach(DispositivoInteligente::ejecutarReglas);
         dispositivosInteligentesDelCliente.forEach(DispositivoInteligente::actualizarState);
         model.addAttribute("dispositivosInteligentes", dispositivosInteligentesDelCliente);
         model.addAttribute("dispositivosEstandar", dispositivosEstandarDelCliente);
