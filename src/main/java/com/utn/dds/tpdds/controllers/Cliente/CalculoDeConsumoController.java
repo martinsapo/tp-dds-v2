@@ -30,7 +30,7 @@ public class CalculoDeConsumoController {
     public ModelAndView calcularConsumo(HttpServletRequest request) {
         ModelMap model = new ModelMap();
         ClienteResidencial cliente = ((ClienteResidencial) request.getSession().getAttribute("cliente"));
-
+        cliente = clienteResidencialJPARepository.findById(cliente.getId()).get();
         String inicio = request.getParameter("inicio") + " 00:00";
         String fin = request.getParameter("fin") + " 23:59";
 

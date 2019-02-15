@@ -11,6 +11,7 @@ import com.utn.dds.tpdds.model.CondicionPorValor;
 import com.utn.dds.tpdds.model.DispositivoInteligente;
 import com.utn.dds.tpdds.model.Operador;
 import com.utn.dds.tpdds.model.Regla;
+import com.utn.dds.tpdds.repository.ClienteResidencialJpaRepository;
 import com.utn.dds.tpdds.repository.DispositivoInteligenteJpaRepository;
 import com.utn.dds.tpdds.repository.ReglaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,7 @@ public class ReglasABMController {
 
     @Autowired ReglaRepository reglaRepository;
     @Autowired DispositivoInteligenteJpaRepository dispositivoInteligenteJpaRepository;
+    @Autowired ClienteResidencialJpaRepository clienteResidencialJpaRepository;
 
     @RequestMapping(value = "")
     public ModelAndView index(HttpServletRequest request) {
@@ -44,6 +46,7 @@ public class ReglasABMController {
     @RequestMapping(value = "/alta", method = RequestMethod.GET)
     public ModelAndView alta(HttpServletRequest request) {
         ClienteResidencial cliente = ((ClienteResidencial) request.getSession().getAttribute("cliente"));
+        cliente = clienteResidencialJpaRepository.findById(cliente.getId()).get();
         List<DispositivoInteligente> dispositivoInteligentes = cliente.getDispositivosInteligentes();
         ModelMap model = new ModelMap();
 
