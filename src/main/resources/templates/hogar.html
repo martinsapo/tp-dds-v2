@@ -63,7 +63,6 @@
             <tr>
                 <th>Id de regla</th>
                 <th>Id de dispositivo</th>
-                <th>Sensor</th>
                 <th>Accion</th>
                 <th>Operador de la condicion</th>
                 <th>Medicion esperada</th>
@@ -71,7 +70,6 @@
             <tr th:each="regla : ${reglas}">
                 <td th:text="${regla.id}"></td>
                 <td th:text="${regla.dispositivoInteligente.id}"></td>
-                <td th:text="${regla.sensor.id}"></td>
                 <td th:text="${regla.accion.id}"></td>
                 <td th:text="${regla.condicion.operator}"></td>
                 <td th:text="${regla.condicion.getMedicion()}"></td>

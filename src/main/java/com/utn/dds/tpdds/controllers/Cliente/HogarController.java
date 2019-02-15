@@ -19,7 +19,7 @@ public class HogarController {
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView submithogar(HttpServletRequest request) {
         ClienteResidencial cliente = ((ClienteResidencial) request.getSession().getAttribute("cliente"));
-
+        cliente = clienteResidencialJPARepository.findById(cliente.getId()).get();
         ModelAndView modelAndView = new ModelAndView("hogar");
         modelAndView.addObject("dispositivosInteligentes", cliente.getDispositivosInteligentes());
         modelAndView.addObject("dispositivosEstandares", cliente.getDispositivosEstandars());
