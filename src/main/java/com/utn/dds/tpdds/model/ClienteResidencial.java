@@ -152,7 +152,7 @@ public class ClienteResidencial{
     public BigDecimal calcularConsumoEnUnPeriodo(LocalDateTime startTime, LocalDateTime endTime) {
         BigDecimal consumos = new BigDecimal(0);
         Hibernate.initialize(getDispositivos());
-        for (Dispositivo dispositivo : getDispositivos()) {
+        for (DispositivoInteligente dispositivo : getDispositivosInteligentes()) {
             consumos = consumos.add(dispositivo
                     .cantidadDeEnergiaConsumidaEnUnPeriodo(startTime, endTime));
         }

@@ -36,28 +36,72 @@ import java.time.LocalDateTime;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.NONE)
 @Rollback(false)
-@ActiveProfiles("dev")
+@ActiveProfiles("prod")
 public class aaaaaFillDataTestDeMartin {
     @Autowired ClienteResidencialJpaRepository clienteResidencialJPARepository;
     @Autowired CatalogoDispositivosJpaRepository catalogoDispositivosJpaRepository;
     @Autowired AdministradorJpaRepository administradorJpaRepository;
 
     @Test
-    public void testFillData() {
+    public void aaaaaaaTestFillData() {
         persistirTablaDispositivos();
 
-        ZonaGeografica zonaGeografica = new ZonaGeografica("Mitre", 1.0, 1.0, 1.0);
+        ZonaGeografica zonaGeografica = new ZonaGeografica("Mitre", -34.603683, -58.381557, 134.0);
         Transformador transformador = new Transformador(zonaGeografica, -34.612985, -58.470673);
+        Transformador transformador1 = new Transformador(zonaGeografica, -34.596006, -58.410802);
+        Transformador transformador2 = new Transformador(zonaGeografica, -34.593557, -58.397010);
 
         ClienteResidencial clienteResidencial = new ClienteResidencial("Martin","Saposnic", "gaona", "martinsapo", "123",
                 new Documento("40136136", TipoDeDocumento.DNI), "123123123", new Categoria(100.0));
 
         clienteResidencial.setFechaDeAlta(new DateTime());
 
-        Hogar hogar = new Hogar(clienteResidencial, 3.0, 2.0, transformador);
+        ClienteResidencial clienteResidencial1 = new ClienteResidencial("Pablo","Quinci", "gaona", "pabloquinci", "123",
+                new Documento("23233232", TipoDeDocumento.DNI), "123123123", new Categoria(100.0));
+
+        clienteResidencial1.setFechaDeAlta(new DateTime());
+
+        ClienteResidencial clienteResidencial2 = new ClienteResidencial("Eric","Cano", "gaona", "ericcano", "123",
+                new Documento("123123123", TipoDeDocumento.DNI), "123123123", new Categoria(100.0));
+
+        clienteResidencial2.setFechaDeAlta(new DateTime());
+
+        Hogar hogar = new Hogar(clienteResidencial, -34.593557, -58.397010, transformador);
+        Hogar hogar1 = new Hogar(clienteResidencial1, 3.0, 2.0, transformador1);
+        Hogar hogar2 = new Hogar(clienteResidencial2, -34.596006, -58.410802, transformador2);
+
+        clienteResidencialJPARepository.save(clienteResidencial);
+        clienteResidencialJPARepository.save(clienteResidencial1);
+        clienteResidencialJPARepository.save(clienteResidencial2);
+
+        agregarDispositivos(clienteResidencial);
+        agregarDispositivos(clienteResidencial1);
+        agregarDispositivos(clienteResidencial2);
 
         clienteResidencialJPARepository.save(clienteResidencial);
 
+        Administrador administrador = new Administrador();
+        administrador.setPassword("123");
+        administrador.setNombreDeUsuario("martinsapo");
+
+        administradorJpaRepository.save(administrador);
+
+    }
+
+    private void persistirTablaDispositivos(){
+
+        JSONArray catalogoArray = (JSONArray) Helper.mapJsonToArrayJSON("src/test/java/json/tablaDispositivos.json");
+
+        assert catalogoArray != null;
+        for (Object catalogoDispositivo : catalogoArray) {
+            JSONObject object = (JSONObject) catalogoDispositivo;
+            ItemDeCatalogoDeDispositivos dispositivoDeCatalogo = new ItemDeCatalogoDeDispositivos(object);
+            catalogoDispositivosJpaRepository.save(dispositivoDeCatalogo);
+
+        }
+    }
+
+    private void agregarDispositivos(ClienteResidencial clienteResidencial){
         DispositivoInteligente tv = new DispositivoInteligente("TV LED 40", clienteResidencial, catalogoDispositivosJpaRepository.findFirstByNombreLike("TV LED de 40"));
         DispositivoInteligente lampara = new DispositivoInteligente("Lampara de 11w", clienteResidencial,catalogoDispositivosJpaRepository.findFirstByNombreLike("Lampara de 11 W"));
         DispositivoEstandar lavarropas = new DispositivoEstandar("lavarropas Semi-automatico de 5 kg", clienteResidencial, 11.0, catalogoDispositivosJpaRepository.findFirstByNombreLike("Lavarropas 5kg semi-automatico"));
@@ -94,28 +138,5 @@ public class aaaaaFillDataTestDeMartin {
         clienteResidencial.addDispositivo(microondasConvencional);
         clienteResidencial.addDispositivo(planchaAVapor);
         clienteResidencial.addDispositivo(ventiladorDeTecho);
-
-
-        clienteResidencialJPARepository.save(clienteResidencial);
-
-        Administrador administrador = new Administrador();
-        administrador.setPassword("123");
-        administrador.setNombreDeUsuario("martinsapo");
-
-        administradorJpaRepository.save(administrador);
-
-    }
-
-    private void persistirTablaDispositivos(){
-
-        JSONArray catalogoArray = (JSONArray) Helper.mapJsonToArrayJSON("src/test/java/json/tablaDispositivos.json");
-
-        assert catalogoArray != null;
-        for (Object catalogoDispositivo : catalogoArray) {
-            JSONObject object = (JSONObject) catalogoDispositivo;
-            ItemDeCatalogoDeDispositivos dispositivoDeCatalogo = new ItemDeCatalogoDeDispositivos(object);
-            catalogoDispositivosJpaRepository.save(dispositivoDeCatalogo);
-
-        }
     }
 }

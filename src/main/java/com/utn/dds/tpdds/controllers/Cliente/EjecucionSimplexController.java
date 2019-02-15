@@ -42,44 +42,6 @@ public class EjecucionSimplexController {
             mensajeDeEficiencia = "Su hogar NO es eficiente, por favor use menos los dispositivos";
         }
         model.addAttribute("esEficiente", mensajeDeEficiencia);
-
-        if (cliente.getAhorroAutomatico()){
-            disparaEjecucionAutomaticaDelSimplex(cliente.getHogar());
-        }
-
         return new ModelAndView("ejecutarSimplex", model);
-    }
-
-    private void disparaEjecucionAutomaticaDelSimplex(Hogar hogar){
-
-        AbstractApplicationContext factory = new ClassPathXmlApplicationContext("spring-quartz.xml");
-
-
-        //get the quartzFactory bean
-        Scheduler scheduler = (Scheduler) factory.getBean("scheduler");
-
-        try {
-            // create JOB
-            MethodInvokingJobDetailFactoryBean jobDetail = new MethodInvokingJobDetailFactoryBean();
-            jobDetail.setTargetObject(hogar);
-            jobDetail.setTargetMethod("ejecucionAutomatica");
-            jobDetail.setName("MyJobDetail");
-            jobDetail.setConcurrent(false);
-            jobDetail.afterPropertiesSet();
-
-            SimpleTriggerFactoryBean trigger = new SimpleTriggerFactoryBean();
-            trigger.setBeanName("MyTrigger");
-            trigger.setJobDetail(jobDetail.getObject());
-            trigger.setRepeatInterval(5000);
-            trigger.afterPropertiesSet();
-
-            scheduler.scheduleJob(jobDetail.getObject(), trigger.getObject());
-
-            // Start Scheduler
-            scheduler.start();
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
     }
 }
