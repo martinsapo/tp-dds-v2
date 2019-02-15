@@ -24,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -104,7 +105,13 @@ public class DispositivosABMController {
     public ModelAndView altaInteligente() {
         ModelMap model = new ModelMap();
         List<ItemDeCatalogoDeDispositivos> items = catalogoDispositivosJpaRepository.findAll();
-        model.addAttribute("catalogo", items);
+        List<ItemDeCatalogoDeDispositivos> itemsInteligentes = new ArrayList<>();
+        for (ItemDeCatalogoDeDispositivos item : items) {
+            if (item.getEsInteligente()) {
+                itemsInteligentes.add(item);
+            }
+        }
+        model.addAttribute("catalogo", itemsInteligentes);
         return new ModelAndView("dispositivosInteligentesAlta", model);
     }
 
@@ -112,7 +119,13 @@ public class DispositivosABMController {
     public ModelAndView altaEstandar() {
         ModelMap model = new ModelMap();
         List<ItemDeCatalogoDeDispositivos> items = catalogoDispositivosJpaRepository.findAll();
-        model.addAttribute("catalogo", items);
+        List<ItemDeCatalogoDeDispositivos> itemsEstandar = new ArrayList<>();
+        for (ItemDeCatalogoDeDispositivos item : items) {
+            if (!item.getEsInteligente()) {
+                itemsEstandar.add(item);
+            }
+        }
+        model.addAttribute("catalogo", itemsEstandar);
         return new ModelAndView("dispositivosEstandarAlta", model);
     }
 

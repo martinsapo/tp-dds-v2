@@ -10,6 +10,8 @@ import com.utn.dds.tpdds.model.EstadoDeDispositivo;
 import com.utn.dds.tpdds.model.Helper;
 import com.utn.dds.tpdds.model.Hogar;
 import com.utn.dds.tpdds.model.ItemDeCatalogoDeDispositivos;
+import com.utn.dds.tpdds.model.Sensor;
+import com.utn.dds.tpdds.model.SensorDeValores;
 import com.utn.dds.tpdds.model.TipoDeDocumento;
 import com.utn.dds.tpdds.model.Transformador;
 import com.utn.dds.tpdds.model.ZonaGeografica;
@@ -34,7 +36,7 @@ import java.time.LocalDateTime;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.NONE)
 @Rollback(false)
-@ActiveProfiles("dev")
+@ActiveProfiles("prod")
 public class aaaaaFillDataTestDeMartin {
     @Autowired ClienteResidencialJpaRepository clienteResidencialJPARepository;
     @Autowired CatalogoDispositivosJpaRepository catalogoDispositivosJpaRepository;
@@ -64,6 +66,12 @@ public class aaaaaFillDataTestDeMartin {
         DispositivoEstandar microondasConvencional = new DispositivoEstandar("Microondas convencional", clienteResidencial, 2.0, catalogoDispositivosJpaRepository.findFirstByNombreLike("Microondas convencional"));
         DispositivoEstandar planchaAVapor = new DispositivoEstandar("Plancha a vapor", clienteResidencial, 1.0, catalogoDispositivosJpaRepository.findFirstByNombreLike("Plancha a vapor"));
         DispositivoInteligente ventiladorDeTecho = new DispositivoInteligente("Ventilador de techo", clienteResidencial, catalogoDispositivosJpaRepository.findFirstByNombreLike("Ventilador de techo"));
+
+        Sensor sensor = new SensorDeValores(tv, "sensor");
+        Sensor sensor1 = new SensorDeValores(lampara, "sensor");
+        Sensor sensor2 = new SensorDeValores(pc, "sensor");
+        Sensor sensor3 = new SensorDeValores(aireAcond, "sensor");
+        Sensor sensor4 = new SensorDeValores(ventiladorDeTecho, "sensor");
 
 
         tv.agregarRegistroDeCambioDeEstadoPersonalizado(LocalDateTime.of(2019, 2, 5, 0, 0), EstadoDeDispositivo.PRENDIDO);
