@@ -44,7 +44,7 @@ public class DispositivoInteligente extends Dispositivo implements Serializable{
     public DispositivoInteligente(String nombre, ClienteResidencial dueno, ItemDeCatalogoDeDispositivos itemDeCatalogoDeDispositivos) {
         super(nombre, dueno, itemDeCatalogoDeDispositivos);
         agregarRegistroARegistrosDeCambioDeEstadoDeDispositivo(EstadoDeDispositivo.APAGADO);
-        agregarSensor(new SensorDeValores());
+        agregarSensor(new SensorDeValores(this, "nombre"));
         driver = new AireAcondicionado();
         driver.setDispositivoInteligente(this);
     }
@@ -52,6 +52,7 @@ public class DispositivoInteligente extends Dispositivo implements Serializable{
     public DispositivoInteligente(DispositivoEstandar dispositivo) {
         super(dispositivo.nombreDelDispositivo, dispositivo.dueno, dispositivo.getItemDeCatalogoDeDispositivos());
         agregarRegistroARegistrosDeCambioDeEstadoDeDispositivo(EstadoDeDispositivo.APAGADO);
+        agregarSensor(new SensorDeValores(this, "nombre"));
     }
 
     public DispositivoInteligente(String jsonDispositivo) {
@@ -61,6 +62,7 @@ public class DispositivoInteligente extends Dispositivo implements Serializable{
             this.state = dispositivo.state;
             this.dueno = dispositivo.dueno;
             agregarRegistroARegistrosDeCambioDeEstadoDeDispositivo(EstadoDeDispositivo.APAGADO);
+            agregarSensor(new SensorDeValores(this, "nombre"));
         }
     }
 

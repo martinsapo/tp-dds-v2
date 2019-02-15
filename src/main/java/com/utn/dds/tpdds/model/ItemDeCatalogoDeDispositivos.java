@@ -25,7 +25,7 @@ public class ItemDeCatalogoDeDispositivos {
     private Boolean esInteligente;
     private Boolean esBajoConsumo;
 
-    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "itemDeCatalogoDeDispositivos")
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.PERSIST, mappedBy = "itemDeCatalogoDeDispositivos")
     private List<Dispositivo> dispositivosAsociados;
 
     public ItemDeCatalogoDeDispositivos(String nombre, BigDecimal consumo ,Integer usoMinimo, Integer usoMaximo, Boolean esBajoConsumo, Boolean esInteligente){

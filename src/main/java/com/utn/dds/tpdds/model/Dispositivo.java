@@ -32,7 +32,7 @@ public abstract class Dispositivo implements Serializable {
 	public Integer id;
 
 	String nombreDelDispositivo;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private ItemDeCatalogoDeDispositivos itemDeCatalogoDeDispositivos;
 
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
