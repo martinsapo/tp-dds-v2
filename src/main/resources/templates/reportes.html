@@ -35,24 +35,30 @@
 
     </div>
 </nav>
-
-    <form class="form-signin" method="get" action="/admin/reportes/consumoPorHogar">
+<div id="opciones" class="col-sm-4">
+    <form class="form-signin center" method="get" action="/admin/reportes/consumoPorHogar">
         <input type="date" name="fechaInicioHogar" required>
-        <input type="date" name="fechaFinHogar" required>
-        <button class="btn btn-lg btn-primary btn-block btn-signin " type="submit">Consumo por Hogar</button>
+        <input type="date" name="fechaFinHogar" required><br><br>
+
+        <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Consumo por Hogar</button>
     </form>
-    <form class="form-signin" method="get" action="/admin/reportes//consumoPromedioPorTipo">
+    <form class="form-signin center" method="get" action="/admin/reportes/consumoPromedioPorTipo">
         <input type="date" name="fechaInicioPromedio" required>
-        <input type="date" name="fechaFinPromedio" required>
-        <button class="btn btn-lg btn-primary btn-block btn-signin " type="submit">Consumo promedio por Tipo de Dispositivo</button>
+        <input type="date" name="fechaFinPromedio" required><br><br>
+
+        <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Consumo promedio por Tipo de Dispositivo</button>
     </form>
-    <form class="form-signin" method="get" action="/admin/reportes//consumoPorTransformador">
+    <form class="form-signin center" method="get" action="/admin/reportes/consumoPorTransformador">
         <input type="date" name="fechaInicioTransformador" required>
-        <input type="date" name="fechaFinTransformador" required>
-        <button class="btn btn-lg btn-primary btn-block btn-signin " type="submit">Consumo por Transformador</button>
+        <input type="date" name="fechaFinTransformador" required><br><br>
+
+        <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Consumo por Transformador</button>
     </form>
+    <br><br>
+</div>
 
-
+<div id="resultados" class="col-sm-8" style="border:2px solid black;margin-left:15%; margin-right:15%; text-align:center;">
+    <h1>Resultado del reporte </h1>
     <div th:if="${reporteDeConsumoTotalPorHogar != null}">
         <table style="width:70%; margin-left:15%; margin-right:15%; text-align:center; background-color:snow; border: 1px solid black;">
             <tr>
@@ -68,7 +74,6 @@
 
 
     <div th:if="${reporteConsumoPromedioPorTipoDeDispositivo != null}">
-        <h4>Consumo Promedio por Tipo de Dispositivo</h4>
         <table style="width:70%; margin-left:15%; margin-right:15%; text-align:center; background-color:snow; border: 1px solid black;">
             <tr>
                 <th style="border: 1px solid black; text-align:center; ">Estandar</th>
@@ -93,6 +98,7 @@
             </tr>
         </table>
     </div>
-
+    <br><br>
+</div>
 </body>
 </html>
